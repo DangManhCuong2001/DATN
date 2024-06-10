@@ -1,0 +1,175 @@
+import { createContext, useContext, useEffect, useState } from "react";
+import { BaseContextProps } from "../../global.config";
+import {
+  TAllDataHospital,
+  getInfoHospitalById,
+  getTopHospitalHome,
+  getTopHospitalWithType,
+} from "../../services/HospitalService/HospitalService";
+import { THospital, TTypeHospital } from "../constants/typeData";
+import {
+  TAllDataDoctor,
+  TReturnAllDataDoctor,
+  getInfoDoctor,
+  getListDoctorByHopital,
+} from "../../services/DoctorService/DoctorService";
+import moment from "moment";
+
+interface IHospitalContext {
+  dataHospital: TdataHospital;
+  topHospitals: THospital[];
+  hospitalsWithType: TAllDataHospital[];
+  setTypeHospital: React.Dispatch<React.SetStateAction<TTypeHospital>>;
+  dataForm: TDataForm;
+  setDataForm: React.Dispatch<React.SetStateAction<TDataForm>>;
+  infoHospital: TAllDataHospital;
+  listDoctorByHospital: TReturnAllDataDoctor;
+  infoDoctor: TAllDataDoctor;
+}
+
+export type TdataHospital = {
+  [key in TTypeHospital]: {
+    id: string;
+    title: string;
+  };
+};
+const dataHospital: TdataHospital = {
+  benhVienCong: { id: "1", title: "Bệnh viện công" },
+  benhVienTu: { id: "2", title: "Bệnh viện tư" },
+  phongKham: { id: "3", title: "Phòng khám" },
+};
+
+export type TDataForm = {
+  hospitalSelected: string;
+  doctorSelected: string;
+  daySelected: number | string;
+  hourSelected: string;
+  patientId: string;
+};
+
+const HospitalContext = createContext({} as IHospitalContext);
+export function HospitalProvider({ children }: BaseContextProps) {
+  const [topHospitals, setTopHospitals] = useState<THospital[]>([]);
+  const [hospitalsWithType, setHospitalsWithType] = useState<
+    TAllDataHospital[]
+  >([]);
+  const [typeHospital, setTypeHospital] =
+    useState<TTypeHospital>("benhVienCong");
+  const [infoHospital, setInfoHospital] = useState<TAllDataHospital>({
+    address: "",
+    id: "",
+    image: "",
+    name: "",
+    type: "benhVienCong",
+  });
+  const [listDoctorByHospital, setListDoctorByHospital] =
+    useState<TReturnAllDataDoctor>([]);
+  const [dataForm, setDataForm] = useState<TDataForm>({
+    doctorSelected: "",
+    hospitalSelected: "",
+    daySelected: moment(new Date()).startOf("day").valueOf(),
+    hourSelected: "",
+    patientId: "",
+  });
+  // const [HospitalSelected,setHospitalSelected] = useState<TInfoDoctor>({firstName:'',image:'',lastName:''})
+  const [infoDoctor, setInfoDoctor] = useState<TAllDataDoctor>({
+    firstName: "",
+    lastName: "",
+    image: "",
+    doctorId: "",
+    gender: "",
+    nameSpecialty: "",
+    price: "",
+    province: "",
+  });
+
+  console.log(dataForm, infoDoctor);
+
+  async function getDataListDoctorByHospital() {
+    try {
+      const response = await getListDoctorByHopital(dataForm.hospitalSelected);
+      console.log(response);
+      setListDoctorByHospital(response);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+  console.log(hospitalsWithType);
+
+  async function getDataInfoHospitalById() {
+    try {
+      const response = await getInfoHospitalById(dataForm.hospitalSelected);
+      console.log(response);
+      setInfoHospital(response);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  async function getInfoDoctorSelected() {
+    try {
+      const response = await getInfoDoctor(dataForm.doctorSelected);
+      console.log(response);
+      setInfoDoctor(response);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  async function getDataTopHospitals() {
+    try {
+      const response = await getTopHospitalHome();
+      console.log(response);
+      setTopHospitals(response.data.topHospital);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  async function getListHospitalsWithType() {
+    try {
+      const response = await getTopHospitalWithType(typeHospital);
+      console.log(response);
+      setHospitalsWithType(response);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  useEffect(() => {
+    getDataTopHospitals();
+  }, []);
+
+  useEffect(() => {
+    getDataInfoHospitalById();
+    getDataListDoctorByHospital();
+  }, [dataForm.hospitalSelected]);
+
+  useEffect(() => {
+    getInfoDoctorSelected();
+  }, [dataForm.doctorSelected, dataForm.hourSelected]);
+
+  useEffect(() => {
+    getListHospitalsWithType();
+  }, [typeHospital]);
+
+  return (
+    <HospitalContext.Provider
+      value={{
+        dataHospital,
+        topHospitals,
+        hospitalsWithType,
+        setTypeHospital,
+        dataForm,
+        setDataForm,
+        infoDoctor,
+        infoHospital,
+        listDoctorByHospital,
+      }}
+    >
+      {children}
+    </HospitalContext.Provider>
+  );
+}
+
+export const useHospitalContext = () => useContext(HospitalContext);
