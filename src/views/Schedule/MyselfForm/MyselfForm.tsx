@@ -19,13 +19,36 @@ import { useHospitalContext } from "../../../context/hospital-context";
 import { bookingAppointment } from "../../../services/PatientService/PatientService";
 import { useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
+import moment from "moment";
 
+type TtimeType = "T1" | "T2" | "T3" | "T4" | "T5" | "T6" | "T7" | "T8";
+const timeType: { [k in TtimeType]: string } = {
+  T1: "8:00 - 9:00",
+  T2: "9:00 - 10:00",
+  T3: "10:00 - 11:00",
+  T4: "8:00 - 12:00",
+  T5: "14:00 - 15:00",
+  T6: "15:00 - 16:00",
+  T7: "16:00 - 17:00",
+  T8: "17:00 - 18:00",
+};
 export default function MyselfForm() {
   const { isLogin, dataLogin } = useLoginContext();
   const { dataForm, setDataForm } = useHospitalContext();
   console.log(dataForm, dataLogin);
 
   const navigate = useNavigate();
+
+  const renderTimeBooking = (dataTime: any) => {
+    if (dataTime) {
+      let time = timeType[dataForm.hourSelected as TtimeType];
+      let date = moment.unix(+dataTime / 1000).format("dddd - DD/MM/YYYY");
+      return `${time}-${date}`;
+    }
+
+    return "";
+  };
+
   async function handleClickBook() {
     const id = uuidv4();
     const addDataForm = { ...dataForm, id: id };
@@ -43,10 +66,13 @@ export default function MyselfForm() {
   }
 
   useEffect(() => {
+    // renderTimeBooking(),
     setDataForm((prev) => {
       return {
         ...prev,
         patientId: dataLogin.idUser,
+        email: dataLogin.email,
+        timeString: renderTimeBooking(dataForm.daySelected),
       };
     });
   }, [isLogin]);
@@ -65,6 +91,10 @@ export default function MyselfForm() {
       >
         <PersonIcon sx={{ mr: 1 }} />
         <input
+          value={dataForm.fullName}
+          onChange={(e) =>
+            setDataForm({ ...dataForm, fullName: e.target.value })
+          }
           className="inputStyle"
           style={{
             border: "none",
@@ -78,14 +108,16 @@ export default function MyselfForm() {
       </Box>
       <RadioGroup
         aria-labelledby="demo-radio-buttons-group-label"
-        defaultValue="female"
+        defaultValue="Nam"
         name="radio-buttons-group"
         row
         sx={{ mt: 1 }}
+        value={dataForm.gender}
+        onChange={(e) => setDataForm({ ...dataForm, gender: e.target.value })}
       >
-        <FormControlLabel value="female" control={<Radio />} label="Female" />
-        <FormControlLabel value="male" control={<Radio />} label="Male" />
-        <FormControlLabel value="other" control={<Radio />} label="Other" />
+        <FormControlLabel value="Nam" control={<Radio />} label="Nam" />
+        <FormControlLabel value="Nữ" control={<Radio />} label="Nữ" />
+        <FormControlLabel value="Khác" control={<Radio />} label="Khác" />
       </RadioGroup>
       <Box
         sx={{
@@ -100,6 +132,10 @@ export default function MyselfForm() {
         <LocalPhoneIcon sx={{ mr: 1 }} />
         <input
           className="inputStyle"
+          value={dataForm.phoneNumber}
+          onChange={(e) =>
+            setDataForm({ ...dataForm, phoneNumber: e.target.value })
+          }
           style={{
             border: "none",
             background: "none",
@@ -131,6 +167,11 @@ export default function MyselfForm() {
             width: "calc(100% - 25px)",
             fontSize: "14px",
           }}
+          value={dataForm.dateOfBirth}
+          onChange={(e) =>
+            setDataForm({ ...dataForm, dateOfBirth: e.target.value })
+          }
+          type="date"
           placeholder="Năm sinh(Bắt buộc)"
         ></input>
       </Box>
@@ -181,6 +222,10 @@ export default function MyselfForm() {
             width: "calc(100% - 25px)",
             fontSize: "14px",
           }}
+          value={dataForm.address}
+          onChange={(e) =>
+            setDataForm({ ...dataForm, address: e.target.value })
+          }
           placeholder="Địa chỉ cụ thể(Bắt buộc)"
         ></input>
       </Box>
@@ -205,6 +250,8 @@ export default function MyselfForm() {
             width: "calc(100% - 25px)",
             fontSize: "14px",
           }}
+          value={dataForm.reason}
+          onChange={(e) => setDataForm({ ...dataForm, reason: e.target.value })}
           placeholder="Lý do khám(Bắt buộc)"
         ></input>
       </Box>

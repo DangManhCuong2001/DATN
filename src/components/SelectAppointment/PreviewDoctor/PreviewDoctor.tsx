@@ -19,7 +19,7 @@ export default function PreviewDoctor({
   price: string;
   doctorId: string;
 }) {
-  const { setDataForm } = useHospitalContext();
+  const { setDataForm, dataForm } = useHospitalContext();
   const navigate = useNavigate();
   const { idHospital } = useParams();
 
@@ -34,7 +34,10 @@ export default function PreviewDoctor({
   // }, []);
   return (
     <Box
-      onClick={() => navigate(`/SelectAppointment/${idHospital}/${doctorId}`)}
+      onClick={() => {
+        setDataForm({ ...dataForm, fullNameDoctor: name });
+        navigate(`/SelectAppointment/${idHospital}/${doctorId}`);
+      }}
       sx={{
         p: 2,
         border: "1px solid",

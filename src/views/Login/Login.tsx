@@ -38,22 +38,31 @@ export default function Login({ urlAfterLogin }: { urlAfterLogin?: string }) {
         <Box sx={{ mb: 2 }}>
           <TextField
             placeholder="Mật khẩu"
+            type="password"
             onChange={(e) => changePassword(e.target.value)}
           ></TextField>
         </Box>
         <Button
           variant="contained"
-          onClick={() => handleLogin(urlAfterLogin ? urlAfterLogin : "-1")}
+          onClick={() => handleLogin(urlAfterLogin ? urlAfterLogin : undefined)}
         >
           Đăng nhập
         </Button>
       </Box>
-      <Box>
-        <Typography>Hoặc đăng nhập bằng tài khoản</Typography>
+      <Box sx={{ mt: 2 }}>
+        <Typography sx={{ mb: 1 }}>Hoặc đăng nhập bằng tài khoản</Typography>
         <Button href="/a" variant="outlined">
           ĐĂNG NHẬP VỚI GOOGLE
         </Button>
         <Button variant="outlined">ĐĂNG NHẬP VỚI FACEBOOK</Button>
+      </Box>
+      <Box sx={{ mt: 2 }}>
+        <Typography>
+          Nếu chưc có tải khoản. Vui lòng{" "}
+          <a href="/register" target="_blank">
+            Đăng ký
+          </a>
+        </Typography>
       </Box>
     </Box>
   );

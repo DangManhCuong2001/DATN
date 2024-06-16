@@ -19,6 +19,9 @@ import SelectAppointment from "./components/SelectAppointment/SelectAppointment"
 import SelectDate from "./components/SelectAppointment/SelectDate/SelectDate";
 import ManageSchedules from "./views/Manage/ManageSchedules/ManageSchedules";
 import ManagePatient from "./views/Manage/ManagePatient/ManagePatient";
+import VerifyBooking from "./views/VerifyBooking/VerifyBooking";
+import Register from "./views/Login/Register/Register";
+import ProfileUser from "./views/ProfileUser/ProfileUser";
 
 export default function RouterUrl() {
   return useRoutes([
@@ -45,10 +48,12 @@ export default function RouterUrl() {
         { path: "/speciality/:idSpeciality", element: <DetailSpeciality /> },
         { path: "/doctor/:idDoctor", element: <Doctor /> },
         { path: "/form-booking/", element: <Schedule /> },
+        { path: "/login", element: <Login /> },
+        { path: "/register", element: <Register /> },
+        { path: "/profile", element: <ProfileUser /> },
         {
-          path: "/login",
-          element: <Login />,
-          children: [],
+          path: "/verify-booking",
+          element: <VerifyBooking />,
         },
       ],
     },

@@ -38,7 +38,7 @@ export type TUser = {
   previewImage: string;
 };
 
-const initNewUser: TUser = {
+export const initNewUser: TUser = {
   id: null,
   email: "",
   password: "",

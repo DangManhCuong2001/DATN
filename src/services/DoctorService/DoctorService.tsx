@@ -72,3 +72,9 @@ export const getScheduleDoctors = async (
     `${BACKEND_DOMAIN}/api/get-schedule-doctors?doctorId=${doctorId}&date=${date}`
   );
 };
+
+export const doneAppointment = async (apppointmentId: string) => {
+  return await axios.post(`${BACKEND_DOMAIN}/api/done-appointment`, {
+    apppointmentId: apppointmentId,
+  });
+};

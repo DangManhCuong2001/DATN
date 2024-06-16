@@ -2,11 +2,11 @@ import { ReactNode, createContext, useContext, useState } from "react";
 import { BaseContextProps } from "../../global.config";
 import { imagePath } from "../../constants/imagePath";
 import { getDataLogin } from "../../services/UserService/UserService";
-import { useNavigate } from "react-router-dom";
+import { To, useNavigate } from "react-router-dom";
 import { Isconnected, LocalStorageKey } from "../../constants";
 
 interface ILoginContext {
-  handleLogin: (urlAfterLogin: string) => Promise<void>;
+  handleLogin: (urlAfterLogin: string | undefined) => Promise<void>;
   setAccountLogin: React.Dispatch<React.SetStateAction<TAccountLogin>>;
   dataLogin: TDataLogin;
   isLogin: boolean;
@@ -18,10 +18,15 @@ export type TAccountLogin = {
 };
 
 export type TDataLogin = {
+  email: string;
   firstName: string;
   lastName: string;
   roleId: string;
   idUser: string;
+  gender: string;
+  phoneNumber: string;
+  address: string;
+  image: string;
 };
 const LoginContext = createContext({} as ILoginContext);
 export function LoginProvider({ children }: BaseContextProps) {
@@ -31,15 +36,20 @@ export function LoginProvider({ children }: BaseContextProps) {
     password: "",
   });
   const [dataLogin, setDataLogin] = useState<TDataLogin>({
+    email: "",
     firstName: "",
     lastName: "",
     roleId: "",
     idUser: "",
+    gender: "",
+    phoneNumber: "",
+    address: "",
+    image: "",
   });
   const [isLogin, setIsLogin] = useState<boolean>(false);
 
   console.log(dataLogin);
-  async function handleLogin(urlAfterLogin?: string) {
+  async function handleLogin(urlAfterLogin?: string | undefined) {
     try {
       const response = await getDataLogin(accountLogin);
       console.log(response);
@@ -52,10 +62,15 @@ export function LoginProvider({ children }: BaseContextProps) {
         setDataLogin((prev) => {
           return {
             ...prev,
+            email: response.data.user.email,
             firstName: response.data.user.firstName,
             lastName: response.data.user.lastName,
             roleId: response.data.user.roleId,
             idUser: response.data.user.id,
+            gender: response.data.user.gender,
+            phoneNumber: response.data.user.phoneNumber,
+            address: response.data.user.address,
+            image: response.data.user.image,
           };
         });
         if (urlAfterLogin) {

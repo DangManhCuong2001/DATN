@@ -45,6 +45,15 @@ export type TDataForm = {
   daySelected: number | string;
   hourSelected: string;
   patientId: string;
+  email: string;
+  fullName: string;
+  gender: string;
+  phoneNumber: string;
+  address: string;
+  reason: string;
+  dateOfBirth: string;
+  timeString: string;
+  fullNameDoctor: string;
 };
 
 const HospitalContext = createContext({} as IHospitalContext);
@@ -70,6 +79,15 @@ export function HospitalProvider({ children }: BaseContextProps) {
     daySelected: moment(new Date()).startOf("day").valueOf(),
     hourSelected: "",
     patientId: "",
+    email: "",
+    fullName: "",
+    gender: "",
+    phoneNumber: "",
+    address: "",
+    reason: "",
+    dateOfBirth: "",
+    timeString: "",
+    fullNameDoctor: "",
   });
   // const [HospitalSelected,setHospitalSelected] = useState<TInfoDoctor>({firstName:'',image:'',lastName:''})
   const [infoDoctor, setInfoDoctor] = useState<TAllDataDoctor>({
