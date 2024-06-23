@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Container } from "../../components/container/Container";
-import { Box, Grid, Typography } from "@mui/material";
-import { imagePath } from "../../constants/imagePath";
+import { Box, Button, Grid, Typography } from "@mui/material";
 import { getAppoinmentsPatient } from "../../services/PatientService/PatientService";
 import { useLoginContext } from "../../context/login-context";
 import DividerCustom from "../../components/DividerCustom/DividerCustom";
+import { useHospitalContext } from "../../context/hospital-context";
+import ModalRate from "../../components/ModalDetailDoctor/ModalDetailDoctor";
 
 type TDataAppoinment = {
+  appointmentId: string;
   fullName: string;
   gender: string;
   address: string;
@@ -14,21 +16,46 @@ type TDataAppoinment = {
   dateOfBirth: string;
   phoneNumber: string;
   reason: string;
-  statusID: string;
+  statusId: string;
   timeType: string;
+  doctorName: string;
+  doctorId: string;
+  ratePoint: string;
 };
+
+export type TDataInfoRate = {
+  // id:string,
+  doctorNameSelected: string;
+  appointmentId: string;
+  userId: string;
+  doctorId: string;
+  // point:string,
+  // rateContent:string
+};
+
 export default function ProfileUser() {
   const { dataLogin, isLogin } = useLoginContext();
   const [listAppointment, setListAppointment] = useState<TDataAppoinment[]>([]);
+  const { setOpenModalInfoDoctor } = useHospitalContext();
+  const [dataInfoRate, setDataInfoRate] = useState<TDataInfoRate>({
+    // id:'',
+    appointmentId: "",
+    doctorId: "",
+    doctorNameSelected: "",
+    userId: "",
+    // point:'',
+    // rateContent:'',userId:''
+  });
 
-  async function getDataUser() {}
   async function getListAppointmentByUSer() {
     try {
       const response = await getAppoinmentsPatient(dataLogin.idUser);
       console.log(response);
+
       setListAppointment(
         response.data.data.map((item: any) => {
           return {
+            appointmentId: item.id,
             fullName: item.fullName,
             gender: item.gender,
             address: item.address,
@@ -36,8 +63,11 @@ export default function ProfileUser() {
             dateOfBirth: item.dateOfBirth,
             phoneNumber: item.phoneNumber,
             reason: item.reason,
-            statusID: item.statusID,
+            statusId: item.statusId,
             timeType: item.timeType,
+            doctorName: item.User.firstName + " " + item.User.lastName,
+            doctorId: item.doctorId,
+            ratePoint: item.RatePoint,
           };
         })
       );
@@ -53,6 +83,10 @@ export default function ProfileUser() {
     <>
       {isLogin ? (
         <Container sx={{ mt: 3 }}>
+          <ModalRate
+            dataInfoRate={dataInfoRate}
+            getListAppointmentByUSer={getListAppointmentByUSer}
+          />
           <Grid container spacing={2}>
             <Grid
               item
@@ -111,9 +145,7 @@ export default function ProfileUser() {
                 <Grid item xs={1}>
                   <Typography>Giới tính</Typography>
                 </Grid>
-                <Grid item xs={2}>
-                  <Typography>Số điện thoại</Typography>
-                </Grid>
+
                 <Grid item xs={2}>
                   <Typography>Địa chỉ</Typography>
                 </Grid>
@@ -121,7 +153,10 @@ export default function ProfileUser() {
                   <Typography>Ngày sinh</Typography>
                 </Grid>
                 <Grid item xs={2}>
-                  <Typography>Lý do khám</Typography>
+                  <Typography>Bác sĩ khám</Typography>
+                </Grid>
+                <Grid item xs={2}>
+                  <Typography>Hành động</Typography>
                 </Grid>
               </Grid>
               <Box>
@@ -141,9 +176,7 @@ export default function ProfileUser() {
                             <Grid item xs={1}>
                               <Typography>{item.gender}</Typography>
                             </Grid>
-                            <Grid item xs={2}>
-                              <Typography>{item.phoneNumber}</Typography>
-                            </Grid>
+
                             <Grid item xs={2}>
                               <Typography>{item.address}</Typography>
                             </Grid>
@@ -151,7 +184,52 @@ export default function ProfileUser() {
                               <Typography>{item.dateOfBirth}</Typography>
                             </Grid>
                             <Grid item xs={2}>
-                              <Typography>{item.reason}</Typography>
+                              <Typography>{item.doctorName}</Typography>
+                            </Grid>
+                            <Grid item xs={2}>
+                              <>
+                                {item.statusId == "S1" ? (
+                                  <Typography sx={{ color: "red" }}>
+                                    Bạn chưa xác nhận
+                                  </Typography>
+                                ) : (
+                                  <>
+                                    {item.statusId == "S2" ? (
+                                      <Typography sx={{ color: "red" }}>
+                                        Chưa khám
+                                      </Typography>
+                                    ) : (
+                                      <>
+                                        {item.ratePoint ? (
+                                          <Typography sx={{ color: "green" }}>
+                                            Đã đánh giá
+                                          </Typography>
+                                        ) : (
+                                          <Button
+                                            variant="contained"
+                                            onClick={() => {
+                                              setOpenModalInfoDoctor(true);
+                                              setDataInfoRate((prev) => {
+                                                return {
+                                                  ...prev,
+                                                  doctorId: item.doctorId,
+                                                  doctorNameSelected:
+                                                    item.doctorName,
+                                                  appointmentId:
+                                                    item.appointmentId,
+                                                  userId: dataLogin.idUser,
+                                                };
+                                              });
+                                            }}
+                                          >
+                                            Đánh giá
+                                          </Button>
+                                        )}
+                                      </>
+                                    )}
+                                  </>
+                                )}
+                              </>
                             </Grid>
                           </Grid>
                         </Box>

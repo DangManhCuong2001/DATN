@@ -29,10 +29,18 @@ export default function SelectAppointment() {
               sx={{
                 background: "white",
                 borderRadius: "12px",
-                p: 2,
               }}
             >
-              <Box>
+              <Box
+                sx={{
+                  background:
+                    "linear-gradient(83.63deg, #00b5f1 33.34%, #00e0ff 113.91%)",
+                  borderTopRightRadius: "12px",
+                  borderTopLeftRadius: "12px",
+                  color: "white",
+                  py: 1,
+                }}
+              >
                 <Typography
                   sx={{
                     fontWeight: 600,
@@ -43,7 +51,8 @@ export default function SelectAppointment() {
                   Thông tin cơ sở y tế
                 </Typography>
               </Box>
-              <Box sx={{ display: "flex" }}>
+
+              <Box sx={{ display: "flex", p: 2 }}>
                 <ApartmentRoundedIcon />
                 <Box sx={{ ml: 1 }}>
                   <Typography sx={{ fontSize: "20px" }}>
@@ -56,25 +65,33 @@ export default function SelectAppointment() {
           </Grid>
           <Grid item xs={6} md={8.5}>
             <Box sx={{ borderRadius: "12px", background: "white" }}>
-              <Box sx={{ p: 2 }}>
+              <Box
+                sx={{
+                  background:
+                    "linear-gradient(83.63deg, #00b5f1 33.34%, #00e0ff 113.91%)",
+                  borderTopRightRadius: "12px",
+                  borderTopLeftRadius: "12px",
+                  py: 1,
+                }}
+              >
                 <Typography
                   sx={{
                     fontWeight: 600,
                     fontSize: "24px",
                     textAlign: "center",
+                    color: "white",
                   }}
                 >
                   Vui lòng chọn Bác sĩ
                 </Typography>
+              </Box>
+
+              <Box sx={{ p: 2 }}>
                 {listDoctorByHospital.map((item, index) => {
                   return (
                     <PreviewDoctor
                       key={"hospital" + item + index}
-                      name={item.firstName + " " + item.lastName}
-                      gender={item.gender}
-                      price={item.price}
-                      specialty={item.nameSpecialty}
-                      doctorId={item.doctorId}
+                      data={item}
                     />
                   );
                 })}

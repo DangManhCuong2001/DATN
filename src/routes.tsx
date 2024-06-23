@@ -35,6 +35,7 @@ export default function RouterUrl() {
           path: "/:idTypeHospital/:idHospital",
           element: <DetailHospital />,
         },
+
         {
           path: "/SelectAppointment/:idHospital",
           element: <SelectAppointment />,

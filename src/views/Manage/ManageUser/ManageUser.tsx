@@ -365,8 +365,8 @@ export default function ManageUser() {
                     setNewUser({ ...newUser, gender: e.target.value as string })
                   }
                 >
-                  <MenuItem value={"male"}>Nam</MenuItem>
-                  <MenuItem value={"female"}>Nữ</MenuItem>
+                  <MenuItem value={"Nam"}>Nam</MenuItem>
+                  <MenuItem value={"Nữ"}>Nữ</MenuItem>
                 </Select>
               </FormControl>
             </Grid>

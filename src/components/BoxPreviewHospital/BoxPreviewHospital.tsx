@@ -60,6 +60,7 @@ export default function BoxPreviewHospital({
                 borderRadius: "20px",
                 fontWeight: 600,
               }}
+              onClick={() => navigate(`/SelectAppointment/${idHospital}`)}
             >
               Đặt khám ngay
             </Button>

@@ -78,7 +78,7 @@ export default function MyselfForm() {
   }, [isLogin]);
 
   return (
-    <Box sx={{ px: 50 }}>
+    <Box sx={{ px: 10 }}>
       <Box
         sx={{
           border: "1px solid #ccc",
@@ -175,7 +175,7 @@ export default function MyselfForm() {
           placeholder="Năm sinh(Bắt buộc)"
         ></input>
       </Box>
-      <Box
+      {/* <Box
         sx={{
           border: "1px solid #ccc",
           display: "flex",
@@ -200,7 +200,7 @@ export default function MyselfForm() {
           <MenuItem value={20}>Twenty</MenuItem>
           <MenuItem value={30}>Thirty</MenuItem>
         </Select>
-      </Box>
+      </Box> */}
       <Box
         sx={{
           border: "1px solid #ccc",

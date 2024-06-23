@@ -1,28 +1,17 @@
-import { Box, Typography } from "@mui/material";
-import React, { useEffect } from "react";
+import { Box, Button, Grid, Typography } from "@mui/material";
 import PersonRoundedIcon from "@mui/icons-material/PersonRounded";
 import WcIcon from "@mui/icons-material/Wc";
 import { useHospitalContext } from "../../../context/hospital-context";
-import { TSpecialty } from "../../../context/constants/typeData";
 import { useNavigate, useParams } from "react-router-dom";
+import { TAllDataDoctor } from "../../../services/DoctorService/DoctorService";
+import MedicalServicesRoundedIcon from "@mui/icons-material/MedicalServicesRounded";
+import AttachMoneyRoundedIcon from "@mui/icons-material/AttachMoneyRounded";
 
-export default function PreviewDoctor({
-  name,
-  gender,
-  specialty,
-  price,
-  doctorId,
-}: {
-  name: string;
-  gender: string;
-  specialty: string;
-  price: string;
-  doctorId: string;
-}) {
+export default function PreviewDoctor({ data }: { data: TAllDataDoctor }) {
   const { setDataForm, dataForm } = useHospitalContext();
   const navigate = useNavigate();
   const { idHospital } = useParams();
-
+  console.log("dfdfd", data);
   // useEffect(() => {
   //   // setHospitalSelected(idHospital as string);
   //   setDataForm((prev) => {
@@ -33,39 +22,92 @@ export default function PreviewDoctor({
   //   });
   // }, []);
   return (
-    <Box
-      onClick={() => {
-        setDataForm({ ...dataForm, fullNameDoctor: name });
-        navigate(`/SelectAppointment/${idHospital}/${doctorId}`);
-      }}
-      sx={{
-        p: 2,
-        border: "1px solid",
-        borderRadius: "12px",
-        cursor: "pointer",
-        mb: 3,
-      }}
-    >
-      <Box sx={{ display: "flex", placeItems: "center" }}>
-        <PersonRoundedIcon />
-        <Typography>{name}</Typography>
+    <>
+      <Box
+        sx={{
+          p: 2,
+          border: "1px solid",
+          borderRadius: "12px",
+          mb: 3,
+          display: "flex",
+          placeItems: "center",
+          gap: 2,
+          justifyContent: "space-between",
+        }}
+      >
+        <Box sx={{ display: "flex" }}>
+          <img
+            src={data.image}
+            style={{
+              width: "120px",
+              height: "120px",
+              borderRadius: "12px",
+              marginRight: "10px",
+            }}
+          />
+
+          <Box>
+            <Box sx={{ display: "flex", placeItems: "center", mb: 1, gap: 1 }}>
+              <PersonRoundedIcon sx={{ color: " #00b5f1 " }} />
+              <Typography>{data.firstName + " " + data.lastName}</Typography>
+            </Box>
+            <Box sx={{ display: "flex", placeItems: "center", mb: 1, gap: 1 }}>
+              <WcIcon sx={{ color: " #00b5f1 " }} />
+              <Typography>Giới tính: {data.gender}</Typography>
+            </Box>
+            <Box sx={{ display: "flex", placeItems: "center", mb: 1, gap: 1 }}>
+              <MedicalServicesRoundedIcon sx={{ color: " #00b5f1 " }} />
+              <Typography>Chuyên khoa: {data.nameSpecialty}</Typography>
+            </Box>
+            {/* <Box sx={{ display: "flex", placeItems: "center" }}>
+              <PersonRoundedIcon />
+              <Typography>Lịch khám: Thứ 2, 3, 4, 5, 6</Typography>
+            </Box> */}
+            <Box sx={{ display: "flex", placeItems: "center", gap: 1 }}>
+              <AttachMoneyRoundedIcon sx={{ color: " #00b5f1 " }} />
+              <Typography>Giá khám: {data.price}</Typography>
+            </Box>
+          </Box>
+        </Box>
+
+        <Box sx={{ ml: 0 }}>
+          <Box sx={{ mb: 2 }}>
+            <Button
+              variant="contained"
+              onClick={() => {
+                navigate(`/doctor/${data.doctorId}`);
+                // setOpenModalInfoDoctor(true);
+              }}
+              sx={{
+                width: "160px",
+                background:
+                  "linear-gradient(83.63deg, #00b5f1 33.34%, #00e0ff 113.91%)",
+              }}
+            >
+              Xem chi tiết
+            </Button>
+          </Box>
+          <Box>
+            <Button
+              variant="contained"
+              onClick={() => {
+                setDataForm({
+                  ...dataForm,
+                  fullNameDoctor: data.firstName + data.lastName,
+                });
+                navigate(`/SelectAppointment/${idHospital}/${data.doctorId}`);
+              }}
+              sx={{
+                width: "160px",
+                background:
+                  "linear-gradient(83.63deg, #00b5f1 33.34%, #00e0ff 113.91%)",
+              }}
+            >
+              Đặt lịch ngay
+            </Button>
+          </Box>
+        </Box>
       </Box>
-      <Box sx={{ display: "flex", placeItems: "center" }}>
-        <WcIcon />
-        <Typography>Giới tính: {gender}</Typography>
-      </Box>
-      <Box sx={{ display: "flex", placeItems: "center" }}>
-        <PersonRoundedIcon />
-        <Typography>Chuyên khoa: {specialty}</Typography>
-      </Box>
-      <Box sx={{ display: "flex", placeItems: "center" }}>
-        <PersonRoundedIcon />
-        <Typography>Lịch khám: Thứ 2, 3, 4, 5, 6</Typography>
-      </Box>
-      <Box sx={{ display: "flex", placeItems: "center" }}>
-        <PersonRoundedIcon />
-        <Typography>Giá khám: {price}</Typography>
-      </Box>
-    </Box>
+    </>
   );
 }

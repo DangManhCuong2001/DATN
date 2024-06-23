@@ -2,10 +2,19 @@ import { Box, Button, Grid, MenuItem, Select, Typography } from "@mui/material";
 import ApartmentRoundedIcon from "@mui/icons-material/ApartmentRounded";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { useHospitalContext } from "../../../context/hospital-context";
+import {
+  initDataInfoDoctor,
+  useHospitalContext,
+} from "../../../context/hospital-context";
 import { Container } from "../../container/Container";
 import moment from "moment";
-import { getScheduleDoctors } from "../../../services/DoctorService/DoctorService";
+import {
+  TAllDataDoctor,
+  getInfoDoctor,
+  getScheduleDoctors,
+} from "../../../services/DoctorService/DoctorService";
+import MedicalServicesRoundedIcon from "@mui/icons-material/MedicalServicesRounded";
+import MasksRoundedIcon from "@mui/icons-material/MasksRounded";
 
 type TObject = {
   label: string;
@@ -14,10 +23,11 @@ type TObject = {
 export default function SelectDate() {
   const navigate = useNavigate();
   const { idHospital, idDoctor } = useParams();
-  const { infoHospital, setDataForm, listDoctorByHospital, dataForm } =
-    useHospitalContext();
+  const { infoHospital, setDataForm, dataForm } = useHospitalContext();
   const [allDays, setAllDays] = useState<TObject[]>([]);
   const [listSchedule, setListSchedule] = useState([]);
+  const [dataDoctor, setDataDoctor] =
+    useState<TAllDataDoctor>(initDataInfoDoctor);
 
   console.log(dataForm);
   console.log(allDays);
@@ -73,13 +83,25 @@ export default function SelectDate() {
     navigate("/form-booking");
   }
 
+  async function getDataInfoDoctor() {
+    try {
+      if (idDoctor) {
+        const response = await getInfoDoctor(idDoctor);
+        console.log(response);
+        setDataDoctor(response);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   useEffect(() => {
     getDataScheduleDoctor();
   }, [idDoctor, allDays, dataForm.daySelected]);
 
   useEffect(() => {
     getArrDays();
-
+    getDataInfoDoctor();
     setDataForm((prev) => {
       return {
         ...prev,
@@ -97,10 +119,19 @@ export default function SelectDate() {
               sx={{
                 background: "white",
                 borderRadius: "12px",
-                p: 2,
+                // p: 2,
               }}
             >
-              <Box>
+              <Box
+                sx={{
+                  background:
+                    "linear-gradient(83.63deg, #00b5f1 33.34%, #00e0ff 113.91%)",
+                  borderTopRightRadius: "12px",
+                  borderTopLeftRadius: "12px",
+                  color: "white",
+                  py: 1,
+                }}
+              >
                 <Typography
                   sx={{
                     fontWeight: 600,
@@ -111,29 +142,55 @@ export default function SelectDate() {
                   Thông tin cơ sở y tế
                 </Typography>
               </Box>
-              <Box sx={{ display: "flex" }}>
-                <ApartmentRoundedIcon />
-                <Box sx={{ ml: 1 }}>
-                  <Typography sx={{ fontSize: "20px" }}>
-                    {infoHospital.name}
+              <Box sx={{ p: 2 }}>
+                <Box sx={{ display: "flex" }}>
+                  <ApartmentRoundedIcon />
+                  <Box sx={{ ml: 1 }}>
+                    <Typography sx={{ fontSize: "20px" }}>
+                      {infoHospital.name}
+                    </Typography>
+                    <Typography>{infoHospital.address}</Typography>
+                  </Box>
+                </Box>
+
+                <Box sx={{ display: "flex", mt: 2 }}>
+                  <MedicalServicesRoundedIcon />
+                  <Typography sx={{ fontSize: "20px", ml: 1 }}>
+                    Chuyên khoa: {dataDoctor.nameSpecialty}
                   </Typography>
-                  <Typography>{infoHospital.address}</Typography>
+                </Box>
+                <Box sx={{ display: "flex", mt: 2 }}>
+                  <MasksRoundedIcon />
+                  <Typography sx={{ fontSize: "20px", ml: 1 }}>
+                    Bác sĩ: {dataDoctor.firstName + " " + dataDoctor.lastName}
+                  </Typography>
                 </Box>
               </Box>
             </Box>
           </Grid>
           <Grid item xs={6} md={8.5}>
             <Box sx={{ borderRadius: "12px", background: "white" }}>
-              <Box sx={{ p: 2 }}>
+              <Box
+                sx={{
+                  background:
+                    "linear-gradient(83.63deg, #00b5f1 33.34%, #00e0ff 113.91%)",
+                  borderTopRightRadius: "12px",
+                  borderTopLeftRadius: "12px",
+                  py: 1,
+                }}
+              >
                 <Typography
                   sx={{
                     fontWeight: 600,
                     fontSize: "24px",
                     textAlign: "center",
+                    color: "white",
                   }}
                 >
                   Vui lòng chọn thời gian khám
                 </Typography>
+              </Box>
+              <Box sx={{ p: 2 }}>
                 <Box>
                   <Select
                     value={dataForm.daySelected}
@@ -159,8 +216,6 @@ export default function SelectDate() {
                 <Box
                   sx={{
                     mt: 3,
-                    justifyContent: "space-between",
-                    display: "flex",
                   }}
                 >
                   {listSchedule.map((item: any, index) => {
@@ -173,6 +228,7 @@ export default function SelectDate() {
                             : "outlined"
                         }
                         key={"day" + index}
+                        sx={{ mr: 4 }}
                       >
                         {" "}
                         {item.Allcode.value}

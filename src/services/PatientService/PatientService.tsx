@@ -2,6 +2,7 @@ import axios from "axios";
 import { TDataForm } from "../../context/hospital-context";
 import { BACKEND_DOMAIN } from "../BackendDomain";
 import { TDataVerify } from "../../views/VerifyBooking/VerifyBooking";
+import { TDataInfoRate } from "../../views/ProfileUser/ProfileUser";
 
 export const bookingAppointment = async (dataForm: TDataForm) => {
   return await axios.post(
@@ -29,5 +30,15 @@ export const postVerifyBookAppointment = async (dataVerify: TDataVerify) => {
 export const getAppoinmentsPatient = async (userId: string) => {
   return await axios.get(
     `${BACKEND_DOMAIN}/api/get-appointments-patient?userId=${userId}`
+  );
+};
+
+export const saveRatePoint = async (dataRate: TDataInfoRate) => {
+  return await axios.post(`${BACKEND_DOMAIN}/api/save-rate-point`, dataRate);
+};
+
+export const getDataSearch = async (keyword: string) => {
+  return await axios.get(
+    `${BACKEND_DOMAIN}/api/search-data?keyword=${keyword}`
   );
 };

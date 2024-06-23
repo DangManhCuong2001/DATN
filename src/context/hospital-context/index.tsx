@@ -25,6 +25,8 @@ interface IHospitalContext {
   infoHospital: TAllDataHospital;
   listDoctorByHospital: TReturnAllDataDoctor;
   infoDoctor: TAllDataDoctor;
+  openModalInfoDoctor: boolean;
+  setOpenModalInfoDoctor: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export type TdataHospital = {
@@ -54,6 +56,23 @@ export type TDataForm = {
   dateOfBirth: string;
   timeString: string;
   fullNameDoctor: string;
+};
+
+export const initDataInfoDoctor: TAllDataDoctor = {
+  firstName: "",
+  lastName: "",
+  image: "",
+  doctorId: "",
+  gender: "",
+  nameSpecialty: "",
+  price: "",
+  province: "",
+  hospitalId: "",
+  specialtyId: "",
+  nameHospital: "",
+  addressHospital: "",
+  description: "",
+  markdownHTML: "",
 };
 
 const HospitalContext = createContext({} as IHospitalContext);
@@ -90,16 +109,10 @@ export function HospitalProvider({ children }: BaseContextProps) {
     fullNameDoctor: "",
   });
   // const [HospitalSelected,setHospitalSelected] = useState<TInfoDoctor>({firstName:'',image:'',lastName:''})
-  const [infoDoctor, setInfoDoctor] = useState<TAllDataDoctor>({
-    firstName: "",
-    lastName: "",
-    image: "",
-    doctorId: "",
-    gender: "",
-    nameSpecialty: "",
-    price: "",
-    province: "",
-  });
+  const [infoDoctor, setInfoDoctor] =
+    useState<TAllDataDoctor>(initDataInfoDoctor);
+  const [openModalInfoDoctor, setOpenModalInfoDoctor] =
+    useState<boolean>(false);
 
   console.log(dataForm, infoDoctor);
 
@@ -183,6 +196,8 @@ export function HospitalProvider({ children }: BaseContextProps) {
         infoDoctor,
         infoHospital,
         listDoctorByHospital,
+        setOpenModalInfoDoctor,
+        openModalInfoDoctor,
       }}
     >
       {children}

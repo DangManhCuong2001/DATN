@@ -17,31 +17,42 @@ import {
 } from "../../../services/DoctorService/DoctorService";
 import { BACKEND_DOMAIN } from "../../../services/BackendDomain";
 import axios from "axios";
+import MarkdownIt from "markdown-it";
+import MdEditor from "react-markdown-editor-lite";
+import "react-markdown-editor-lite/lib/index.css";
 
 // type TPrice = '200.000VND'|'300.000VND'|'400.000VND'|'500.000VND'
 export type TInfoDoctor = {
   doctorSelected: string;
-  intro: string;
   price: string;
   province: string;
   note: string;
   specialtySelected: string;
   hospitalSelected: string;
+  description: string;
+  contentHTML: string;
+  contentMarkdown: string;
 };
 
 const initDoctor: TInfoDoctor = {
   doctorSelected: "",
-  intro: "",
   price: "",
   province: "",
   note: "",
   specialtySelected: "",
   hospitalSelected: "",
+  description: "",
+  contentMarkdown: "",
+  contentHTML: "",
 };
+
+const mdParser = new MarkdownIt(/* Markdown-it options */);
 
 export default function ManageDoctors() {
   const [infoDoctor, setInfoDoctor] = useState<TInfoDoctor>(initDoctor);
   const { doctors, specialtys, hospitals } = useManageContext();
+  // const [contentMarkdown, setContentMarkdown] = useState<string>();
+  // const [contentHTML, setContentHTML] = useState<string>();
 
   console.log(doctors);
   console.log(infoDoctor);
@@ -52,8 +63,8 @@ export default function ManageDoctors() {
         `${BACKEND_DOMAIN}/api/get-info-doctor?id=${infoDoctor.doctorSelected}`
       );
       console.log(response);
-      if (response.data.doctorInfo.Doctor_Info) {
-        const resInfo = response.data.doctorInfo.Doctor_Info;
+      if (response.data.doctorInfo.data.Doctor_Info) {
+        const resInfo = response.data.doctorInfo.data.Doctor_Info;
         console.log(resInfo);
         setInfoDoctor((prev) => {
           return {
@@ -63,6 +74,10 @@ export default function ManageDoctors() {
             specialtySelected: resInfo.specialtyId,
             hospitalSelected: resInfo.clinicId,
             price: resInfo.priceId,
+            description: response.data.doctorInfo.data.Markdown.description,
+            contentMarkdown:
+              response.data.doctorInfo.data.Markdown.contentMarkdown,
+            contentHTML: response.data.doctorInfo.data.Markdown.contentHTML,
           };
         });
       } else {
@@ -75,11 +90,27 @@ export default function ManageDoctors() {
             note: "",
             specialtySelected: "",
             hospitalSelected: "",
+            contentHTML: "",
+            contentMarkdown: "",
+            description: "",
           };
         });
       }
     } catch (err) {
-      console.log(err);
+      setInfoDoctor((prev) => {
+        return {
+          ...prev,
+          intro: "",
+          price: "",
+          province: "",
+          note: "",
+          specialtySelected: "",
+          hospitalSelected: "",
+          contentHTML: "",
+          contentMarkdown: "",
+          description: "",
+        };
+      });
     }
   }
   // function handleSelectDoctor(doctorId: string) {
@@ -91,7 +122,10 @@ export default function ManageDoctors() {
 
   async function handleAddInfoDoctor() {
     const id = uuidv4();
-    const addInfoDoctor = { ...infoDoctor, id: id };
+    const addInfoDoctor = {
+      ...infoDoctor,
+      id: id,
+    };
     console.log(addInfoDoctor);
 
     try {
@@ -102,6 +136,23 @@ export default function ManageDoctors() {
       console.log(err);
     }
   }
+
+  const handleEditorChange = ({
+    html,
+    text,
+  }: {
+    html: string;
+    text: string;
+  }) => {
+    setInfoDoctor((prev) => {
+      return {
+        ...prev,
+        contentHTML: html,
+        contentMarkdown: text,
+      };
+    });
+    console.log("handleEditorChange", html, text);
+  };
 
   useEffect(() => {
     getDataInfoDoctor();
@@ -142,12 +193,12 @@ export default function ManageDoctors() {
         </Grid>
         <Grid item xs={12} md={8}>
           <Box>
-            <Typography>thong tin gioi thieu</Typography>
+            <Typography>Thông tin giới thiệu chung</Typography>
             <TextField
               sx={{ width: "100%" }}
-              value={infoDoctor.intro}
+              value={infoDoctor.description}
               onChange={(e) =>
-                setInfoDoctor({ ...infoDoctor, intro: e.target.value })
+                setInfoDoctor({ ...infoDoctor, description: e.target.value })
               }
             />
           </Box>
@@ -165,18 +216,7 @@ export default function ManageDoctors() {
             />
           </Box>
         </Grid>
-        <Grid item xs={12} md={4}>
-          {/* <Box>
-            <Typography>Chọn phương thức thanh toán</Typography>
-            <Select
-              sx={{ width: "100%" }}
-              // value={this.state.selectedPayment}
-              // onChange={this.handleChangeSelectDoctorInfo}
-              // options={this.state.listPayment}
-              // name="selectedPayment"
-            />
-          </Box> */}
-        </Grid>
+
         <Grid item xs={12} md={4}>
           <Box>
             <Typography>Chọn tỉnh thành</Typography>
@@ -189,30 +229,7 @@ export default function ManageDoctors() {
             />
           </Box>
         </Grid>
-        <Grid item xs={12} md={4}>
-          {/* <Box>
-            <Typography>Tên phòng khám</Typography>
-            <TextField
-              sx={{ width: "100%" }}
-              // onChange={(event) => {
-              //   this.handleOnChangeText(event, "nameClinic");
-              // }}
-              // value={this.state.nameClinic}
-            ></TextField>
-          </Box> */}
-        </Grid>
-        <Grid item xs={12} md={4}>
-          {/* <Box>
-            <Typography>Địa chỉ phòng khám</Typography>
-            <TextField
-              sx={{ width: "100%" }}
-              // onChange={(event) => {
-              //   this.handleOnChangeText(event, "addressClinic");
-              // }}
-              // value={this.state.addressClinic}
-            ></TextField>
-          </Box> */}
-        </Grid>
+
         <Grid item xs={12} md={4}>
           <Box>
             <Typography>Note</Typography>
@@ -277,14 +294,16 @@ export default function ManageDoctors() {
             </Select>
           </Box>
         </Grid>
-        <Box>
-          {/* <MdEditor
-          style={{ height: "500px" }}
-          renderHTML={(text) => mdParser.render(text)}
-          onChange={this.handleEditorChange}
-          value={this.state.contentMarkdown}
-        /> */}
-        </Box>
+        <Grid item xs={12}>
+          <Box sx={{ height: "200px" }}>
+            <MdEditor
+              style={{ height: "200px", width: "100%" }}
+              renderHTML={(text) => mdParser.render(text)}
+              onChange={handleEditorChange}
+              value={infoDoctor.contentMarkdown}
+            />
+          </Box>
+        </Grid>
       </Grid>
       <Button variant="contained" onClick={handleAddInfoDoctor} sx={{ mt: 4 }}>
         Save

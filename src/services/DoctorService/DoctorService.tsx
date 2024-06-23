@@ -11,6 +11,12 @@ export type TAllDataDoctor = {
   nameSpecialty: string;
   doctorId: string;
   image: string;
+  specialtyId: string;
+  hospitalId: string;
+  nameHospital: string;
+  addressHospital: string;
+  markdownHTML: string;
+  description: String;
 };
 
 export type TReturnAllDataDoctor = TAllDataDoctor[];
@@ -31,16 +37,22 @@ export const getInfoDoctor = async (
     `${BACKEND_DOMAIN}/api/get-info-doctor?id=${userId}`
   );
   console.log(response);
-  const data = response.data.doctorInfo;
+  const data = response.data.doctorInfo.data;
   return {
     price: data.Doctor_Info.priceId,
-    nameSpecialty: "",
     firstName: data.firstName,
     lastName: data.lastName,
     gender: data.gender,
     province: data.provinceId,
-    doctorId: "",
+    doctorId: data.id,
     image: data.image,
+    hospitalId: data.Doctor_Info.clinicId,
+    specialtyId: data.Doctor_Info.specialtyId,
+    nameHospital: response.data.doctorInfo.dataHospital.name,
+    nameSpecialty: response.data.doctorInfo.dataSpecialty.name,
+    addressHospital: response.data.doctorInfo.dataHospital.address,
+    markdownHTML: data?.Markdown?.contentHTML,
+    description: data?.Markdown?.description,
   };
 };
 
@@ -60,6 +72,7 @@ export const getListDoctorByHopital = async (hospitalId: string) => {
       gender: item.User.gender,
       province: item.provinceId,
       doctorId: item.doctorId,
+      image: item.User.image,
     };
   });
 };
@@ -77,4 +90,10 @@ export const doneAppointment = async (apppointmentId: string) => {
   return await axios.post(`${BACKEND_DOMAIN}/api/done-appointment`, {
     apppointmentId: apppointmentId,
   });
+};
+
+export const getListRatePoint = async (idDoctor: string) => {
+  return await axios.get(
+    `${BACKEND_DOMAIN}/api/get-list-rate-point?doctorId=${idDoctor}`
+  );
 };
