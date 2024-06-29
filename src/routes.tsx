@@ -22,6 +22,7 @@ import ManagePatient from "./views/Manage/ManagePatient/ManagePatient";
 import VerifyBooking from "./views/VerifyBooking/VerifyBooking";
 import Register from "./views/Login/Register/Register";
 import ProfileUser from "./views/ProfileUser/ProfileUser";
+import SelectDoctor from "./components/SelectAppointment/SelectDoctor/SelectDoctor";
 
 export default function RouterUrl() {
   return useRoutes([
@@ -41,7 +42,12 @@ export default function RouterUrl() {
           element: <SelectAppointment />,
         },
         {
-          path: "/SelectAppointment/:idHospital/:idDoctor",
+          path: "/SelectAppointment/:idHospital/:idSpecialty",
+          element: <SelectDoctor />,
+        },
+
+        {
+          path: "/SelectAppointment/:idHospital/:idSpecialty/:idDoctor",
           element: <SelectDate />,
         },
 

@@ -12,3 +12,9 @@ export const addNewSpecialty = async (newSpecialty: TSpecialty) => {
     newSpecialty
   );
 };
+
+export const getListSpecialtyByHospital = async (hospitalId: string) => {
+  return await axios.get(
+    `${BACKEND_DOMAIN}/api/get-list-specialty-by-hospital?hospitalId=${hospitalId}`
+  );
+};

@@ -21,19 +21,39 @@ import {
 } from "../../../services/HospitalService/HospitalService";
 import { useManageContext } from "../../../context/manage-context";
 import { THospital, TTypeHospital } from "../../../context/constants/typeData";
+import MarkdownIt from "markdown-it";
+import MdEditor from "react-markdown-editor-lite";
+import "react-markdown-editor-lite/lib/index.css";
 
-const initNewHospital: THospital = {
+const mdParser = new MarkdownIt(/* Markdown-it options */);
+
+type TNewHospital = {
+  id: string;
+  name: string;
+  type: TTypeHospital;
+  image: string;
+  previewImage: string;
+  address: string;
+  contentHTML: string;
+  contentMarkdown: string;
+  description: string;
+};
+
+const initNewHospital: TNewHospital = {
   id: "",
   name: "",
   type: "benhVienCong",
   image: "",
   previewImage: "",
   address: "",
+  contentHTML: "",
+  contentMarkdown: "",
+  description: "",
 };
 
 export default function ManageHospital() {
   const [show, setShow] = useState<boolean>(false);
-  const [newHospital, setNewHospital] = useState<THospital>(initNewHospital);
+  const [newHospital, setNewHospital] = useState<TNewHospital>(initNewHospital);
   const [editing, setEdit] = useState<boolean>(false);
   // const [previewImage, setPreviewImage] = useState<string>("");
   const { hospitals, setHospitals } = useManageContext();
@@ -46,6 +66,23 @@ export default function ManageHospital() {
 
   const handleShow = () => {
     setShow(true);
+  };
+
+  const handleEditorChange = ({
+    html,
+    text,
+  }: {
+    html: string;
+    text: string;
+  }) => {
+    setNewHospital((prev) => {
+      return {
+        ...prev,
+        contentHTML: html,
+        contentMarkdown: text,
+      };
+    });
+    console.log("handleEditorChange", html, text);
   };
 
   const handleChangeImage = async (event: any) => {
@@ -82,7 +119,7 @@ export default function ManageHospital() {
     try {
       const response = await addNewHospital(addHospital);
       setHospitals((prev) => [...prev, addHospital]);
-      setNewHospital(initNewHospital);
+      // setNewHospital(initNewHospital);
 
       setShow(false);
     } catch (err) {
@@ -256,6 +293,17 @@ export default function ManageHospital() {
               sx={{ width: "100%" }}
             ></TextField>
           </Box>
+          <Box sx={{ mb: 1 }}>
+            <Typography>Thông tin giới thiệu chung</Typography>
+            <TextField
+              sx={{ width: "100%" }}
+              value={newHospital.description}
+              onChange={(e) =>
+                setNewHospital({ ...newHospital, description: e.target.value })
+              }
+              multiline
+            />
+          </Box>
           <Box>
             <Typography>Tải ảnh lên</Typography>
             <TextField
@@ -263,8 +311,9 @@ export default function ManageHospital() {
               onChange={(e) => {
                 handleChangeImage(e);
               }}
+              sx={{ mb: 1 }}
             ></TextField>
-            <Box
+            {/* <Box
               sx={{
                 backgroundImage: `url(${newHospital.previewImage})`,
                 backgroundRepeat: "no-repeat",
@@ -272,15 +321,16 @@ export default function ManageHospital() {
                 width: "100%",
                 height: "200px",
               }}
-            ></Box>
+            ></Box> */}
           </Box>
+
           <Box>
-            {/* <MdEditor
-              style={{ height: "400px" }}
+            <MdEditor
+              style={{ height: "300px", width: "100%" }}
               renderHTML={(text) => mdParser.render(text)}
-              onChange={this.handleEditorChange}
-              value={this.state.descriptionMarkdown}
-            /> */}
+              onChange={handleEditorChange}
+              value={newHospital.contentMarkdown}
+            />
           </Box>
           <DialogActions>
             <Button onClick={handleClose} variant="contained" color="warning">

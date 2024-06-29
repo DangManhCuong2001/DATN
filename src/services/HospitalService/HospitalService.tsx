@@ -16,6 +16,9 @@ export type TAllDataHospital = {
   image: string;
   name: string;
   type: TTypeHospital;
+  contentHTML: string;
+  contentMarkdown: string;
+  description: string;
 };
 export type TReturnAllDataHospital = TAllDataHospital[];
 
@@ -52,6 +55,9 @@ export const getInfoHospitalById = async (
     image: data.image,
     name: data.name,
     type: data.type,
+    contentHTML: data?.Markdown?.contentHTML,
+    contentMarkdown: data?.Markdown?.contentMarkdown,
+    description: data?.Markdown?.description,
   };
 };
 

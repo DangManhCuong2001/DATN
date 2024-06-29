@@ -14,7 +14,7 @@ export default function HomePage() {
       <TypicalSpeciality />
       <TypicalHospital />
       <BannerQuickBook />
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 }

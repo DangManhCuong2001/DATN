@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  FormControl,
   FormControlLabel,
   MenuItem,
   Radio,
@@ -20,6 +21,7 @@ import { bookingAppointment } from "../../../services/PatientService/PatientServ
 import { useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 import moment from "moment";
+import useNotifier from "../../../hooks/useNotifier";
 
 type TtimeType = "T1" | "T2" | "T3" | "T4" | "T5" | "T6" | "T7" | "T8";
 const timeType: { [k in TtimeType]: string } = {
@@ -36,7 +38,7 @@ export default function MyselfForm() {
   const { isLogin, dataLogin } = useLoginContext();
   const { dataForm, setDataForm } = useHospitalContext();
   console.log(dataForm, dataLogin);
-
+  const { notifyError, notifySuccess } = useNotifier();
   const navigate = useNavigate();
 
   const renderTimeBooking = (dataTime: any) => {
@@ -57,7 +59,9 @@ export default function MyselfForm() {
         console.log(addDataForm);
         const response = await bookingAppointment(addDataForm);
         console.log(response);
+        notifySuccess("Đặt lịch thành công. Vui lòng xác nhận Email!");
       } catch (err) {
+        notifyError("Đặt lịch thất bại");
         console.log(err);
       }
     } else {
@@ -79,103 +83,107 @@ export default function MyselfForm() {
 
   return (
     <Box sx={{ px: 10 }}>
-      <Box
-        sx={{
-          border: "1px solid #ccc",
-          display: "flex",
-          alignItems: "center",
-          py: 1.5,
-          px: 2,
-          width: "100%",
-        }}
-      >
-        <PersonIcon sx={{ mr: 1 }} />
-        <input
-          value={dataForm.fullName}
-          onChange={(e) =>
-            setDataForm({ ...dataForm, fullName: e.target.value })
-          }
-          className="inputStyle"
-          style={{
-            border: "none",
-            background: "none",
-            outline: "none",
-            width: "calc(100% - 25px)",
-            fontSize: "14px",
+      <FormControl>
+        <Box
+          sx={{
+            border: "1px solid #ccc",
+            display: "flex",
+            alignItems: "center",
+            py: 1.5,
+            px: 2,
+            width: "100%",
           }}
-          placeholder="Họ và tên bệnh nhân(Bắt buộc)"
-        ></input>
-      </Box>
-      <RadioGroup
-        aria-labelledby="demo-radio-buttons-group-label"
-        defaultValue="Nam"
-        name="radio-buttons-group"
-        row
-        sx={{ mt: 1 }}
-        value={dataForm.gender}
-        onChange={(e) => setDataForm({ ...dataForm, gender: e.target.value })}
-      >
-        <FormControlLabel value="Nam" control={<Radio />} label="Nam" />
-        <FormControlLabel value="Nữ" control={<Radio />} label="Nữ" />
-        <FormControlLabel value="Khác" control={<Radio />} label="Khác" />
-      </RadioGroup>
-      <Box
-        sx={{
-          border: "1px solid #ccc",
-          display: "flex",
-          alignItems: "center",
-          py: 1.5,
-          px: 2,
-          width: "100%",
-        }}
-      >
-        <LocalPhoneIcon sx={{ mr: 1 }} />
-        <input
-          className="inputStyle"
-          value={dataForm.phoneNumber}
-          onChange={(e) =>
-            setDataForm({ ...dataForm, phoneNumber: e.target.value })
-          }
-          style={{
-            border: "none",
-            background: "none",
-            outline: "none",
-            width: "calc(100% - 25px)",
-            fontSize: "14px",
+        >
+          <PersonIcon sx={{ mr: 1 }} />
+          <input
+            value={dataForm.fullName}
+            onChange={(e) =>
+              setDataForm({ ...dataForm, fullName: e.target.value })
+            }
+            className="inputStyle"
+            style={{
+              border: "none",
+              background: "none",
+              outline: "none",
+              width: "calc(100% - 25px)",
+              fontSize: "14px",
+            }}
+            placeholder="Họ và tên bệnh nhân(Bắt buộc)"
+            required
+            type="text"
+          ></input>
+        </Box>
+        <RadioGroup
+          aria-labelledby="demo-radio-buttons-group-label"
+          defaultValue="Nam"
+          name="radio-buttons-group"
+          row
+          sx={{ mt: 1 }}
+          value={dataForm.gender}
+          onChange={(e) => setDataForm({ ...dataForm, gender: e.target.value })}
+        >
+          <FormControlLabel value="Nam" control={<Radio />} label="Nam" />
+          <FormControlLabel value="Nữ" control={<Radio />} label="Nữ" />
+          <FormControlLabel value="Khác" control={<Radio />} label="Khác" />
+        </RadioGroup>
+        <Box
+          sx={{
+            border: "1px solid #ccc",
+            display: "flex",
+            alignItems: "center",
+            py: 1.5,
+            px: 2,
+            width: "100%",
           }}
-          placeholder="Số điện thoại liên hệ(Bắt buộc)"
-        ></input>
-      </Box>
-      <Box
-        sx={{
-          border: "1px solid #ccc",
-          display: "flex",
-          alignItems: "center",
-          py: 1.5,
-          px: 2,
-          width: "100%",
-          mt: 2,
-        }}
-      >
-        <CalendarMonthIcon sx={{ mr: 1 }} />
-        <input
-          className="inputStyle"
-          style={{
-            border: "none",
-            background: "none",
-            outline: "none",
-            width: "calc(100% - 25px)",
-            fontSize: "14px",
+        >
+          <LocalPhoneIcon sx={{ mr: 1 }} />
+          <input
+            className="inputStyle"
+            value={dataForm.phoneNumber}
+            onChange={(e) =>
+              setDataForm({ ...dataForm, phoneNumber: e.target.value })
+            }
+            style={{
+              border: "none",
+              background: "none",
+              outline: "none",
+              width: "calc(100% - 25px)",
+              fontSize: "14px",
+            }}
+            type="number"
+            placeholder="Số điện thoại liên hệ(Bắt buộc)"
+          ></input>
+        </Box>
+        <Box
+          sx={{
+            border: "1px solid #ccc",
+            display: "flex",
+            alignItems: "center",
+            py: 1.5,
+            px: 2,
+            width: "100%",
+            mt: 2,
           }}
-          value={dataForm.dateOfBirth}
-          onChange={(e) =>
-            setDataForm({ ...dataForm, dateOfBirth: e.target.value })
-          }
-          type="date"
-          placeholder="Năm sinh(Bắt buộc)"
-        ></input>
-      </Box>
-      {/* <Box
+        >
+          <CalendarMonthIcon sx={{ mr: 1 }} />
+          <input
+            className="inputStyle"
+            style={{
+              border: "none",
+              background: "none",
+              outline: "none",
+              width: "calc(100% - 25px)",
+              fontSize: "14px",
+            }}
+            value={dataForm.dateOfBirth}
+            onChange={(e) =>
+              setDataForm({ ...dataForm, dateOfBirth: e.target.value })
+            }
+            type="date"
+            placeholder="Năm sinh(Bắt buộc)"
+          ></input>
+        </Box>
+        {/* <Box
         sx={{
           border: "1px solid #ccc",
           display: "flex",
@@ -201,94 +209,99 @@ export default function MyselfForm() {
           <MenuItem value={30}>Thirty</MenuItem>
         </Select>
       </Box> */}
-      <Box
-        sx={{
-          border: "1px solid #ccc",
-          display: "flex",
-          alignItems: "center",
-          py: 1.5,
-          px: 2,
-          width: "100%",
-          mt: 2,
-        }}
-      >
-        <LocationOnIcon sx={{ mr: 1 }} />
-        <input
-          className="inputStyle"
-          style={{
-            border: "none",
-            background: "none",
-            outline: "none",
-            width: "calc(100% - 25px)",
-            fontSize: "14px",
+        <Box
+          sx={{
+            border: "1px solid #ccc",
+            display: "flex",
+            alignItems: "center",
+            py: 1.5,
+            px: 2,
+            width: "100%",
+            mt: 2,
           }}
-          value={dataForm.address}
-          onChange={(e) =>
-            setDataForm({ ...dataForm, address: e.target.value })
-          }
-          placeholder="Địa chỉ cụ thể(Bắt buộc)"
-        ></input>
-      </Box>
-      <Box
-        sx={{
-          border: "1px solid #ccc",
-          display: "flex",
-          alignItems: "center",
-          py: 1.5,
-          px: 2,
-          width: "100%",
-          mt: 2,
-        }}
-      >
-        <LocalHospitalIcon sx={{ mr: 1 }} />
-        <input
-          className="inputStyle"
-          style={{
-            border: "none",
-            background: "none",
-            outline: "none",
-            width: "calc(100% - 25px)",
-            fontSize: "14px",
+        >
+          <LocationOnIcon sx={{ mr: 1 }} />
+          <input
+            className="inputStyle"
+            style={{
+              border: "none",
+              background: "none",
+              outline: "none",
+              width: "calc(100% - 25px)",
+              fontSize: "14px",
+            }}
+            value={dataForm.address}
+            onChange={(e) =>
+              setDataForm({ ...dataForm, address: e.target.value })
+            }
+            placeholder="Địa chỉ cụ thể(Bắt buộc)"
+          ></input>
+        </Box>
+        <Box
+          sx={{
+            border: "1px solid #ccc",
+            display: "flex",
+            alignItems: "center",
+            py: 1.5,
+            px: 2,
+            width: "100%",
+            mt: 2,
           }}
-          value={dataForm.reason}
-          onChange={(e) => setDataForm({ ...dataForm, reason: e.target.value })}
-          placeholder="Lý do khám(Bắt buộc)"
-        ></input>
-      </Box>
-      <Typography sx={{ mt: 1, textAlign: "center" }}>
-        Quý khách vui lòng điền đầy đủ thông tin để tiết kiệm thời gian làm thủ
-        tục khám
-      </Typography>
-      <Box
-        sx={{
-          background: "#D4EFFC",
-          px: 2,
-          py: 2,
-          borderRadius: "10px",
-          mt: 1,
-          width: "100%",
-        }}
-      >
-        <Typography>LƯU Ý</Typography>
-        <Typography>
-          Thông tin anh/chị cung cấp sẽ được sử dụng làm hồ sơ khám bệnh, khi
-          điền thông tin anh/chị vui lòng:
+        >
+          <LocalHospitalIcon sx={{ mr: 1 }} />
+          <input
+            className="inputStyle"
+            style={{
+              border: "none",
+              background: "none",
+              outline: "none",
+              width: "calc(100% - 25px)",
+              fontSize: "14px",
+            }}
+            value={dataForm.reason}
+            onChange={(e) =>
+              setDataForm({ ...dataForm, reason: e.target.value })
+            }
+            placeholder="Lý do khám(Bắt buộc)"
+          ></input>
+        </Box>
+        <Typography sx={{ mt: 1, textAlign: "center" }}>
+          Quý khách vui lòng điền đầy đủ thông tin để tiết kiệm thời gian làm
+          thủ tục khám
         </Typography>
-        <Typography>
-          Ghi rõ họ và tên, viết hoa những chữ cái đầu tiên, ví dụ: Trần Văn Phú{" "}
-        </Typography>
-        <Typography>
-          Điền đầy đủ, đúng và vui lòng kiểm tra lại thông tin trước khi ấn "Xác
-          nhận"
-        </Typography>
-      </Box>
-      <Button
-        variant="contained"
-        sx={{ mt: 2, width: "100%" }}
-        onClick={handleClickBook}
-      >
-        Xác nhận đặt lịch khám
-      </Button>
+        <Box
+          sx={{
+            background: "#D4EFFC",
+            px: 2,
+            py: 2,
+            borderRadius: "10px",
+            mt: 1,
+            width: "100%",
+          }}
+        >
+          <Typography>LƯU Ý</Typography>
+          <Typography>
+            Thông tin anh/chị cung cấp sẽ được sử dụng làm hồ sơ khám bệnh, khi
+            điền thông tin anh/chị vui lòng:
+          </Typography>
+          <Typography>
+            Ghi rõ họ và tên, viết hoa những chữ cái đầu tiên, ví dụ: Trần Văn
+            Phú{" "}
+          </Typography>
+          <Typography>
+            Điền đầy đủ, đúng và vui lòng kiểm tra lại thông tin trước khi ấn
+            "Xác nhận"
+          </Typography>
+        </Box>
+        <Button
+          variant="contained"
+          sx={{ mt: 2, width: "100%" }}
+          onClick={handleClickBook}
+          type="submit"
+        >
+          Xác nhận đặt lịch khám
+        </Button>
+      </FormControl>
     </Box>
   );
 }

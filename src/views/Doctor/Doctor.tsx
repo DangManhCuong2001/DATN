@@ -71,7 +71,7 @@ export default function Doctor() {
                 }}
                 onClick={() =>
                   navigator(
-                    `/SelectAppointment/${dataDoctor.hospitalId}/${dataDoctor.doctorId}`
+                    `/SelectAppointment/${dataDoctor.hospitalId}/${dataDoctor.specialtyId}/${dataDoctor.doctorId}`
                   )
                 }
               >

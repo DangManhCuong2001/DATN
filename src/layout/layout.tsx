@@ -4,6 +4,7 @@ import Content from "./content/Content";
 
 import HomePage from "../views/HomePage/HomePage";
 import Providers from "../context/Providers";
+import Footer from "../views/HomePage/Footer/Footer";
 
 export default function Layout() {
   return (
@@ -12,6 +13,7 @@ export default function Layout() {
         <Header />
         {/* <HomePage /> */}
         <Content />
+        <Footer />
       </Box>
     </Providers>
   );

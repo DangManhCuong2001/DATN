@@ -14,8 +14,16 @@ export default function Schedule() {
           ĐẶT LỊCH KHÁM
         </Typography>
       </Box>
-      <Box sx={{ display: "flex", justifyContent: "center", py: 2, gap: 3 }}>
-        <Box
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          py: 2,
+          gap: 3,
+          placeItems: "center",
+        }}
+      >
+        {/* <Box
           sx={{
             backgroundImage: `url(${infoDoctor.image})`,
             backgroundRepeat: "no-repeat",
@@ -25,7 +33,16 @@ export default function Schedule() {
             borderRadius: "10px",
             mr: 3,
           }}
-        ></Box>
+        ></Box> */}
+        <img
+          src={infoDoctor.image}
+          style={{
+            width: "160px",
+            height: "160px",
+            borderRadius: "10px",
+            marginRight: 3,
+          }}
+        ></img>
         <Box>
           <Typography sx={{ fontSize: "20px", fontWeight: 600 }}>
             Bác sĩ: {infoDoctor.firstName} {infoDoctor.lastName}

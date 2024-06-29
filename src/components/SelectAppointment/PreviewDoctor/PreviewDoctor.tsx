@@ -10,7 +10,7 @@ import AttachMoneyRoundedIcon from "@mui/icons-material/AttachMoneyRounded";
 export default function PreviewDoctor({ data }: { data: TAllDataDoctor }) {
   const { setDataForm, dataForm } = useHospitalContext();
   const navigate = useNavigate();
-  const { idHospital } = useParams();
+  const { idHospital, idSpeciality } = useParams();
   console.log("dfdfd", data);
   // useEffect(() => {
   //   // setHospitalSelected(idHospital as string);
@@ -95,7 +95,9 @@ export default function PreviewDoctor({ data }: { data: TAllDataDoctor }) {
                   ...dataForm,
                   fullNameDoctor: data.firstName + data.lastName,
                 });
-                navigate(`/SelectAppointment/${idHospital}/${data.doctorId}`);
+                navigate(
+                  `/SelectAppointment/${idHospital}/${idSpeciality}/${data.doctorId}`
+                );
               }}
               sx={{
                 width: "160px",

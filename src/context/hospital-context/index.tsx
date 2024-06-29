@@ -89,6 +89,9 @@ export function HospitalProvider({ children }: BaseContextProps) {
     image: "",
     name: "",
     type: "benhVienCong",
+    contentHTML: "",
+    contentMarkdown: "",
+    description: "",
   });
   const [listDoctorByHospital, setListDoctorByHospital] =
     useState<TReturnAllDataDoctor>([]);

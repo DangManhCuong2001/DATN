@@ -2,12 +2,14 @@ import { Box, ClickAwayListener, MenuItem, Typography } from "@mui/material";
 import { IconSearch } from "../../../../assets/icon/icon";
 import { useEffect, useState } from "react";
 import { getDataSearch } from "../../../../services/PatientService/PatientService";
+import { useNavigate } from "react-router-dom";
 
 type TDataFilled = {
   id: string;
   image: string;
   name: string;
   address: string;
+  typeHospital: string;
 };
 export default function SearchBox() {
   const [value, setValue] = useState<string>("");
@@ -16,9 +18,12 @@ export default function SearchBox() {
   const [listHospitalFilled, setListHospitalFilled] = useState<TDataFilled[]>(
     []
   );
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState<boolean>(false);
 
   console.log(open);
   async function getData() {
+    setLoading(true);
     try {
       const response = await getDataSearch(value);
 
@@ -39,6 +44,7 @@ export default function SearchBox() {
           image: item.image,
           name: item.name,
           address: item.address,
+          typeHospital: item.type,
         };
       });
       setListDoctorFilled(dataDoctor);
@@ -46,6 +52,7 @@ export default function SearchBox() {
     } catch (err) {
       console.log(err);
     }
+    setLoading(false);
   }
 
   const handleClickAway = () => {
@@ -125,7 +132,13 @@ export default function SearchBox() {
               <Box>
                 {listDoctorFilled.map((item, index) => {
                   return (
-                    <MenuItem key={"doctor filled" + index}>
+                    <MenuItem
+                      key={"doctor filled" + index}
+                      sx={{ mb: 0.5 }}
+                      onClick={() => {
+                        navigate(`/doctor/${item.id}`);
+                      }}
+                    >
                       <Box sx={{ display: "flex", placeItems: "center" }}>
                         <img
                           src={item.image}
@@ -191,7 +204,13 @@ export default function SearchBox() {
               <Box>
                 {listHospitalFilled.map((item, index) => {
                   return (
-                    <MenuItem key={"doctor filled" + index}>
+                    <MenuItem
+                      key={"doctor filled" + index}
+                      onClick={() =>
+                        navigate(`/${item.typeHospital}/${item.id}`)
+                      }
+                      sx={{ mb: 0.5 }}
+                    >
                       <Box sx={{ display: "flex", placeItems: "center" }}>
                         <img
                           src={item.image}
@@ -202,20 +221,22 @@ export default function SearchBox() {
                             marginRight: "10px",
                           }}
                         />
-                        <Typography
-                          variant="body2"
-                          fontWeight={500}
-                          sx={{ color: "black" }}
-                        >
-                          {item.name}{" "}
+                        <Box>
+                          <Typography
+                            variant="body2"
+                            fontWeight={500}
+                            sx={{ color: "black" }}
+                          >
+                            {item.name}{" "}
+                          </Typography>
                           <Typography
                             fontWeight={500}
                             sx={{ color: "black" }}
                             component={"span"}
                           >
-                            ({item.address})
+                            {item.address}
                           </Typography>
-                        </Typography>
+                        </Box>
                       </Box>
                     </MenuItem>
                   );

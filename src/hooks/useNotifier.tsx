@@ -40,6 +40,7 @@ export default function useNotifier() {
   };
 
   const notifySuccess = (msg: string, options?: OptionsObject | undefined) => {
+    console.log("ssss");
     enqueueSnackbar(msg, { ...SUCCESS_TOP_CENTER, ...options });
   };
 

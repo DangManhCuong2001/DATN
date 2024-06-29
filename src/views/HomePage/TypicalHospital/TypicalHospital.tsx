@@ -4,7 +4,7 @@ import SliderHospital from "./SliderHospital/SliderHospital";
 
 export default function TypicalHospital() {
   return (
-    <Box sx={{ backgroundColor: "white", mt: 5, pb: 10 }}>
+    <Box sx={{ backgroundColor: "white", mt: 5, pb: 10, px: 8 }}>
       <Box sx={{ textAlign: "center", py: 5 }}>
         <Typography
           sx={{ fontWeight: 600, fontSize: "50px", color: "#00b5f1" }}
