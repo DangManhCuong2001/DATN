@@ -42,3 +42,19 @@ export const getDataSearch = async (keyword: string) => {
     `${BACKEND_DOMAIN}/api/search-data?keyword=${keyword}`
   );
 };
+
+export const getStatistical = async () => {
+  return await axios.get(`${BACKEND_DOMAIN}/api/get-statistical`);
+};
+
+export const getStatisticalAppByHospitalChart = async () => {
+  return await axios.get(
+    `${BACKEND_DOMAIN}/api/get-statistical-hospital-chart`
+  );
+};
+
+export const getStatisticalAppByStatusChart = async () => {
+  return await axios.get(
+    `${BACKEND_DOMAIN}/api/get-statistical-appointment-chart`
+  );
+};

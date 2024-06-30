@@ -4,69 +4,75 @@
  * value = 0 => route insite project
  * value = 1 => route outsite project
  */
-export type TUrl = 1 | 0;
 export type TTargetLink = "_blank" | "_parent" | "_self" | "_top" | undefined;
 export type TMenu = {
   //   icon: SvgComponent;
   title: string;
   url: string;
   target: TTargetLink;
-  children: { title: string; url: string; type: TUrl; target: TTargetLink }[];
-  type: TUrl;
+  children: { title: string; url: string; target: TTargetLink }[];
 }[];
 
 export const menu: TMenu = [
   {
     // icon: DashboardOutlined,
-    title: "Manage Users",
+    title: "Thống kê",
+    url: "/manage/statistics",
+    children: [],
+    target: undefined,
+  },
+  {
+    // icon: DashboardOutlined,
+    title: "Quản lý người dùng",
     url: "/manage/manageUsers",
     children: [],
-    type: 1,
     target: undefined,
   },
   {
     // icon: IconUser,
-    title: "Manage Doctors",
+    title: "Quản lý Bác sĩ",
     url: "/manage/manageDoctors",
     children: [],
-    type: 0,
     target: undefined,
   },
 
   {
     // icon: IconAutoTrader,
-    title: "Manage Schedules",
+    title: "Quản lý Lịch khám",
     url: "/manage/manageSchedule",
     children: [],
-    type: 0,
     target: undefined,
   },
 
   {
     // icon: IconDapps,
-    title: "Manage Hospital",
+    title: "Quản lý Bệnh viện",
     url: "/manage/manageHospital",
     children: [],
-    type: 1,
     target: undefined,
   },
   {
     // icon: IconDapps,
-    title: "Manage Speciality",
+    title: "Quản lý Chuyên khoa",
     url: "/manage/manageSpeciality",
     children: [],
-    type: 1,
     target: undefined,
   },
 ];
 
 export const menuOfManageDoctor: TMenu = [
   {
+    // icon: DashboardOutlined,
+    title: "Thống kê",
+    url: "/manage/statistics",
+    children: [],
+    target: undefined,
+  },
+  {
     // icon: IconAutoTrader,
     title: "Manage Schedules",
     url: "/manage/manageSchedule",
     children: [],
-    type: 0,
     target: undefined,
   },
   {
@@ -74,7 +80,6 @@ export const menuOfManageDoctor: TMenu = [
     title: "Manage Patients",
     url: "/manage/managePatient",
     children: [],
-    type: 0,
     target: undefined,
   },
 ];

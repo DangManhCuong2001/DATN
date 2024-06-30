@@ -118,64 +118,102 @@ export default function ManageSchedules() {
   }, []);
 
   return (
-    <Grid container spacing={4}>
-      <Grid item xs={6} md={4}>
-        <Box>
-          {dataLogin.roleId == "doctor" ? (
-            <Box>
-              <Typography>Chọn bác sĩ</Typography>
-              <Typography>
-                {dataLogin.firstName} {dataLogin.lastName}
-              </Typography>
-            </Box>
-          ) : (
-            <>
-              <Typography>Chọn bác sĩ</Typography>
-              <FormControl fullWidth>
-                <Select
-                  value={newSchedule.doctorSelected}
-                  onChange={(e) =>
-                    setNewSchedule({
-                      ...newSchedule,
-                      doctorSelected: e.target.value,
-                    })
-                  }
-                  // onChange={(e) => setNewSchedule(e.target.value)}
-                >
-                  {doctors.map((doctor, index) => {
-                    return (
-                      <MenuItem
-                        key={"doctor selected" + index}
-                        value={doctor.id}
-                      >
-                        {doctor.firstName} {doctor.lastName}
-                      </MenuItem>
-                    );
-                  })}
-                </Select>
-              </FormControl>
-            </>
-          )}
-        </Box>
-      </Grid>
-      <Grid item xs={6} md={8}>
-        <Box>
-          <Typography>Chọn ngày</Typography>
-          {/* <DatePicker
+    <Box sx={{ backgroundColor: "#1B2626", borderRadius: "20px", my: 8, p: 3 }}>
+      <Grid container spacing={4}>
+        <Grid item xs={6} md={4}>
+          <Box>
+            {dataLogin.roleId == "doctor" ? (
+              <Box>
+                <Typography sx={{ color: "#95A7AC", mb: 1 }}>
+                  Chọn bác sĩ
+                </Typography>
+                <Typography>
+                  {dataLogin.firstName} {dataLogin.lastName}
+                </Typography>
+              </Box>
+            ) : (
+              <Box sx={{ mb: 2 }}>
+                <Typography sx={{ color: "#95A7AC", mb: 1 }}>
+                  Chọn bác sĩ
+                </Typography>
+                <FormControl fullWidth>
+                  <Select
+                    value={newSchedule.doctorSelected}
+                    onChange={(e) =>
+                      setNewSchedule({
+                        ...newSchedule,
+                        doctorSelected: e.target.value,
+                      })
+                    }
+                    sx={{
+                      color: "#95A7AC",
+                      // backgroundColor: "white",
+                      ".MuiOutlinedInput-notchedOutline": {
+                        borderColor: "#95A7AC",
+                      },
+                      "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                        borderColor: "#95A7AC",
+                      },
+                      "&:hover .MuiOutlinedInput-notchedOutline": {
+                        borderColor: "#95A7AC",
+                      },
+                      ".MuiSvgIcon-root ": {
+                        fill: "#95A7AC !important",
+                      },
+                    }}
+                    // onChange={(e) => setNewSchedule(e.target.value)}
+                  >
+                    {doctors.map((doctor, index) => {
+                      return (
+                        <MenuItem
+                          key={"doctor selected" + index}
+                          value={doctor.id}
+                        >
+                          {doctor.firstName} {doctor.lastName}
+                        </MenuItem>
+                      );
+                    })}
+                  </Select>
+                </FormControl>
+              </Box>
+            )}
+          </Box>
+        </Grid>
+        <Grid item xs={6} md={8}>
+          <Box>
+            <Typography sx={{ color: "#95A7AC", mb: 1 }}>Chọn ngày</Typography>
+            {/* <DatePicker
             className="form-control"
             value={this.state.dayPicked}
             minDate={yesterday}
             onChange={this.handleChangeDatePicker}
           /> */}
-          <Input
-            type="date"
-            value={newSchedule.dayPicked}
-            onChange={(e) => {
-              console.log(e.target.value);
-              setNewSchedule({ ...newSchedule, dayPicked: e.target.value });
-            }}
-          ></Input>
-        </Box>
+            <Input
+              type="date"
+              value={newSchedule.dayPicked}
+              onChange={(e) => {
+                console.log(e.target.value);
+                setNewSchedule({ ...newSchedule, dayPicked: e.target.value });
+              }}
+              sx={{
+                color: "#95A7AC",
+                // backgroundColor: "white",
+                ".MuiOutlinedInput-notchedOutline": {
+                  borderColor: "#95A7AC",
+                },
+                "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                  borderColor: "#95A7AC",
+                },
+                "&:hover .MuiOutlinedInput-notchedOutline": {
+                  borderColor: "#95A7AC",
+                },
+                ".MuiSvgIcon-root ": {
+                  fill: "#95A7AC !important",
+                },
+              }}
+            ></Input>
+          </Box>
+        </Grid>
       </Grid>
       <Box>
         {rangeTime &&
@@ -186,6 +224,7 @@ export default function ManageSchedules() {
                 onClick={() => handleClickTime(item)}
                 variant={item.isSelected === true ? "contained" : "outlined"}
                 key={index}
+                sx={{ mr: 2, mb: 1 }}
               >
                 {" "}
                 {item.value}
@@ -193,7 +232,11 @@ export default function ManageSchedules() {
             );
           })}
       </Box>
-      <Button onClick={() => handleSaveTime()}>Lưu</Button>
-    </Grid>
+      <Box>
+        <Button variant="contained" onClick={() => handleSaveTime()}>
+          Lưu
+        </Button>
+      </Box>
+    </Box>
   );
 }

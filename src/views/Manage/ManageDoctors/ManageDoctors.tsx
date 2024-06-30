@@ -159,16 +159,24 @@ export default function ManageDoctors() {
   }, [infoDoctor.doctorSelected]);
 
   return (
-    <Box sx={{ px: 5 }}>
+    <Box sx={{ backgroundColor: "#1B2626", borderRadius: "20px", my: 8, p: 3 }}>
       <Typography
-        sx={{ textAlign: "center", fontSize: "30px", fontWeight: 600, mb: 3 }}
+        sx={{
+          textAlign: "center",
+          fontSize: "30px",
+          fontWeight: 600,
+          my: 3,
+          color: "#95A7AC",
+        }}
       >
         Thông tin bác sĩ
       </Typography>
       <Grid container spacing={2}>
         <Grid item xs={12} md={4}>
           <Box>
-            <Typography>Chọn bác sĩ</Typography>
+            <Typography sx={{ color: "#95A7AC", mb: 1 }}>
+              Chọn bác sĩ
+            </Typography>
             <FormControl fullWidth>
               <Select
                 value={infoDoctor.doctorSelected}
@@ -178,6 +186,22 @@ export default function ManageDoctors() {
                     doctorSelected: e.target.value,
                   })
                 }
+                sx={{
+                  color: "#95A7AC",
+
+                  ".MuiOutlinedInput-notchedOutline": {
+                    borderColor: "#95A7AC",
+                  },
+                  "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                    borderColor: "#95A7AC",
+                  },
+                  "&:hover .MuiOutlinedInput-notchedOutline": {
+                    borderColor: "#95A7AC",
+                  },
+                  ".MuiSvgIcon-root ": {
+                    fill: "#95A7AC !important",
+                  },
+                }}
                 // onChange={(e) => handleSelectDoctor(e.target.value)}
               >
                 {doctors.map((doctor, index) => {
@@ -193,22 +217,56 @@ export default function ManageDoctors() {
         </Grid>
         <Grid item xs={12} md={8}>
           <Box>
-            <Typography>Thông tin giới thiệu chung</Typography>
+            <Typography sx={{ color: "#95A7AC", mb: 1 }}>
+              Thông tin giới thiệu chung
+            </Typography>
             <TextField
-              sx={{ width: "100%" }}
               value={infoDoctor.description}
               onChange={(e) =>
                 setInfoDoctor({ ...infoDoctor, description: e.target.value })
               }
+              sx={{
+                width: "100%",
+                color: "#95A7AC",
+
+                ".MuiOutlinedInput-notchedOutline": {
+                  borderColor: "#95A7AC",
+                },
+                "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                  borderColor: "#95A7AC",
+                },
+                "&:hover .MuiOutlinedInput-notchedOutline": {
+                  borderColor: "#95A7AC",
+                },
+                ".MuiSvgIcon-root ": {
+                  fill: "#95A7AC !important",
+                },
+              }}
             />
           </Box>
         </Grid>
 
         <Grid item xs={12} md={4}>
           <Box>
-            <Typography>chọn giá</Typography>
+            <Typography sx={{ color: "#95A7AC", mb: 1 }}>chọn giá</Typography>
             <TextField
-              sx={{ width: "100%" }}
+              sx={{
+                width: "100%",
+                color: "#95A7AC",
+
+                ".MuiOutlinedInput-notchedOutline": {
+                  borderColor: "#95A7AC",
+                },
+                "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                  borderColor: "#95A7AC",
+                },
+                "&:hover .MuiOutlinedInput-notchedOutline": {
+                  borderColor: "#95A7AC",
+                },
+                ".MuiSvgIcon-root ": {
+                  fill: "#95A7AC !important",
+                },
+              }}
               value={infoDoctor.price}
               onChange={(e) =>
                 setInfoDoctor({ ...infoDoctor, price: e.target.value })
@@ -219,9 +277,27 @@ export default function ManageDoctors() {
 
         <Grid item xs={12} md={4}>
           <Box>
-            <Typography>Chọn tỉnh thành</Typography>
+            <Typography sx={{ color: "#95A7AC", mb: 1 }}>
+              Chọn tỉnh thành
+            </Typography>
             <TextField
-              sx={{ width: "100%" }}
+              sx={{
+                width: "100%",
+                color: "#95A7AC",
+
+                ".MuiOutlinedInput-notchedOutline": {
+                  borderColor: "#95A7AC",
+                },
+                "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                  borderColor: "#95A7AC",
+                },
+                "&:hover .MuiOutlinedInput-notchedOutline": {
+                  borderColor: "#95A7AC",
+                },
+                ".MuiSvgIcon-root ": {
+                  fill: "#95A7AC !important",
+                },
+              }}
               value={infoDoctor.province}
               onChange={(e) =>
                 setInfoDoctor({ ...infoDoctor, province: e.target.value })
@@ -232,9 +308,25 @@ export default function ManageDoctors() {
 
         <Grid item xs={12} md={4}>
           <Box>
-            <Typography>Note</Typography>
+            <Typography sx={{ color: "#95A7AC", mb: 1 }}>Note</Typography>
             <TextField
-              sx={{ width: "100%" }}
+              sx={{
+                width: "100%",
+                color: "#95A7AC",
+
+                ".MuiOutlinedInput-notchedOutline": {
+                  borderColor: "#95A7AC",
+                },
+                "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                  borderColor: "#95A7AC",
+                },
+                "&:hover .MuiOutlinedInput-notchedOutline": {
+                  borderColor: "#95A7AC",
+                },
+                ".MuiSvgIcon-root ": {
+                  fill: "#95A7AC !important",
+                },
+              }}
               value={infoDoctor.note}
               onChange={(e) =>
                 setInfoDoctor({ ...infoDoctor, note: e.target.value })
@@ -244,7 +336,9 @@ export default function ManageDoctors() {
         </Grid>
         <Grid item xs={12} md={4}>
           <Box>
-            <Typography>Chọn chuyên khoa</Typography>
+            <Typography sx={{ color: "#95A7AC", mb: 1 }}>
+              Chọn chuyên khoa
+            </Typography>
             <Select
               value={infoDoctor.specialtySelected}
               fullWidth
@@ -254,6 +348,22 @@ export default function ManageDoctors() {
                   specialtySelected: e.target.value,
                 })
               }
+              sx={{
+                color: "#95A7AC",
+
+                ".MuiOutlinedInput-notchedOutline": {
+                  borderColor: "#95A7AC",
+                },
+                "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                  borderColor: "#95A7AC",
+                },
+                "&:hover .MuiOutlinedInput-notchedOutline": {
+                  borderColor: "#95A7AC",
+                },
+                ".MuiSvgIcon-root ": {
+                  fill: "#95A7AC !important",
+                },
+              }}
             >
               {specialtys.map((specialty, index) => {
                 return (
@@ -270,7 +380,9 @@ export default function ManageDoctors() {
         </Grid>
         <Grid item xs={12} md={4}>
           <Box>
-            <Typography>Chọn bệnh viện</Typography>
+            <Typography sx={{ color: "#95A7AC", mb: 1 }}>
+              Chọn bệnh viện
+            </Typography>
             <Select
               value={infoDoctor.hospitalSelected}
               fullWidth
@@ -280,6 +392,22 @@ export default function ManageDoctors() {
                   hospitalSelected: e.target.value,
                 })
               }
+              sx={{
+                color: "#95A7AC",
+
+                ".MuiOutlinedInput-notchedOutline": {
+                  borderColor: "#95A7AC",
+                },
+                "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                  borderColor: "#95A7AC",
+                },
+                "&:hover .MuiOutlinedInput-notchedOutline": {
+                  borderColor: "#95A7AC",
+                },
+                ".MuiSvgIcon-root ": {
+                  fill: "#95A7AC !important",
+                },
+              }}
             >
               {hospitals.map((hospital, index) => {
                 return (
@@ -295,9 +423,9 @@ export default function ManageDoctors() {
           </Box>
         </Grid>
         <Grid item xs={12}>
-          <Box sx={{ height: "200px" }}>
+          <Box sx={{ height: "400px" }}>
             <MdEditor
-              style={{ height: "200px", width: "100%" }}
+              style={{ height: "400px", width: "100%" }}
               renderHTML={(text) => mdParser.render(text)}
               onChange={handleEditorChange}
               value={infoDoctor.contentMarkdown}

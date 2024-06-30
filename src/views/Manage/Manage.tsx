@@ -5,6 +5,7 @@ import ContentManage from "./ContentManage/ContentManage";
 import Providers from "../../context/Providers";
 import { useLoginContext } from "../../context/login-context";
 import Login from "../Login/Login";
+import HeaderManage from "./HeaderManage/HeaderManage";
 
 function ManageContent() {
   const { isLogin } = useLoginContext();
@@ -17,12 +18,21 @@ function ManageContent() {
         <Box
           sx={{
             position: "relative",
-            zIndex: 1,
-            ml: { xs: 0, lg: sidebarWidth },
+            backgroundColor: "#0e1713",
           }}
         >
           <SideBar sidebarWidth={sidebarWidth} headerHeight={headerHeight} />
-          <ContentManage />
+          <Box
+            sx={{
+              position: "relative",
+              zIndex: 1,
+              ml: { xs: 0, lg: sidebarWidth },
+            }}
+          >
+            <HeaderManage headerHeight={headerHeight}></HeaderManage>
+            <ContentManage headerHeight={headerHeight}></ContentManage>
+          </Box>
+          {/* <ContentManage /> */}
         </Box>
       ) : (
         <Login urlAfterLogin={"/manage/manageSchedule"} />

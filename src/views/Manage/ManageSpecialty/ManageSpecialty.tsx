@@ -113,7 +113,13 @@ export default function ManageSpecialty() {
   return (
     <Box>
       <Typography
-        sx={{ textAlign: "center", fontSize: "20px", fontWeight: 600, mb: 5 }}
+        sx={{
+          textAlign: "center",
+          fontSize: "20px",
+          fontWeight: 600,
+          my: 5,
+          color: "#95A7AC",
+        }}
       >
         Quản lý chuyên khoa
       </Typography>
@@ -123,16 +129,40 @@ export default function ManageSpecialty() {
       <Box>
         <Grid container>
           <Grid item xs={3}>
-            #
+            <Typography
+              sx={{
+                color: "#95A7AC",
+              }}
+            >
+              #
+            </Typography>
           </Grid>
           <Grid item xs={3}>
-            Tên chuyên khoa
+            <Typography
+              sx={{
+                color: "#95A7AC",
+              }}
+            >
+              Tên chuyên khoa
+            </Typography>
           </Grid>
           <Grid item xs={3}>
-            Hình ảnh
+            <Typography
+              sx={{
+                color: "#95A7AC",
+              }}
+            >
+              Hình ảnh
+            </Typography>
           </Grid>
           <Grid item xs={3}>
-            Action
+            <Typography
+              sx={{
+                color: "#95A7AC",
+              }}
+            >
+              Action
+            </Typography>
           </Grid>
         </Grid>
         <DividerCustom />
@@ -148,10 +178,22 @@ export default function ManageSpecialty() {
                 <>
                   <Grid container key={"specialty" + specialty}>
                     <Grid item xs={3}>
-                      {index + 1}
+                      <Typography
+                        sx={{
+                          color: "#95A7AC",
+                        }}
+                      >
+                        {index + 1}
+                      </Typography>
                     </Grid>
                     <Grid item xs={3}>
-                      {specialty.name}
+                      <Typography
+                        sx={{
+                          color: "#95A7AC",
+                        }}
+                      >
+                        {specialty.name}
+                      </Typography>
                     </Grid>
                     <Grid item xs={3}>
                       {/* {specialty.image} */}

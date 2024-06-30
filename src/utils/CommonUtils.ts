@@ -1,3 +1,5 @@
+import BigNumber from "bignumber.js";
+
 export default class CommonUtils {
   static getBase64(file: Blob) {
     return new Promise((resolve, reject) => {
@@ -7,4 +9,8 @@ export default class CommonUtils {
       reader.onerror = (error) => reject(error);
     });
   }
+}
+
+export function BN(value: any): BigNumber {
+  return new BigNumber(value);
 }

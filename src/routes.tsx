@@ -23,6 +23,7 @@ import VerifyBooking from "./views/VerifyBooking/VerifyBooking";
 import Register from "./views/Login/Register/Register";
 import ProfileUser from "./views/ProfileUser/ProfileUser";
 import SelectDoctor from "./components/SelectAppointment/SelectDoctor/SelectDoctor";
+import Statistics from "./views/Manage/Statistics/Statistics";
 
 export default function RouterUrl() {
   return useRoutes([
@@ -68,7 +69,9 @@ export default function RouterUrl() {
       path: "/manage",
       element: <Manage />,
       children: [
+        { path: "/manage/statistics", element: <Statistics /> },
         { path: "/manage/manageUsers", element: <ManageUser /> },
+
         { path: "/manage/manageDoctors", element: <ManageDoctors /> },
         { path: "/manage/manageSpeciality", element: <ManageSpeciality /> },
         { path: "/manage/manageHospital", element: <ManageHospital /> },

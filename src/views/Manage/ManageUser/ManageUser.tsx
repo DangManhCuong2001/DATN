@@ -22,6 +22,7 @@ import {
 } from "../../../services/UserService/UserService";
 import DividerCustom from "../../../components/DividerCustom/DividerCustom";
 import CommonUtils from "../../../utils/CommonUtils";
+import useNotifier from "../../../hooks/useNotifier";
 
 export type TUser = {
   id: string | null;
@@ -59,7 +60,7 @@ export default function ManageUser() {
   const [newUser, setNewUser] = useState<TUser>(initNewUser);
   const [editing, setEdit] = useState<boolean>(false);
   // const [allUsers,setAllUsers] = useState()
-
+  const { notifySuccess, notifyError } = useNotifier();
   const handleClose = () => {
     setShow(false);
   };
@@ -104,11 +105,13 @@ export default function ManageUser() {
 
     try {
       const response = await AddUser(addUser);
-      setUsers((prev) => [...prev, addUser]);
-      setNewUser(initNewUser);
 
       setShow(false);
+      setUsers((prev) => [...prev, addUser]);
+      notifySuccess("Thêm người dùng thành công!");
+      setNewUser(initNewUser);
     } catch (err) {
+      notifyError("Thêm dùng thất bại!");
       console.log(err);
     }
   }
@@ -117,15 +120,16 @@ export default function ManageUser() {
     setEdit(false);
     let id = newUser.id;
     try {
+      console.log(newUser);
       const response = await EditUser(newUser);
+      setShow(false);
+      notifySuccess("Cập nhật dùng thành công!");
       setUsers(users.map((i) => (i.id === id ? newUser : i)));
+      setNewUser(initNewUser);
     } catch (err) {
+      notifyError("Cập nhật dùng thất bại!");
       console.log(err);
     }
-
-    setNewUser(initNewUser);
-
-    setShow(false);
   }
 
   async function handleDeleteUser(currentUser: TUser) {
@@ -174,9 +178,15 @@ export default function ManageUser() {
     <Box>
       <Box>
         <Typography
-          sx={{ textAlign: "center", fontWeight: 600, fontSize: "20px", mb: 3 }}
+          sx={{
+            textAlign: "center",
+            fontWeight: 600,
+            fontSize: "20px",
+            my: 3,
+            color: "#95A7AC",
+          }}
         >
-          User Data
+          Dữ liệu người dùng
         </Typography>
         <Button variant="contained" onClick={handleShow} sx={{ mb: 3 }}>
           Add User
@@ -185,34 +195,94 @@ export default function ManageUser() {
       <Box>
         <Grid container>
           <Grid item xs={0.4}>
-            #
+            <Typography
+              sx={{
+                color: "#95A7AC",
+              }}
+            >
+              #
+            </Typography>
           </Grid>
           <Grid item xs={2.4}>
-            Email
+            <Typography
+              sx={{
+                color: "#95A7AC",
+              }}
+            >
+              Email
+            </Typography>
           </Grid>
           <Grid item xs={1.2}>
-            First Name
+            <Typography
+              sx={{
+                color: "#95A7AC",
+              }}
+            >
+              First Name
+            </Typography>
           </Grid>
           <Grid item xs={1.2}>
-            Last Name
+            <Typography
+              sx={{
+                color: "#95A7AC",
+              }}
+            >
+              Last Name
+            </Typography>
           </Grid>
           <Grid item xs={1.2}>
-            Phone Number
+            <Typography
+              sx={{
+                color: "#95A7AC",
+              }}
+            >
+              Phone Number
+            </Typography>
           </Grid>
           <Grid item xs={1.2}>
-            Gender
+            <Typography
+              sx={{
+                color: "#95A7AC",
+              }}
+            >
+              Gender
+            </Typography>
           </Grid>
           <Grid item xs={1.2}>
-            Address
+            <Typography
+              sx={{
+                color: "#95A7AC",
+              }}
+            >
+              Address
+            </Typography>
           </Grid>
           <Grid item xs={1}>
-            Position ID
+            <Typography
+              sx={{
+                color: "#95A7AC",
+              }}
+            >
+              Position ID
+            </Typography>
           </Grid>
           <Grid item xs={1}>
-            Role ID
+            <Typography
+              sx={{
+                color: "#95A7AC",
+              }}
+            >
+              Role ID
+            </Typography>
           </Grid>
           <Grid item xs={1.2}>
-            Actions
+            <Typography
+              sx={{
+                color: "#95A7AC",
+              }}
+            >
+              Actions
+            </Typography>
           </Grid>
         </Grid>
         <DividerCustom />
@@ -222,31 +292,85 @@ export default function ManageUser() {
               <>
                 <Grid container key={user.id}>
                   <Grid item xs={0.4}>
-                    {index + 1}
+                    <Typography
+                      sx={{
+                        color: "#95A7AC",
+                      }}
+                    >
+                      {index + 1}
+                    </Typography>
                   </Grid>
                   <Grid item xs={2.4}>
-                    {user.email}
+                    <Typography
+                      sx={{
+                        color: "#95A7AC",
+                      }}
+                    >
+                      {user.email}
+                    </Typography>
                   </Grid>
                   <Grid item xs={1.2}>
-                    {user.firstName}
+                    <Typography
+                      sx={{
+                        color: "#95A7AC",
+                      }}
+                    >
+                      {user.firstName}
+                    </Typography>
                   </Grid>
                   <Grid item xs={1.2}>
-                    {user.lastName}
+                    <Typography
+                      sx={{
+                        color: "#95A7AC",
+                      }}
+                    >
+                      {user.lastName}
+                    </Typography>
                   </Grid>
                   <Grid item xs={1.2}>
-                    {user.phoneNumber}
+                    <Typography
+                      sx={{
+                        color: "#95A7AC",
+                      }}
+                    >
+                      {user.phoneNumber}
+                    </Typography>
                   </Grid>
                   <Grid item xs={1.2}>
-                    {user.gender}
+                    <Typography
+                      sx={{
+                        color: "#95A7AC",
+                      }}
+                    >
+                      {user.gender}
+                    </Typography>
                   </Grid>
                   <Grid item xs={1.2}>
-                    {user.address}
+                    <Typography
+                      sx={{
+                        color: "#95A7AC",
+                      }}
+                    >
+                      {user.address}
+                    </Typography>
                   </Grid>
                   <Grid item xs={1}>
-                    {user.positionId}
+                    <Typography
+                      sx={{
+                        color: "#95A7AC",
+                      }}
+                    >
+                      {user.positionId}
+                    </Typography>
                   </Grid>
                   <Grid item xs={1}>
-                    {user.roleId}
+                    <Typography
+                      sx={{
+                        color: "#95A7AC",
+                      }}
+                    >
+                      {user.roleId}
+                    </Typography>
                   </Grid>
                   <Grid item xs={1.2}>
                     <Button variant="outlined" onClick={() => onEdit(user)}>

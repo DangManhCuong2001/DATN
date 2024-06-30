@@ -21,6 +21,12 @@ import NHI_KHOA from "../assets/image/speciality/101655-nhi-khoa.png";
 import DA_LIEU from "../assets/image/speciality/101638-da-lieu.png";
 import NHA_KHOA from "../assets/image/speciality/101655-nha-khoa.png";
 
+//Icon-static
+import ICON_BENHVIEN from "../assets/icon/benh-vien.png";
+import ICON_CHUYENKHOA from "../assets/icon/chuyenkhoa.png";
+import ICON_LUOTKHAM from "../assets/icon/luot-kham.png";
+import ICON_BACSI from "../assets/icon/bac-si.png";
+
 export const imagePath = {
   BANNER_IMAGE,
   IMAGE_SLIDER1,
@@ -42,4 +48,9 @@ export const imagePath = {
   NHA_KHOA,
   NHI_KHOA,
   TIEU_HOA,
+
+  ICON_BENHVIEN,
+  ICON_CHUYENKHOA,
+  ICON_LUOTKHAM,
+  ICON_BACSI,
 };

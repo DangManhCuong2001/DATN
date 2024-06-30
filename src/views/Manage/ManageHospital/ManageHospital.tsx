@@ -164,22 +164,58 @@ export default function ManageHospital() {
       <Box>
         <Grid container>
           <Grid item xs={1}>
-            #
+            <Typography
+              sx={{
+                color: "#95A7AC",
+              }}
+            >
+              #
+            </Typography>
           </Grid>
-          <Grid item xs={1.8}>
-            Tên bệnh viện
+          <Grid item xs={3}>
+            <Typography
+              sx={{
+                color: "#95A7AC",
+              }}
+            >
+              Tên bệnh viện
+            </Typography>
           </Grid>
-          <Grid item xs={1.8}>
-            Kiểu bệnh viện
+          <Grid item xs={2}>
+            <Typography
+              sx={{
+                color: "#95A7AC",
+              }}
+            >
+              Kiểu bệnh viện
+            </Typography>
           </Grid>
-          <Grid item xs={1.8}>
-            Địa chỉ
+          <Grid item xs={2}>
+            <Typography
+              sx={{
+                color: "#95A7AC",
+              }}
+            >
+              Địa chỉ
+            </Typography>
           </Grid>
-          <Grid item xs={1.8}>
-            Hình ảnh
+          <Grid item xs={2}>
+            <Typography
+              sx={{
+                color: "#95A7AC",
+              }}
+            >
+              Hình ảnh
+            </Typography>
           </Grid>
-          <Grid item xs={1.8}>
-            Action
+          <Grid item xs={2}>
+            <Typography
+              sx={{
+                color: "#95A7AC",
+              }}
+            >
+              Action
+            </Typography>
           </Grid>
         </Grid>
         <DividerCustom />
@@ -195,18 +231,42 @@ export default function ManageHospital() {
                 <>
                   <Grid container key={"hospital" + hospital}>
                     <Grid item xs={1}>
-                      {index + 1}
+                      <Typography
+                        sx={{
+                          color: "#95A7AC",
+                        }}
+                      >
+                        {index + 1}
+                      </Typography>
                     </Grid>
-                    <Grid item xs={1.8}>
-                      {hospital.name}
+                    <Grid item xs={3}>
+                      <Typography
+                        sx={{
+                          color: "#95A7AC",
+                        }}
+                      >
+                        {hospital.name}
+                      </Typography>
                     </Grid>
-                    <Grid item xs={1.8}>
-                      {hospital.type}
+                    <Grid item xs={2}>
+                      <Typography
+                        sx={{
+                          color: "#95A7AC",
+                        }}
+                      >
+                        {hospital.type}
+                      </Typography>
                     </Grid>
-                    <Grid item xs={1.8}>
-                      {hospital.address}
+                    <Grid item xs={2}>
+                      <Typography
+                        sx={{
+                          color: "#95A7AC",
+                        }}
+                      >
+                        {hospital.address}
+                      </Typography>
                     </Grid>
-                    <Grid item xs={1.8}>
+                    <Grid item xs={2}>
                       {/* {hospital.image} */}
                       <Box
                         sx={{
@@ -218,7 +278,7 @@ export default function ManageHospital() {
                         }}
                       ></Box>
                     </Grid>
-                    <Grid item xs={1.8}>
+                    <Grid item xs={2}>
                       <Button
                         variant="outlined"
                         onClick={() => onEdit(hospital)}
