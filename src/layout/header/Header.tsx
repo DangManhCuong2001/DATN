@@ -101,7 +101,16 @@ const navSpeciality: TNav = {
 };
 export default function Header() {
   return (
-    <Box sx={{ backgroundColor: "#e8f2f7" }}>
+    <Box
+      sx={{
+        backgroundColor: "white",
+        position: "sticky",
+        zIndex: 1000,
+        top: 0,
+        boxShadow:
+          "0 10px 20px rgba(0,0,0,.04),0 2px 6px rgba(0,0,0,.04),0 0 1px rgba(0,0,0,.04)",
+      }}
+    >
       <Container>
         <Box
           sx={{
@@ -122,13 +131,21 @@ export default function Header() {
               ml: 10,
             }}
           >
-            <Typography sx={{ mr: 2 }}>Giới thiệu</Typography>
+            <Typography sx={{ mr: 2, color: "#003553", fontWeight: 600 }}>
+              Giới thiệu
+            </Typography>
             <DropDownMenu nav={navHospital} />
-            <DropDownMenu nav={navHealthServices} />
+            {/* <DropDownMenu nav={navHealthServices} /> */}
             <DropDownMenu nav={navSpeciality} />
-            <Typography sx={{ mr: 2 }}>Tin tức</Typography>
-            <Typography sx={{ mr: 2 }}>Hướng dẫn</Typography>
-            <Typography sx={{ mr: 2 }}>Liên hệ hợp tác</Typography>
+            <Typography sx={{ mr: 2, color: "#003553", fontWeight: 600 }}>
+              Tin tức
+            </Typography>
+            <Typography sx={{ mr: 2, color: "#003553", fontWeight: 600 }}>
+              Hướng dẫn
+            </Typography>
+            <Typography sx={{ mr: 2, color: "#003553", fontWeight: 600 }}>
+              Liên hệ hợp tác
+            </Typography>
           </Box>
           <ButtonLogin />
         </Box>

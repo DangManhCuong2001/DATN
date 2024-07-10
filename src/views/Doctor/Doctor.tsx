@@ -147,7 +147,11 @@ export default function Doctor() {
         </Grid>
       </Grid>
       <DividerCustom sx={{ mt: 5 }} />
-      <Box dangerouslySetInnerHTML={{ __html: dataDoctor.markdownHTML }}></Box>
+      <Box>
+        <Box
+          dangerouslySetInnerHTML={{ __html: dataDoctor.markdownHTML }}
+        ></Box>
+      </Box>
       <DividerCustom sx={{ mt: 5 }} />
       <RateComment idDoctor={idDoctor as string} />
     </Container>

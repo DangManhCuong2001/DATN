@@ -136,8 +136,10 @@ export default function ManageUser() {
     try {
       const response = await DeleteUser(currentUser.id as string);
       setUsers(users.filter((i) => i.id !== currentUser.id));
+      notifySuccess("Xoá người dùng thành công!");
     } catch (err) {
       console.log(err);
+      notifyError("Xoá người dùng thất bại!");
     }
   }
 
@@ -373,7 +375,11 @@ export default function ManageUser() {
                     </Typography>
                   </Grid>
                   <Grid item xs={1.2}>
-                    <Button variant="outlined" onClick={() => onEdit(user)}>
+                    <Button
+                      variant="outlined"
+                      onClick={() => onEdit(user)}
+                      sx={{ width: "100px", mb: 1 }}
+                    >
                       Edit
                     </Button>
 
@@ -381,6 +387,7 @@ export default function ManageUser() {
                       variant="outlined"
                       title="Delete user"
                       onClick={() => handleDeleteUser(user)}
+                      sx={{ width: "100px" }}
                     >
                       Delete
                     </Button>

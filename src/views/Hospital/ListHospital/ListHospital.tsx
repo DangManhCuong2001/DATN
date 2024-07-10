@@ -6,11 +6,11 @@ import LinkCustom from "../../../components/LinkCustom/LinkCustom";
 import { useHospitalContext } from "../../../context/hospital-context";
 
 export default function ListHospital() {
-  const { setTypeHospital } = useHospitalContext();
+  const { setTypeHospital, typeHospital } = useHospitalContext();
   return (
     <Box
       sx={{
-        borderTop: "1px solid",
+        borderTop: "1px solid #e3e3e3",
         mt: 5,
         py: 3,
         display: "flex",
@@ -21,9 +21,19 @@ export default function ListHospital() {
         return (
           <LinkCustom url={item.href}>
             <Button
-              variant="contained"
+              variant={typeHospital == item.type ? "contained" : "outlined"}
               onClick={() => setTypeHospital(item.type)}
-              sx={{ borderRadius: "20px", fontWeight: 600, mr: 5 }}
+              sx={{
+                borderRadius: "20px",
+                border: "none",
+                fontWeight: 600,
+                mr: 5,
+                background:
+                  typeHospital == item.type
+                    ? "linear-gradient(83.63deg,#00b5f1 33.34%,#00e0ff 113.91%)"
+                    : "#ebf9fd",
+                width: "200px",
+              }}
             >
               {item.subTitle}
             </Button>

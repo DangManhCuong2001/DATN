@@ -56,10 +56,13 @@ export const getInfoDoctor = async (
   };
 };
 
-export const getListDoctorByHopital = async (hospitalId: string) => {
+export const getListDoctorByHopital = async (
+  hospitalId: string,
+  specialtyId: string
+) => {
   console.log(hospitalId);
   const response = await axios.get(
-    `${BACKEND_DOMAIN}/api/get-list-doctor-by-hospital?hospitalId=${hospitalId}`
+    `${BACKEND_DOMAIN}/api/get-list-doctor-by-hospital?hospitalId=${hospitalId}&specialtyId=${specialtyId}`
   );
   console.log(response);
   const data = response.data.data;

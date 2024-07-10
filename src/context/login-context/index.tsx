@@ -4,6 +4,7 @@ import { imagePath } from "../../constants/imagePath";
 import { getDataLogin } from "../../services/UserService/UserService";
 import { To, useNavigate } from "react-router-dom";
 import { Isconnected, LocalStorageKey } from "../../constants";
+import useNotifier from "../../hooks/useNotifier";
 
 interface ILoginContext {
   handleLogin: (urlAfterLogin: string | undefined) => Promise<void>;
@@ -47,6 +48,7 @@ export function LoginProvider({ children }: BaseContextProps) {
     image: "",
   });
   const [isLogin, setIsLogin] = useState<boolean>(false);
+  const { notifyError, notifySuccess } = useNotifier();
 
   console.log(dataLogin);
   async function handleLogin(urlAfterLogin?: string | undefined) {
@@ -73,14 +75,18 @@ export function LoginProvider({ children }: BaseContextProps) {
             image: response.data.user.image,
           };
         });
+        notifySuccess("Đăng nhập thành công!");
         if (urlAfterLogin) {
           navigate(urlAfterLogin);
         } else {
           navigate(-1);
         }
+      } else {
+        notifyError("Email hoặc mật khẩu không chính xác!");
       }
     } catch (err) {
       console.log(err);
+      notifyError("Đăng nhập thất bại!");
     }
   }
 

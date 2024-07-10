@@ -5,6 +5,8 @@ import { useHospitalContext } from "../../../context/hospital-context";
 import { getListSpecialtyByHospital } from "../../../services/SpecialtyService/SpecialtyService";
 import { useEffect, useState } from "react";
 import PreviewSpecialty from "./PreviewSpecialty/PreviewSpecialty";
+import LinkCustom from "../../LinkCustom/LinkCustom";
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 
 export type TDataSelectSpecialty = {
   id: string;
@@ -38,7 +40,28 @@ export default function SelectSpecialty() {
     getListSpecialty();
   }, [infoHospital.id]);
   return (
-    <Box sx={{ backgroundColor: "#e8f2f7", pb: 5 }}>
+    <Box sx={{ backgroundColor: "#e8f2f7", pb: 5, pt: 3 }}>
+      <Container sx={{ display: "flex", placeItems: "center", mb: 4 }}>
+        <LinkCustom url={"/"}>
+          <Typography
+            sx={{ cursor: "pointer", color: "#003553", fontWeight: 600 }}
+          >
+            Trang chủ
+          </Typography>
+        </LinkCustom>
+        <ArrowForwardIosIcon sx={{ fontSize: "16px", mx: 1 }} />
+        <LinkCustom url={`/${infoHospital.type}/${infoHospital.id}`}>
+          <Typography
+            sx={{ cursor: "pointer", color: "#003553", fontWeight: 600 }}
+          >
+            {infoHospital.name}
+          </Typography>
+        </LinkCustom>
+        <ArrowForwardIosIcon sx={{ fontSize: "16px", mx: 1 }} />
+        <Typography sx={{ color: "#00b5f1", fontWeight: 600 }}>
+          Chọn chuyên khoa
+        </Typography>
+      </Container>
       <Container>
         <Grid container spacing={4}>
           <Grid item xs={6} md={3.5}>

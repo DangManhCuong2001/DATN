@@ -13,7 +13,7 @@ function ManageContent() {
   const sidebarWidth = "230px";
   const headerHeight = "66px";
   return (
-    <>
+    <Box sx={{ backgroundColor: "#e8f2f7", minHeight: "920px" }}>
       {isLogin ? (
         <Box
           sx={{
@@ -35,9 +35,9 @@ function ManageContent() {
           {/* <ContentManage /> */}
         </Box>
       ) : (
-        <Login urlAfterLogin={"/manage/manageSchedule"} />
+        <Login urlAfterLogin={"/manage/statistics"} />
       )}
-    </>
+    </Box>
   );
 }
 

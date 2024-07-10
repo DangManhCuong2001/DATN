@@ -45,7 +45,6 @@ export default function ModalRate({
   const [value, setValue] = useState<number | null>(3);
   const [hover, setHover] = useState(-1);
   const [contentRate, setContentRate] = useState<string>("");
-
   console.log("dataInfoRate", dataInfoRate);
   // console.log(data);
   function getLabelText(value: number) {

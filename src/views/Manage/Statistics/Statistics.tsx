@@ -2,6 +2,7 @@ import { Box, Grid, Typography } from "@mui/material";
 import React from "react";
 import StatisticsAppByHospital from "./StatisticsAppByHospital/StatisticsAppByHospital";
 import StatisticsAppByStatus from "./StatisticsAppByStatus/StatisticsAppByStatus";
+import CollumeChart from "./CollumeChart/CollumeChart";
 
 export default function Statistics() {
   return (
@@ -73,6 +74,8 @@ export default function Statistics() {
           <StatisticsAppByStatus />
         </Grid>
       </Grid>
+
+      <CollumeChart />
     </Box>
   );
 }

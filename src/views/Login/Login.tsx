@@ -26,13 +26,21 @@ export default function Login({ urlAfterLogin }: { urlAfterLogin?: string }) {
   //     handleLogin();
   //   }, []);
   return (
-    <Box sx={{ textAlign: "center" }}>
+    <Box
+      sx={{
+        textAlign: "center",
+        backgroundColor: "#e8f2f7",
+        py: 5,
+        minHeight: "600px",
+      }}
+    >
       <IconLogo />
       <Box>
-        <Box sx={{ mb: 2 }}>
+        <Box sx={{ mb: 2, mt: 5 }}>
           <TextField
             placeholder="Tài khoản"
             onChange={(e) => changeEmail(e.target.value)}
+            sx={{ width: "300px" }}
           ></TextField>
         </Box>
         <Box sx={{ mb: 2 }}>
@@ -40,25 +48,52 @@ export default function Login({ urlAfterLogin }: { urlAfterLogin?: string }) {
             placeholder="Mật khẩu"
             type="password"
             onChange={(e) => changePassword(e.target.value)}
+            sx={{ width: "300px" }}
           ></TextField>
         </Box>
         <Button
           variant="contained"
           onClick={() => handleLogin(urlAfterLogin ? urlAfterLogin : undefined)}
+          sx={{
+            background:
+              "linear-gradient(83.63deg, #00b5f1 33.34%, #00e0ff 113.91%)",
+          }}
         >
           Đăng nhập
         </Button>
       </Box>
-      <Box sx={{ mt: 2 }}>
+      {/* <Box sx={{ mt: 5 }}>
         <Typography sx={{ mb: 1 }}>Hoặc đăng nhập bằng tài khoản</Typography>
-        <Button href="/a" variant="outlined">
-          ĐĂNG NHẬP VỚI GOOGLE
-        </Button>
-        <Button variant="outlined">ĐĂNG NHẬP VỚI FACEBOOK</Button>
-      </Box>
+        <Box>
+          <Button
+            href="/a"
+            variant="contained"
+            sx={{
+              background:
+                "linear-gradient(83.63deg, #00b5f1 33.34%, #00e0ff 113.91%)",
+              width: "300px",
+              mb: 1,
+            }}
+          >
+            ĐĂNG NHẬP VỚI GOOGLE
+          </Button>
+        </Box>
+        <Box>
+          <Button
+            variant="contained"
+            sx={{
+              background:
+                "linear-gradient(83.63deg, #00b5f1 33.34%, #00e0ff 113.91%)",
+              width: "300px",
+            }}
+          >
+            ĐĂNG NHẬP VỚI FACEBOOK
+          </Button>
+        </Box>
+      </Box> */}
       <Box sx={{ mt: 2 }}>
         <Typography>
-          Nếu chưc có tải khoản. Vui lòng{" "}
+          Nếu chưa có tải khoản. Vui lòng{" "}
           <a href="/register" target="_blank">
             Đăng ký
           </a>

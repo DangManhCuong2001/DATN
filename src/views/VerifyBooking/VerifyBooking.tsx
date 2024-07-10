@@ -32,7 +32,7 @@ export default function VerifyBooking() {
     postVerify();
   }, []);
   return (
-    <Box sx={{ mt: 5, textAlign: "center" }}>
+    <Box sx={{ mt: 5, textAlign: "center", minHeight: "550px" }}>
       {statusVerify ? (
         <Typography sx={{ fontWeight: 600, color: "green", fontSize: "20px" }}>
           Xác nhận lịch hẹn thành công!

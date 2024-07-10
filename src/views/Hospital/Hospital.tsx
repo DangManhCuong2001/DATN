@@ -17,12 +17,18 @@ export default function Hospital() {
 
   return (
     <Box sx={{ mt: 3 }}>
-      <Container sx={{ display: "flex" }}>
+      <Container sx={{ display: "flex", placeItems: "center" }}>
         <LinkCustom url={"/"}>
-          <Typography sx={{ cursor: "pointer" }}>Trang chủ</Typography>
+          <Typography
+            sx={{ cursor: "pointer", color: "#003553", fontWeight: 600 }}
+          >
+            Trang chủ
+          </Typography>
         </LinkCustom>
-        <ArrowForwardIosIcon />
-        <Typography>{dataLocalHospital.title}</Typography>
+        <ArrowForwardIosIcon sx={{ fontSize: "16px", mx: 1 }} />
+        <Typography sx={{ color: "#00b5f1", fontWeight: 600 }}>
+          {dataLocalHospital.title}
+        </Typography>
       </Container>
       <Typography
         sx={{
@@ -31,9 +37,16 @@ export default function Hospital() {
           color: "#00b5f1",
           textAlign: "center",
           mt: 3,
+          mb: 1,
         }}
       >
         {dataLocalHospital.title}
+      </Typography>
+      <Typography
+        sx={{ textAlign: "center", mb: 3, color: "#003553", fontWeight: 400 }}
+      >
+        Đặt khám dễ dàng, không lo chờ đợi tại các bệnh viện công hàng đầu Việt
+        Nam
       </Typography>
       <Box sx={{ display: "flex", justifyContent: "center" }}>
         <Box
@@ -44,6 +57,7 @@ export default function Hospital() {
             alignItems: "center",
 
             boxShadow: " 0px 3px 6px 0px rgba(0, 0, 0, 0.08);",
+            // border: "1px solid",
             borderRadius: "25px",
             px: 2,
             py: 1,
@@ -54,7 +68,7 @@ export default function Hospital() {
             },
           }}
         >
-          <IconSearch sx={{ color: "red" }} />
+          <IconSearch sx={{ color: "#bcbcbc" }} />
           <input
             className="inputStyle"
             style={{
@@ -64,12 +78,12 @@ export default function Hospital() {
               width: "calc(100% - 25px)",
               fontSize: "14px",
             }}
-            placeholder="Search...."
+            placeholder="Tìm kiếm bệnh viện"
           ></input>
         </Box>
       </Box>
       <ListHospital />
-      <Box sx={{ background: "#e8f2f7" }}>
+      <Box sx={{ background: "#e8f2f7", display: "flex" }}>
         <Container sx={{ py: 3 }}>
           {hospitalsWithType.map((item, index) => {
             return (

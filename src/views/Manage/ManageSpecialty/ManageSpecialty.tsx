@@ -18,6 +18,7 @@ import {
 import CommonUtils from "../../../utils/CommonUtils";
 import { useManageContext } from "../../../context/manage-context";
 import { TSpecialty } from "../../../context/constants/typeData";
+import useNotifier from "../../../hooks/useNotifier";
 
 const initNewSpecialty: TSpecialty = {
   id: "",
@@ -32,6 +33,7 @@ export default function ManageSpecialty() {
     useState<TSpecialty>(initNewSpecialty);
   const [editing, setEdit] = useState<boolean>(false);
   const { specialtys, setSpecialtys } = useManageContext();
+  const { notifyError, notifySuccess } = useNotifier();
   // const [previewImage, setPreviewImage] = useState<string>("");
 
   console.log(specialtys);
@@ -77,12 +79,14 @@ export default function ManageSpecialty() {
 
     try {
       const response = await addNewSpecialty(addSpecialty);
+      notifySuccess("Thêm chuyên khoa thành công");
       setSpecialtys((prev) => [...prev, addSpecialty]);
       setNewSpecialty(initNewSpecialty);
 
       setShow(false);
     } catch (err) {
       console.log(err);
+      notifyError("Thêm chuyên khoa thất bại");
     }
   }
 
@@ -90,7 +94,7 @@ export default function ManageSpecialty() {
     setEdit(false);
     let id = newSpecialty.id;
     try {
-      //   const response = await EditSpeciality(newSpecialty);
+      // const response = await EditSpeciality(newSpecialty);
       setSpecialtys(specialtys.map((i) => (i.id === id ? newSpecialty : i)));
     } catch (err) {
       console.log(err);
@@ -211,6 +215,7 @@ export default function ManageSpecialty() {
                       <Button
                         variant="outlined"
                         onClick={() => onEdit(specialty)}
+                        sx={{ mr: 2 }}
                       >
                         Edit
                       </Button>

@@ -72,12 +72,14 @@ export default function SearchBox() {
     <ClickAwayListener onClickAway={handleClickAway}>
       <Box
         sx={{
-          width: "500px",
+          width: "740px",
           height: "40px",
           display: "flex",
           alignItems: "center",
           boxShadow: " 0px 3px 6px 0px rgba(0, 0, 0, 0.08);",
           borderRadius: "25px",
+          // border: "1px solid",
+          backgroundColor: "white",
           px: 2,
           py: 1,
           columnGap: 1,
@@ -88,7 +90,7 @@ export default function SearchBox() {
           position: "relative",
         }}
       >
-        <IconSearch sx={{ color: "red" }} />
+        <IconSearch sx={{ color: "#bcbcbc" }} />
         <input
           className="inputStyle"
           style={{
@@ -98,7 +100,7 @@ export default function SearchBox() {
             width: "calc(100% - 25px)",
             fontSize: "14px",
           }}
-          placeholder="Search...."
+          placeholder="Tìm kiếm bệnh viện, bác sĩ"
           value={value}
           onChange={(e) => setValue(e.target.value)}
           onClick={() => setOpen(true)}
@@ -108,8 +110,7 @@ export default function SearchBox() {
             sx={{
               position: "absolute",
               top: "60px",
-              right: 0,
-              width: "530px",
+              width: "740px",
               borderRadius: "16px",
               boxShadow: 4,
               backgroundColor: "white",

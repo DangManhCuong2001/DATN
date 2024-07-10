@@ -53,7 +53,6 @@ export default function ButtonLogin() {
                   top: "40px",
                   right: 0,
                   width: "fit-content",
-                  bgcolor: "background.paper",
                   minWidth: "140px",
                   borderRadius: "16px",
                   boxShadow: 4,
@@ -88,9 +87,13 @@ export default function ButtonLogin() {
           variant="outlined"
           sx={{ borderRadius: "20px", placeItems: "center" }}
         >
-          <PersonIcon sx={{ mr: 1 }} />
+          <PersonIcon sx={{ mr: 1, color: "#00b5f1" }} />
           <LinkCustom url="/Login">
-            <Typography>Tài khoản</Typography>
+            <Typography
+              sx={{ fontSize: "16px", fontWeight: 600, color: "#00b5f1" }}
+            >
+              Tài khoản
+            </Typography>
           </LinkCustom>
         </Button>
       )}

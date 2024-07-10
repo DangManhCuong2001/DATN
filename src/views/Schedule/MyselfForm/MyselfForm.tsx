@@ -122,9 +122,6 @@ export default function MyselfForm() {
 
   return (
     <Container>
-      <Box sx={{ textAlign: "center" }}>
-        <Validate />
-      </Box>
       <Box
         sx={{
           border: "1px solid #ccc",
@@ -332,10 +329,13 @@ export default function MyselfForm() {
           nhận"
         </Typography>
       </Box>
+      <Box sx={{ textAlign: "center", mt: 2 }}>
+        <Validate />
+      </Box>
       <Button
         variant={isvalid ? "outlined" : "contained"}
         sx={{
-          mt: 2,
+          mt: 1,
           width: "100%",
           background: isvalid
             ? null

@@ -15,6 +15,7 @@ import {
   saveBulkSchedule,
 } from "../../../services/UserService/UserService";
 import { useLoginContext } from "../../../context/login-context";
+import useNotifier from "../../../hooks/useNotifier";
 
 type TRangeTime = {
   id: number;
@@ -38,7 +39,7 @@ export default function ManageSchedules() {
   });
   const [rangeTime, setRangeTime] = useState<TRangeTime[]>([]);
   // const [isSelected,setIsSelected] = useState<boolean>(false)
-
+  const { notifyError, notifySuccess } = useNotifier();
   console.log(newSchedule);
 
   async function getRangeTime() {
@@ -61,57 +62,62 @@ export default function ManageSchedules() {
     }
   };
 
-  const handleSaveTime = async () => {
-    let result: any[] = [];
-    // if (!dayPicked) {
-    //     toast.error("Vui long chon ngay");
-    //     return;
-    // }
-    // if (selectedOption && _.isEmpty(selectedOption)) {
-    //     toast.error('Vui long chon bac si');
-    //     return;
-    // }
-    let formatedDate = new Date(newSchedule.dayPicked).getTime();
-    console.log(formatedDate);
+  async function handleSaveTime() {
+    try {
+      let result: any[] = [];
+      // if (!dayPicked) {
+      //     toast.error("Vui long chon ngay");
+      //     return;
+      // }
+      // if (selectedOption && _.isEmpty(selectedOption)) {
+      //     toast.error('Vui long chon bac si');
+      //     return;
+      // }
+      let formatedDate = new Date(newSchedule.dayPicked).getTime();
+      console.log(formatedDate);
 
-    if (rangeTime && rangeTime.length > 0) {
-      let selectedTime = rangeTime.filter((item) => item.isSelected === true);
-      if (selectedTime && selectedTime.length > 0) {
-        selectedTime.map((schedule) => {
-          let object: any = {};
-          object.doctorId =
-            dataLogin.roleId == "doctor"
-              ? dataLogin.idUser
-              : newSchedule.doctorSelected;
-          object.date = formatedDate;
-          object.timeType = schedule.key;
-          result.push(object);
-        });
-      } else {
-        // toast.error("Vui long chon gio")
-        return;
+      if (rangeTime && rangeTime.length > 0) {
+        let selectedTime = rangeTime.filter((item) => item.isSelected === true);
+        if (selectedTime && selectedTime.length > 0) {
+          selectedTime.map((schedule) => {
+            let object: any = {};
+            object.doctorId =
+              dataLogin.roleId == "doctor"
+                ? dataLogin.idUser
+                : newSchedule.doctorSelected;
+            object.date = formatedDate;
+            object.timeType = schedule.key;
+            result.push(object);
+          });
+        } else {
+          // toast.error("Vui long chon gio")
+          return;
+        }
       }
+      console.log("result", result);
+
+      // let res = await saveBulkSchedule(result);
+
+      let res = await saveBulkSchedule({
+        arrSchedule: result,
+        doctorId:
+          dataLogin.roleId == "doctor"
+            ? dataLogin.idUser
+            : newSchedule.doctorSelected,
+        formatedDate: formatedDate,
+      });
+      notifySuccess("Thêm lịch khám thành công!");
+      // if (res && res.errCode === 0) {
+      //   toast.success("Luu thanh cong")
+      // } else {
+      //   toast.error("Luu that bai")
+      //   console.log("res", res);
+      // }
+    } catch (err) {
+      console.log(err);
+      notifyError("Thêm lịch khám thất bại!");
     }
-    console.log("result", result);
-
-    // let res = await saveBulkSchedule(result);
-
-    let res = await saveBulkSchedule({
-      arrSchedule: result,
-      doctorId:
-        dataLogin.roleId == "doctor"
-          ? dataLogin.idUser
-          : newSchedule.doctorSelected,
-      formatedDate: formatedDate,
-    });
-
-    // if (res && res.errCode === 0) {
-    //   toast.success("Luu thanh cong")
-    // } else {
-    //   toast.error("Luu that bai")
-    //   console.log("res", res);
-    // }
-  };
+  }
 
   useEffect(() => {
     getRangeTime();

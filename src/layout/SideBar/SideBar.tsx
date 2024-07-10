@@ -6,6 +6,7 @@ import { imagePath } from "../../constants/imagePath";
 import LinkCustom from "../../components/LinkCustom/LinkCustom";
 import { menu, menuOfManageDoctor } from "../menu";
 import { useLoginContext } from "../../context/login-context";
+import { IconLogo } from "../../assets/icon/icon";
 
 export default function SideBar({
   sidebarWidth,
@@ -104,12 +105,13 @@ export default function SideBar({
               alignItems: "center",
             }}
           >
-            <img
-              src={imagePath.LOGO_BVDHYDTPHCM}
+            {/* <img
+              src={imagePath.}
               alt="logo orchai"
               width={"117px"}
               height={"auto"}
-            />
+            /> */}
+            <IconLogo />
           </Box>
           <Box sx={{ pt: 3 }}>
             {menuManage.map((item, index) => {

@@ -20,6 +20,7 @@ import axios from "axios";
 import MarkdownIt from "markdown-it";
 import MdEditor from "react-markdown-editor-lite";
 import "react-markdown-editor-lite/lib/index.css";
+import useNotifier from "../../../hooks/useNotifier";
 
 // type TPrice = '200.000VND'|'300.000VND'|'400.000VND'|'500.000VND'
 export type TInfoDoctor = {
@@ -51,6 +52,7 @@ const mdParser = new MarkdownIt(/* Markdown-it options */);
 export default function ManageDoctors() {
   const [infoDoctor, setInfoDoctor] = useState<TInfoDoctor>(initDoctor);
   const { doctors, specialtys, hospitals } = useManageContext();
+  const { notifyError, notifySuccess } = useNotifier();
   // const [contentMarkdown, setContentMarkdown] = useState<string>();
   // const [contentHTML, setContentHTML] = useState<string>();
 
@@ -132,8 +134,10 @@ export default function ManageDoctors() {
       const response = await saveInfoDoctor(addInfoDoctor);
       // setSpecialtys((prev) => [...prev, addInfoDoctor]);
       // setInfoDoctor(initDoctor);
+      notifySuccess("Thêm thông tin bác sĩ thành công!");
     } catch (err) {
       console.log(err);
+      notifyError("Thêm thông tin bác sĩ thất bại!");
     }
   }
 
@@ -227,7 +231,7 @@ export default function ManageDoctors() {
               }
               sx={{
                 width: "100%",
-                color: "#95A7AC",
+                color: "white !important",
 
                 ".MuiOutlinedInput-notchedOutline": {
                   borderColor: "#95A7AC",
@@ -248,7 +252,7 @@ export default function ManageDoctors() {
 
         <Grid item xs={12} md={4}>
           <Box>
-            <Typography sx={{ color: "#95A7AC", mb: 1 }}>chọn giá</Typography>
+            <Typography sx={{ color: "#95A7AC", mb: 1 }}>Giá</Typography>
             <TextField
               sx={{
                 width: "100%",
@@ -277,9 +281,7 @@ export default function ManageDoctors() {
 
         <Grid item xs={12} md={4}>
           <Box>
-            <Typography sx={{ color: "#95A7AC", mb: 1 }}>
-              Chọn tỉnh thành
-            </Typography>
+            <Typography sx={{ color: "#95A7AC", mb: 1 }}>Tỉnh thành</Typography>
             <TextField
               sx={{
                 width: "100%",

@@ -82,7 +82,7 @@ export default function ProfileUser() {
   return (
     <>
       {isLogin ? (
-        <Container sx={{ mt: 3 }}>
+        <Container sx={{ mt: 3, minHeight: "580px" }}>
           <ModalRate
             dataInfoRate={dataInfoRate}
             getListAppointmentByUSer={getListAppointmentByUSer}
@@ -95,7 +95,7 @@ export default function ProfileUser() {
                 justifyContent: "center",
               }}
             >
-              <Box
+              {/* <Box
                 sx={{
                   backgroundImage: `url(${dataLogin.image})`,
                   backgroundRepeat: "no-repeat",
@@ -105,7 +105,15 @@ export default function ProfileUser() {
                   height: "200px",
                   borderRadius: "12px",
                 }}
-              ></Box>
+              ></Box> */}
+              <img
+                src={dataLogin.image}
+                style={{
+                  borderRadius: "12px",
+                  width: "200px",
+                  height: "200px",
+                }}
+              />
             </Grid>
             <Grid item xs={8}>
               <Box>
@@ -125,7 +133,7 @@ export default function ProfileUser() {
                   Số điện thoại: {dataLogin.phoneNumber}
                 </Typography>
                 <Typography sx={{ mb: 1 }}>
-                  Vai trò: {dataLogin.roleId}
+                  {/* Vai trò: {dataLogin.roleId} */}
                 </Typography>
               </Box>
             </Grid>

@@ -1,10 +1,11 @@
-import { Box, Button, Grid, TextField, Typography } from "@mui/material";
+import { Box, Button, Grid, Input, TextField, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import DividerCustom from "../../../components/DividerCustom/DividerCustom";
 import { getListPatientForDoctor } from "../../../services/PatientService/PatientService";
 import { useLoginContext } from "../../../context/login-context";
 import moment from "moment";
 import { doneAppointment } from "../../../services/DoctorService/DoctorService";
+import useNotifier from "../../../hooks/useNotifier";
 
 type TListPatient = {
   id: string;
@@ -21,6 +22,8 @@ export default function ManagePatient() {
   const { dataLogin } = useLoginContext();
   const [date, setDate] = useState<string>("");
   const [listPatient, setListPatient] = useState<TListPatient[]>([]);
+  const { notifyError, notifySuccess } = useNotifier();
+
   async function getListPatient() {
     try {
       // const format2 = "YYYY-MM-DD";
@@ -46,8 +49,10 @@ export default function ManagePatient() {
       const response = await doneAppointment(apppointmentId);
       console.log(apppointmentId, response);
       getListPatient();
+      notifySuccess("Cập nhật thành công!");
     } catch (err) {
       console.log(err);
+      notifyError("Cập nhật thất bại!");
     }
   }
 
@@ -57,40 +62,105 @@ export default function ManagePatient() {
   return (
     <Box>
       <Typography
-        sx={{ textAlign: "center", fontSize: "20px", fontWeight: 600, mb: 5 }}
+        sx={{
+          textAlign: "center",
+          fontSize: "20px",
+          fontWeight: 600,
+          mb: 5,
+          color: "#95A7AC",
+          pt: 5,
+        }}
       >
-        Quản lý bệnh nhân
+        Quản lý lịch sử khám
       </Typography>
 
       <Box>
-        <Typography>Chọn ngày khám</Typography>
-        <TextField
+        <Typography sx={{ color: "#95A7AC", mb: 1 }}>Chọn ngày khám</Typography>
+        <Input
           type="date"
           value={date}
           onChange={(e) => setDate(e.target.value)}
+          sx={{
+            color: "#95A7AC",
+            // backgroundColor: "white",
+            ".MuiOutlinedInput-notchedOutline": {
+              borderColor: "#95A7AC",
+            },
+            "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+              borderColor: "#95A7AC",
+            },
+            "&:hover .MuiOutlinedInput-notchedOutline": {
+              borderColor: "#95A7AC",
+            },
+            ".MuiSvgIcon-root ": {
+              fill: "#95A7AC !important",
+            },
+          }}
         />
       </Box>
       <Grid container sx={{ mt: 5 }}>
         <Grid item xs={1}>
-          <Typography>STT</Typography>
+          <Typography
+            sx={{
+              color: "#95A7AC",
+            }}
+          >
+            STT
+          </Typography>
         </Grid>
         <Grid item xs={2}>
-          <Typography>Họ và tên</Typography>
+          <Typography
+            sx={{
+              color: "#95A7AC",
+            }}
+          >
+            Họ và tên
+          </Typography>
         </Grid>
         <Grid item xs={2}>
-          <Typography>Thời gian</Typography>
+          <Typography
+            sx={{
+              color: "#95A7AC",
+            }}
+          >
+            Thời gian
+          </Typography>
         </Grid>
         <Grid item xs={2}>
-          <Typography>Số điện thoại</Typography>
+          <Typography
+            sx={{
+              color: "#95A7AC",
+            }}
+          >
+            Số điện thoại
+          </Typography>
         </Grid>
         <Grid item xs={2}>
-          <Typography>Địa chỉ</Typography>
+          <Typography
+            sx={{
+              color: "#95A7AC",
+            }}
+          >
+            Địa chỉ
+          </Typography>
         </Grid>
         <Grid item xs={1}>
-          <Typography>Giới tính</Typography>
+          <Typography
+            sx={{
+              color: "#95A7AC",
+            }}
+          >
+            Giới tính
+          </Typography>
         </Grid>
         <Grid item xs={2}>
-          <Typography>Actions</Typography>
+          <Typography
+            sx={{
+              color: "#95A7AC",
+            }}
+          >
+            Actions
+          </Typography>
         </Grid>
       </Grid>
       {listPatient.map((item, index) => {
@@ -99,22 +169,58 @@ export default function ManagePatient() {
             <DividerCustom />
             <Grid container>
               <Grid item xs={1}>
-                <Typography>{index + 1}</Typography>
+                <Typography
+                  sx={{
+                    color: "#95A7AC",
+                  }}
+                >
+                  {index + 1}
+                </Typography>
               </Grid>
               <Grid item xs={2}>
-                <Typography>{item.fullName}</Typography>
+                <Typography
+                  sx={{
+                    color: "#95A7AC",
+                  }}
+                >
+                  {item.fullName}
+                </Typography>
               </Grid>
               <Grid item xs={2}>
-                <Typography>{item.timeType}</Typography>
+                <Typography
+                  sx={{
+                    color: "#95A7AC",
+                  }}
+                >
+                  {item.timeType}
+                </Typography>
               </Grid>
               <Grid item xs={2}>
-                <Typography>{item.phoneNumber}</Typography>
+                <Typography
+                  sx={{
+                    color: "#95A7AC",
+                  }}
+                >
+                  {item.phoneNumber}
+                </Typography>
               </Grid>
               <Grid item xs={2}>
-                <Typography>{item.address}</Typography>
+                <Typography
+                  sx={{
+                    color: "#95A7AC",
+                  }}
+                >
+                  {item.address}
+                </Typography>
               </Grid>
               <Grid item xs={1}>
-                <Typography>{item.gender}</Typography>
+                <Typography
+                  sx={{
+                    color: "#95A7AC",
+                  }}
+                >
+                  {item.gender}
+                </Typography>
               </Grid>
               <Grid item xs={2}>
                 <Button

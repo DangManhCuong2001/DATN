@@ -15,6 +15,8 @@ import {
 } from "../../../services/DoctorService/DoctorService";
 import MedicalServicesRoundedIcon from "@mui/icons-material/MedicalServicesRounded";
 import MasksRoundedIcon from "@mui/icons-material/MasksRounded";
+import LinkCustom from "../../LinkCustom/LinkCustom";
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 
 type TObject = {
   label: string;
@@ -111,7 +113,28 @@ export default function SelectDate() {
     });
   }, []);
   return (
-    <Box sx={{ backgroundColor: "#e8f2f7" }}>
+    <Box sx={{ backgroundColor: "#e8f2f7", py: 5, minHeight: "600px" }}>
+      <Container sx={{ display: "flex", placeItems: "center", mb: 4 }}>
+        <LinkCustom url={"/"}>
+          <Typography
+            sx={{ cursor: "pointer", color: "#003553", fontWeight: 600 }}
+          >
+            Trang chủ
+          </Typography>
+        </LinkCustom>
+        <ArrowForwardIosIcon sx={{ fontSize: "16px", mx: 1 }} />
+        <LinkCustom url={`/${infoHospital.type}/${infoHospital.id}`}>
+          <Typography
+            sx={{ cursor: "pointer", color: "#003553", fontWeight: 600 }}
+          >
+            {infoHospital.name}
+          </Typography>
+        </LinkCustom>
+        <ArrowForwardIosIcon sx={{ fontSize: "16px", mx: 1 }} />
+        <Typography sx={{ color: "#00b5f1", fontWeight: 600 }}>
+          Chọn ngày khám
+        </Typography>
+      </Container>
       <Container>
         <Grid container spacing={4}>
           <Grid item xs={6} md={3.5}>
@@ -228,7 +251,7 @@ export default function SelectDate() {
                             : "outlined"
                         }
                         key={"day" + index}
-                        sx={{ mr: 4 }}
+                        sx={{ mr: 4, mt: 2, width: "170px" }}
                       >
                         {" "}
                         {item.Allcode.value}
@@ -237,6 +260,9 @@ export default function SelectDate() {
                   })}
                 </Box>
                 <Typography sx={{ mt: 3 }}>
+                  Chọn và đặt (Phí đặt lịch 0đ)
+                </Typography>
+                <Typography sx={{ mt: 2 }}>
                   Tất cả thời gian theo múi giờ Việt Nam GMT +7
                 </Typography>
               </Box>

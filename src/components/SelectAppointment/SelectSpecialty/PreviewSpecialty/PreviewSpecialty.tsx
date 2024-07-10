@@ -21,6 +21,10 @@ export default function PreviewSpecialty({
           fontWeight: 600,
           fontSize: "20px",
           cursor: "pointer",
+          "&:hover": {
+            color: "#00b5f1",
+            opacity: 1,
+          },
         }}
       >
         {data.nameSpecialty}

@@ -70,14 +70,14 @@ export const menuOfManageDoctor: TMenu = [
   },
   {
     // icon: IconAutoTrader,
-    title: "Manage Schedules",
+    title: "Quản lý Lịch khám",
     url: "/manage/manageSchedule",
     children: [],
     target: undefined,
   },
   {
     // icon: IconUser,
-    title: "Manage Patients",
+    title: "Quản lý Lịch sử",
     url: "/manage/managePatient",
     children: [],
     target: undefined,

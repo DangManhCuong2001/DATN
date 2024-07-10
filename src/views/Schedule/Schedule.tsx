@@ -8,9 +8,11 @@ export default function Schedule() {
   console.log(dataForm, infoDoctor);
 
   return (
-    <Box sx={{ px: 40 }}>
+    <Box sx={{ backgroundColor: "#e8f2f7", px: 40, py: 5 }}>
       <Box sx={{ textAlign: "center" }}>
-        <Typography sx={{ fontWeight: 600, my: 3, fontSize: "28px" }}>
+        <Typography
+          sx={{ fontWeight: 600, mb: 3, fontSize: "28px", color: "#00b5f1" }}
+        >
           ĐẶT LỊCH KHÁM
         </Typography>
       </Box>
@@ -44,14 +46,20 @@ export default function Schedule() {
           }}
         ></img>
         <Box>
-          <Typography sx={{ fontSize: "20px", fontWeight: 600 }}>
+          <Typography
+            sx={{ fontSize: "20px", fontWeight: 600, color: "#00b5f1" }}
+          >
             Bác sĩ: {infoDoctor.firstName} {infoDoctor.lastName}
           </Typography>
-          <Typography sx={{ fontSize: "20px", fontWeight: 600 }}>
+          <Typography
+            sx={{ fontSize: "20px", fontWeight: 600, color: "#00b5f1" }}
+          >
             Thời gian: {dataForm.hourSelected} -{" "}
             {moment(new Date(dataForm.daySelected)).format("dddd - DD/MM/YYYY")}
           </Typography>
-          <Typography sx={{ fontSize: "20px", fontWeight: 600 }}>
+          <Typography
+            sx={{ fontSize: "20px", fontWeight: 600, color: "#00b5f1" }}
+          >
             Giá khám :{infoDoctor.price} đ
           </Typography>
         </Box>

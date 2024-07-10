@@ -29,6 +29,7 @@ export default function DropDownMenu({ nav }: { nav: TNav }) {
           display: "flex",
           alignItems: "center",
           cursor: "pointer",
+          color: "#003553",
           "&:hover": {
             color: "#1da1f2",
           },
@@ -57,7 +58,7 @@ export default function DropDownMenu({ nav }: { nav: TNav }) {
             // py: 1,
             // maxHeight: "70%",
             boxShadow: "0px 2px 8px 0px rgba(81, 133, 170, 0.29)",
-            backgroundColor: "hsla(0,0%,100%,.8)",
+            backgroundColor: "hsla(0,0%,90%,.8)",
           }}
           className="custom-scrollbar"
         >

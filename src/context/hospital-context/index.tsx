@@ -16,6 +16,7 @@ import {
 import moment from "moment";
 
 interface IHospitalContext {
+  typeHospital: TTypeHospital;
   dataHospital: TdataHospital;
   topHospitals: THospital[];
   hospitalsWithType: TAllDataHospital[];
@@ -56,6 +57,7 @@ export type TDataForm = {
   dateOfBirth: string;
   timeString: string;
   fullNameDoctor: string;
+  specialtySelected: string;
 };
 
 export const initDataInfoDoctor: TAllDataDoctor = {
@@ -98,6 +100,7 @@ export function HospitalProvider({ children }: BaseContextProps) {
   const [dataForm, setDataForm] = useState<TDataForm>({
     doctorSelected: "",
     hospitalSelected: "",
+    specialtySelected: "",
     daySelected: moment(new Date()).startOf("day").valueOf(),
     hourSelected: "",
     patientId: "",
@@ -121,7 +124,10 @@ export function HospitalProvider({ children }: BaseContextProps) {
 
   async function getDataListDoctorByHospital() {
     try {
-      const response = await getListDoctorByHopital(dataForm.hospitalSelected);
+      const response = await getListDoctorByHopital(
+        dataForm.hospitalSelected,
+        dataForm.specialtySelected
+      );
       console.log(response);
       setListDoctorByHospital(response);
     } catch (err) {
@@ -177,7 +183,7 @@ export function HospitalProvider({ children }: BaseContextProps) {
   useEffect(() => {
     getDataInfoHospitalById();
     getDataListDoctorByHospital();
-  }, [dataForm.hospitalSelected]);
+  }, [dataForm.hospitalSelected, dataForm.specialtySelected]);
 
   useEffect(() => {
     getInfoDoctorSelected();
@@ -190,6 +196,7 @@ export function HospitalProvider({ children }: BaseContextProps) {
   return (
     <HospitalContext.Provider
       value={{
+        typeHospital,
         dataHospital,
         topHospitals,
         hospitalsWithType,

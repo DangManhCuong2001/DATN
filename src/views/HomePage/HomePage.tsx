@@ -11,7 +11,7 @@ export default function HomePage() {
     <>
       <Banner />
       <Statistical />
-      <TypicalSpeciality />
+      {/* <TypicalSpeciality /> */}
       <TypicalHospital />
       <BannerQuickBook />
       {/* <Footer /> */}

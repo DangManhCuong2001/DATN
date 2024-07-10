@@ -5,9 +5,12 @@ import { useEffect } from "react";
 import { useHospitalContext } from "../../../context/hospital-context";
 import { Container } from "../../container/Container";
 import PreviewDoctor from "../PreviewDoctor/PreviewDoctor";
+import LinkCustom from "../../LinkCustom/LinkCustom";
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import MedicalServicesRoundedIcon from "@mui/icons-material/MedicalServicesRounded";
 
 export default function SelectDoctor() {
-  const { idHospital } = useParams();
+  const { idHospital, idSpecialty } = useParams();
   const { infoHospital, setDataForm, listDoctorByHospital } =
     useHospitalContext();
 
@@ -17,11 +20,33 @@ export default function SelectDoctor() {
       return {
         ...prev,
         hospitalSelected: idHospital as string,
+        specialtySelected: idSpecialty as string,
       };
     });
   }, []);
   return (
-    <Box sx={{ backgroundColor: "#e8f2f7", pb: 5 }}>
+    <Box sx={{ backgroundColor: "#e8f2f7", pb: 5, pt: 5 }}>
+      <Container sx={{ display: "flex", placeItems: "center", mb: 4 }}>
+        <LinkCustom url={"/"}>
+          <Typography
+            sx={{ cursor: "pointer", color: "#003553", fontWeight: 600 }}
+          >
+            Trang chủ
+          </Typography>
+        </LinkCustom>
+        <ArrowForwardIosIcon sx={{ fontSize: "16px", mx: 1 }} />
+        <LinkCustom url={`/${infoHospital.type}/${infoHospital.id}`}>
+          <Typography
+            sx={{ cursor: "pointer", color: "#003553", fontWeight: 600 }}
+          >
+            {infoHospital.name}
+          </Typography>
+        </LinkCustom>
+        <ArrowForwardIosIcon sx={{ fontSize: "16px", mx: 1 }} />
+        <Typography sx={{ color: "#00b5f1", fontWeight: 600 }}>
+          Chọn bác sĩ
+        </Typography>
+      </Container>
       <Container>
         <Grid container spacing={4}>
           <Grid item xs={6} md={3.5}>
@@ -60,6 +85,12 @@ export default function SelectDoctor() {
                   </Typography>
                   <Typography>{infoHospital.address}</Typography>
                 </Box>
+              </Box>
+              <Box sx={{ display: "flex", p: 2 }}>
+                <MedicalServicesRoundedIcon />
+                <Typography sx={{ fontSize: "20px", ml: 1 }}>
+                  Chuyên khoa:
+                </Typography>
               </Box>
             </Box>
           </Grid>

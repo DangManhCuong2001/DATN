@@ -58,3 +58,7 @@ export const getStatisticalAppByStatusChart = async () => {
     `${BACKEND_DOMAIN}/api/get-statistical-appointment-chart`
   );
 };
+
+export const getAppIn7Day = async () => {
+  return await axios.get(`${BACKEND_DOMAIN}/api/get-appointment-in-7-day`);
+};
