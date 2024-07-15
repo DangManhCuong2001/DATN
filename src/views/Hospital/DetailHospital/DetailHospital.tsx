@@ -27,7 +27,7 @@ export default function DetailHospital() {
     });
   }, []);
   return (
-    <Box sx={{ backgroundColor: "#e8f2f7", pb: 5 }}>
+    <Box sx={{ backgroundColor: "#e8f2f7", pb: 5, pt: 3 }}>
       <Container>
         <Box sx={{ display: "flex", placeItems: "center", mb: 4 }}>
           <LinkCustom url={"/"}>
@@ -113,12 +113,33 @@ export default function DetailHospital() {
                 </Button>
               </Box>
             </Box>
+            <Box
+              sx={{ p: 4, background: "white", borderRadius: "12px", mt: 3 }}
+            >
+              <Typography sx={{ fontWeight: 600, fontSize: "24px" }}>
+                Mô tả
+              </Typography>
+              <Typography>{infoHospital.description}</Typography>
+            </Box>
           </Grid>
           <Grid item xs={6} md={7.5}>
-            <SliderImage />
+            {/* <SliderImage /> */}
+            <Box
+              sx={{
+                p: 4,
+                background: "white",
+                borderRadius: "12px",
+                maxHeight: "670px",
+                overflow: "auto",
+              }}
+            >
+              <Box
+                dangerouslySetInnerHTML={{ __html: infoHospital.contentHTML }}
+              ></Box>
+            </Box>
           </Grid>
         </Grid>
-        <Box sx={{ mt: 4 }}>
+        {/* <Box sx={{ mt: 4 }}>
           <Grid container spacing={4}>
             <Grid item xs={6} md={4.5}>
               <Box sx={{ p: 4, background: "white", borderRadius: "12px" }}>
@@ -144,7 +165,7 @@ export default function DetailHospital() {
               </Box>
             </Grid>
           </Grid>
-        </Box>
+        </Box> */}
       </Container>
     </Box>
   );

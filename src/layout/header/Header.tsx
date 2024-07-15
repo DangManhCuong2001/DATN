@@ -7,6 +7,7 @@ import DropDownMenu from "../../components/DropDownMenu/DropDownMenu";
 import LinkCustom from "../../components/LinkCustom/LinkCustom";
 import { useLoginContext } from "../../context/login-context";
 import { TTypeHospital } from "../../context/constants/typeData";
+import { imagePath } from "../../constants/imagePath";
 
 export type TNav = {
   title: string;
@@ -122,7 +123,11 @@ export default function Header() {
         >
           {/* <Typography>Logo</Typography> */}
           <LinkCustom url="/" target="_blank">
-            <IconLogo />
+            {/* <IconLogo /> */}
+            <img
+              src={imagePath.logo_white}
+              style={{ width: "150px", height: "65px" }}
+            />
           </LinkCustom>
           <Box
             sx={{
@@ -131,19 +136,19 @@ export default function Header() {
               ml: 10,
             }}
           >
-            <Typography sx={{ mr: 2, color: "#003553", fontWeight: 600 }}>
+            <Typography sx={{ mr: 3, color: "#003553", fontWeight: 600 }}>
               Giới thiệu
             </Typography>
             <DropDownMenu nav={navHospital} />
             {/* <DropDownMenu nav={navHealthServices} /> */}
-            <DropDownMenu nav={navSpeciality} />
-            <Typography sx={{ mr: 2, color: "#003553", fontWeight: 600 }}>
+            {/* <DropDownMenu nav={navSpeciality} /> */}
+            <Typography sx={{ mr: 3, color: "#003553", fontWeight: 600 }}>
               Tin tức
             </Typography>
-            <Typography sx={{ mr: 2, color: "#003553", fontWeight: 600 }}>
+            <Typography sx={{ mr: 3, color: "#003553", fontWeight: 600 }}>
               Hướng dẫn
             </Typography>
-            <Typography sx={{ mr: 2, color: "#003553", fontWeight: 600 }}>
+            <Typography sx={{ mr: 3, color: "#003553", fontWeight: 600 }}>
               Liên hệ hợp tác
             </Typography>
           </Box>

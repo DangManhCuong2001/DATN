@@ -28,22 +28,26 @@ export default function Login({ urlAfterLogin }: { urlAfterLogin?: string }) {
   return (
     <Box
       sx={{
-        textAlign: "center",
         backgroundColor: "#e8f2f7",
         py: 5,
+        px: 100,
         minHeight: "600px",
       }}
     >
       <IconLogo />
       <Box>
         <Box sx={{ mb: 2, mt: 5 }}>
+          <Typography>Email:</Typography>
+
           <TextField
-            placeholder="Tài khoản"
+            placeholder="Email"
             onChange={(e) => changeEmail(e.target.value)}
             sx={{ width: "300px" }}
+            type="email"
           ></TextField>
         </Box>
         <Box sx={{ mb: 2 }}>
+          <Typography>Mật khẩu:</Typography>
           <TextField
             placeholder="Mật khẩu"
             type="password"

@@ -6,7 +6,6 @@ import { getHospital } from "../../services/HospitalService/HospitalService";
 import { TDoctor, THospital, TSpecialty } from "../constants/typeData";
 
 interface IManageContext {
-  doctors: TDoctor[];
   specialtys: TSpecialty[];
   setSpecialtys: React.Dispatch<React.SetStateAction<TSpecialty[]>>;
   hospitals: THospital[];
@@ -15,19 +14,8 @@ interface IManageContext {
 
 const ManageContext = createContext({} as IManageContext);
 export function ManageProvider({ children }: BaseContextProps) {
-  const [doctors, setDoctors] = useState<TDoctor[]>([]);
   const [specialtys, setSpecialtys] = useState<TSpecialty[]>([]);
   const [hospitals, setHospitals] = useState<THospital[]>([]);
-
-  async function getDataDoctors() {
-    try {
-      const response = await getDoctors();
-      console.log(response);
-      setDoctors(response.data.doctors);
-    } catch (err) {
-      console.log(err);
-    }
-  }
 
   async function getDataSpecialtys() {
     try {
@@ -50,14 +38,13 @@ export function ManageProvider({ children }: BaseContextProps) {
   }
 
   useEffect(() => {
-    getDataDoctors();
     getDataSpecialtys();
     getDataHospitals();
   }, []);
 
   return (
     <ManageContext.Provider
-      value={{ doctors, specialtys, setSpecialtys, hospitals, setHospitals }}
+      value={{ specialtys, setSpecialtys, hospitals, setHospitals }}
     >
       {children}
     </ManageContext.Provider>

@@ -25,7 +25,9 @@ export default function ButtonLogin() {
     setOpen(false);
   };
 
-  function disconnectWallet() {}
+  function disconnectWallet() {
+    window.location.reload();
+  }
   return (
     <>
       {isLogin ? (

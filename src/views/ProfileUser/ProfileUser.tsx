@@ -1,11 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { Container } from "../../components/container/Container";
 import { Box, Button, Grid, Typography } from "@mui/material";
-import { getAppoinmentsPatient } from "../../services/PatientService/PatientService";
+import {
+  cancelAppointment,
+  getAppoinmentsPatient,
+} from "../../services/PatientService/PatientService";
 import { useLoginContext } from "../../context/login-context";
 import DividerCustom from "../../components/DividerCustom/DividerCustom";
 import { useHospitalContext } from "../../context/hospital-context";
 import ModalRate from "../../components/ModalDetailDoctor/ModalDetailDoctor";
+import useNotifier from "../../hooks/useNotifier";
+import { useModalContext } from "../../context/modal-contex/modal-context";
+import ModalCancel from "./ModalCancel/ModalCancel";
 
 type TDataAppoinment = {
   appointmentId: string;
@@ -46,6 +52,17 @@ export default function ProfileUser() {
     // point:'',
     // rateContent:'',userId:''
   });
+  const { openModal, open } = useModalContext();
+  console.log(open);
+  function handleDelete(appointmentId: string) {
+    openModal(
+      "Vui lòng xác nhận lại!",
+      <ModalCancel
+        appointmentId={appointmentId}
+        getListAppointmentByUSer={getListAppointmentByUSer}
+      />
+    );
+  }
 
   async function getListAppointmentByUSer() {
     try {
@@ -203,9 +220,19 @@ export default function ProfileUser() {
                                 ) : (
                                   <>
                                     {item.statusId == "S2" ? (
-                                      <Typography sx={{ color: "red" }}>
-                                        Chưa khám
-                                      </Typography>
+                                      // <Typography sx={{ color: "red" }}>
+                                      //   Chưa khám
+                                      // </Typography>
+                                      <Button
+                                        variant="contained"
+                                        color="error"
+                                        onClick={() =>
+                                          handleDelete(item.appointmentId)
+                                        }
+                                        sx={{ width: "120px" }}
+                                      >
+                                        Huỷ
+                                      </Button>
                                     ) : (
                                       <>
                                         {item.ratePoint ? (
@@ -214,6 +241,11 @@ export default function ProfileUser() {
                                           </Typography>
                                         ) : (
                                           <Button
+                                            sx={{
+                                              width: "120px",
+                                              background:
+                                                "linear-gradient(83.63deg,#00b5f1 33.34%,#00e0ff 113.91%)",
+                                            }}
                                             variant="contained"
                                             onClick={() => {
                                               setOpenModalInfoDoctor(true);

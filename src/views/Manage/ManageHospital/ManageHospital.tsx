@@ -24,6 +24,7 @@ import { THospital, TTypeHospital } from "../../../context/constants/typeData";
 import MarkdownIt from "markdown-it";
 import MdEditor from "react-markdown-editor-lite";
 import "react-markdown-editor-lite/lib/index.css";
+import useNotifier from "../../../hooks/useNotifier";
 
 const mdParser = new MarkdownIt(/* Markdown-it options */);
 
@@ -57,6 +58,7 @@ export default function ManageHospital() {
   const [editing, setEdit] = useState<boolean>(false);
   // const [previewImage, setPreviewImage] = useState<string>("");
   const { hospitals, setHospitals } = useManageContext();
+  const { notifyError, notifySuccess } = useNotifier();
   console.log(newHospital);
   console.log(hospitals);
 
@@ -119,11 +121,13 @@ export default function ManageHospital() {
     try {
       const response = await addNewHospital(addHospital);
       setHospitals((prev) => [...prev, addHospital]);
+      notifySuccess("Thêm bệnh viện thành công!");
       // setNewHospital(initNewHospital);
 
       setShow(false);
     } catch (err) {
       console.log(err);
+      notifyError("Thêm bệnh viện thất bại!");
     }
   }
 
@@ -132,9 +136,13 @@ export default function ManageHospital() {
     let id = newHospital.id;
     try {
       const response = await EditHospital(newHospital);
+
       setHospitals(hospitals.map((i) => (i.id === id ? newHospital : i)));
+      notifySuccess("Cập nhật bệnh viện thành công!");
     } catch (err) {
       console.log(err);
+
+      notifyError("Cập nhật bệnh viện thất bại!");
     }
 
     setNewHospital(initNewHospital);
@@ -154,9 +162,15 @@ export default function ManageHospital() {
   return (
     <Box>
       <Typography
-        sx={{ textAlign: "center", fontSize: "20px", fontWeight: 600, mb: 5 }}
+        sx={{
+          textAlign: "center",
+          fontSize: "30px",
+          fontWeight: 600,
+          my: 3,
+          color: "#95A7AC",
+        }}
       >
-        Quản lý bệnh viện
+        Thông tin bệnh viện
       </Typography>
       <Button variant="contained" onClick={handleShow} sx={{ mb: 3 }}>
         Thêm bệnh viện
@@ -268,7 +282,7 @@ export default function ManageHospital() {
                     </Grid>
                     <Grid item xs={2}>
                       {/* {hospital.image} */}
-                      <Box
+                      {/* <Box
                         sx={{
                           backgroundImage: `url(${hospital.image})`,
                           backgroundRepeat: "no-repeat",
@@ -276,12 +290,17 @@ export default function ManageHospital() {
                           width: "120px",
                           height: "120px",
                         }}
-                      ></Box>
+                      ></Box> */}
+                      <img
+                        src={hospital.image}
+                        style={{ width: "120px", height: "120px" }}
+                      />
                     </Grid>
                     <Grid item xs={2}>
                       <Button
                         variant="outlined"
                         onClick={() => onEdit(hospital)}
+                        sx={{ mr: 1 }}
                       >
                         Edit
                       </Button>

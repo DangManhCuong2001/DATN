@@ -66,7 +66,7 @@ export default function Statistics() {
           </Grid>
         </Grid>
       </Box>
-      <Grid container spacing={2}>
+      <Grid container spacing={2} sx={{ mt: 3 }}>
         <Grid item xs={6}>
           <StatisticsAppByHospital />
         </Grid>

@@ -62,3 +62,11 @@ export const getStatisticalAppByStatusChart = async () => {
 export const getAppIn7Day = async () => {
   return await axios.get(`${BACKEND_DOMAIN}/api/get-appointment-in-7-day`);
 };
+
+export const cancelAppointment = async (appointmentId: string) => {
+  return await axios.delete(`${BACKEND_DOMAIN}/api/cancel-appoinment`, {
+    data: {
+      appointmentId: appointmentId,
+    },
+  });
+};

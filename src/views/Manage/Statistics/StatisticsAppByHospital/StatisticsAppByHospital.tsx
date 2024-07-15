@@ -13,8 +13,9 @@ export default function StatisticsAppByHospital() {
       sx={{
         backgroundColor: "rgb(27, 38, 38)",
         p: 3,
+
+        height: "100%",
         borderRadius: "20px",
-        mt: 3,
       }}
     >
       <Box>

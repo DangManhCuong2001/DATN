@@ -39,7 +39,7 @@ export default function BoxPreviewHospital({
           src={imagePath.LOGO_BVDHYDTPHCM}
           style={{ width: "120px", height: "120px", marginRight: "10px" }}
         /> */}
-        <Box
+        {/* <Box
           sx={{
             backgroundImage: `url(${image})`,
             backgroundRepeat: "no-repeat",
@@ -49,7 +49,11 @@ export default function BoxPreviewHospital({
             borderRadius: "10px",
             mr: 2,
           }}
-        ></Box>
+        ></Box> */}
+        <img
+          src={image}
+          style={{ width: "120px", height: "120px", marginRight: "20px" }}
+        />
         <Box>
           <Typography>{name}</Typography>
           <Typography>{address}</Typography>

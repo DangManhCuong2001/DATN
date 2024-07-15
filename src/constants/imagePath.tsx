@@ -27,6 +27,9 @@ import ICON_CHUYENKHOA from "../assets/icon/chuyenkhoa.png";
 import ICON_LUOTKHAM from "../assets/icon/luot-kham.png";
 import ICON_BACSI from "../assets/icon/bac-si.png";
 
+import logo_black from "../assets/image/logo black.png";
+import logo_white from "../assets/image/logoWhite.png";
+
 export const imagePath = {
   BANNER_IMAGE,
   IMAGE_SLIDER1,
@@ -53,4 +56,6 @@ export const imagePath = {
   ICON_CHUYENKHOA,
   ICON_LUOTKHAM,
   ICON_BACSI,
+  logo_black,
+  logo_white,
 };

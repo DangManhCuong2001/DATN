@@ -23,7 +23,7 @@ export const menu: TMenu = [
   },
   {
     // icon: DashboardOutlined,
-    title: "Quản lý người dùng",
+    title: "Quản lý tài khoản",
     url: "/manage/manageUsers",
     children: [],
     target: undefined,

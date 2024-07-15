@@ -111,7 +111,11 @@ export default function SideBar({
               width={"117px"}
               height={"auto"}
             /> */}
-            <IconLogo />
+            {/* <IconLogo /> */}
+            <img
+              src={imagePath.logo_black}
+              style={{ width: "100%", height: "60px" }}
+            />
           </Box>
           <Box sx={{ pt: 3 }}>
             {menuManage.map((item, index) => {

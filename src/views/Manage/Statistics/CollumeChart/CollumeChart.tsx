@@ -40,6 +40,11 @@ export default function CollumeChart() {
         accessibility: {
           description: "Countries",
         },
+        labels: {
+          style: {
+            color: "white",
+          },
+        },
       },
       yAxis: {
         min: 0,
@@ -49,6 +54,11 @@ export default function CollumeChart() {
         //     color: "red",
         //   },
         // },
+        labels: {
+          style: {
+            color: "white",
+          },
+        },
       },
       //   tooltip: {
       //     valueSuffix: " (1000 MT)",
@@ -83,7 +93,7 @@ export default function CollumeChart() {
         backgroundColor: "rgb(27, 38, 38)",
         p: 3,
         borderRadius: "20px",
-        mt: 3,
+        mt: 10,
       }}
     >
       <HighchartsReact

@@ -14,7 +14,7 @@ export default function StatisticsAppByStatus() {
         backgroundColor: "rgb(27, 38, 38)",
         p: 3,
         borderRadius: "20px",
-        mt: 3,
+        height: "100%",
       }}
     >
       <Box>

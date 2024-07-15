@@ -12,6 +12,7 @@ import { useEffect, useState } from "react";
 import { useManageContext } from "../../../context/manage-context";
 import { v4 as uuidv4 } from "uuid";
 import {
+  getDoctors,
   getInfoDoctor,
   saveInfoDoctor,
 } from "../../../services/DoctorService/DoctorService";
@@ -21,6 +22,7 @@ import MarkdownIt from "markdown-it";
 import MdEditor from "react-markdown-editor-lite";
 import "react-markdown-editor-lite/lib/index.css";
 import useNotifier from "../../../hooks/useNotifier";
+import { TDoctor } from "../../../context/constants/typeData";
 
 // type TPrice = '200.000VND'|'300.000VND'|'400.000VND'|'500.000VND'
 export type TInfoDoctor = {
@@ -51,13 +53,29 @@ const mdParser = new MarkdownIt(/* Markdown-it options */);
 
 export default function ManageDoctors() {
   const [infoDoctor, setInfoDoctor] = useState<TInfoDoctor>(initDoctor);
-  const { doctors, specialtys, hospitals } = useManageContext();
+  const { specialtys, hospitals } = useManageContext();
   const { notifyError, notifySuccess } = useNotifier();
+  const [doctors, setDoctors] = useState<TDoctor[]>([]);
+
   // const [contentMarkdown, setContentMarkdown] = useState<string>();
   // const [contentHTML, setContentHTML] = useState<string>();
 
   console.log(doctors);
   console.log(infoDoctor);
+
+  async function getDataDoctors() {
+    try {
+      const response = await getDoctors();
+      console.log(response);
+      setDoctors(response.data.doctors);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  useEffect(() => {
+    getDataDoctors();
+  }, []);
 
   async function getDataInfoDoctor() {
     try {
