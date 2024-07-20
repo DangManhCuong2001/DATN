@@ -18,3 +18,18 @@ export const getListSpecialtyByHospital = async (hospitalId: string) => {
     `${BACKEND_DOMAIN}/api/get-list-specialty-by-hospital?hospitalId=${hospitalId}`
   );
 };
+
+export const EditSpeciality = async (editSpeciality: TSpecialty) => {
+  return await axios.put(
+    `${BACKEND_DOMAIN}/api/edit-specialty`,
+    editSpeciality
+  );
+};
+
+export const DeleteSpecialty = async (specialityId: string) => {
+  return await axios.delete(`${BACKEND_DOMAIN}/api/delete-specialty`, {
+    data: {
+      id: specialityId,
+    },
+  });
+};

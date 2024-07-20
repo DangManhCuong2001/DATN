@@ -1,10 +1,24 @@
-import { Box, Button, Grid, Input, TextField, Typography } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import {
+  Box,
+  Button,
+  FormControl,
+  Grid,
+  Input,
+  MenuItem,
+  Select,
+  Typography,
+} from "@mui/material";
+import { useEffect, useState } from "react";
 import DividerCustom from "../../../components/DividerCustom/DividerCustom";
 import { getListPatientForDoctor } from "../../../services/PatientService/PatientService";
-import { useLoginContext } from "../../../context/login-context";
 import moment from "moment";
-import { doneAppointment } from "../../../services/DoctorService/DoctorService";
+import {
+  doneAppointment,
+  getDoctors,
+} from "../../../services/DoctorService/DoctorService";
+import { TDoctor } from "../../../context/constants/typeData";
+import ModalConfirm from "./ModalConfirm/ModalConfirm";
+import { useModalContext } from "../../../context/modal-contex/modal-context";
 import useNotifier from "../../../hooks/useNotifier";
 
 type TListPatient = {
@@ -16,29 +30,37 @@ type TListPatient = {
   reason: string;
   dateOfBirth: string;
   timeType: string;
+  statusId: string;
 };
 
 export default function ManagePatient() {
-  const { dataLogin } = useLoginContext();
-  const [date, setDate] = useState<string>("");
+  const [date, setDate] = useState<string>(
+    moment(new Date()).format("YYYY-MM-DD")
+  );
   const [listPatient, setListPatient] = useState<TListPatient[]>([]);
+  const [doctors, setDoctors] = useState<TDoctor[]>([]);
+  const [doctorSelected, setDoctorSelected] = useState<string>("");
+  // console.log(doctors);
+  const { openModal } = useModalContext();
   const { notifyError, notifySuccess } = useNotifier();
 
   async function getListPatient() {
     try {
       // const format2 = "YYYY-MM-DD";
-
+      // const todayDate = moment(new Date()).format("YYYY-MM-DD");
       // const valueMoment = moment(date).format(format2);
       // const daySelected = new Date(valueMoment).getTime();
       const daySelected = moment(new Date(date)).startOf("day").valueOf();
-      // console.log(xx);
+      // console.log(date, daySelected, todayDate);
       const response = await getListPatientForDoctor(
-        dataLogin.idUser,
+        doctorSelected,
         daySelected
       );
 
-      console.log(dataLogin.idUser, daySelected, response);
-      setListPatient(response.data.listPatientBook);
+      console.log(doctorSelected, daySelected, response);
+      if (response.data.errCode == 0) {
+        setListPatient(response.data.listPatientBook);
+      }
     } catch (err) {
       console.log(err);
     }
@@ -54,13 +76,35 @@ export default function ManagePatient() {
       console.log(err);
       notifyError("Cập nhật thất bại!");
     }
+    // openModal(
+    //   "Xác nhận đã hoàn thành lịch hẹn",
+    //   <ModalConfirm
+    //     apppointmentId={apppointmentId}
+    //     getListPatient={getListPatient}
+    //   />,
+    //   "600px"
+    // );
+  }
+
+  async function getDataDoctors() {
+    try {
+      const response = await getDoctors();
+      console.log(response);
+      setDoctors(response.data.doctors);
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   useEffect(() => {
+    getDataDoctors();
+  }, []);
+
+  useEffect(() => {
     getListPatient();
-  }, [date]);
+  }, [date, doctorSelected]);
   return (
-    <Box>
+    <Box sx={{ minHeight: "900px" }}>
       <Typography
         sx={{
           textAlign: "center",
@@ -75,28 +119,77 @@ export default function ManagePatient() {
       </Typography>
 
       <Box>
-        <Typography sx={{ color: "#95A7AC", mb: 1 }}>Chọn ngày khám</Typography>
-        <Input
-          type="date"
-          value={date}
-          onChange={(e) => setDate(e.target.value)}
-          sx={{
-            color: "#95A7AC",
-            // backgroundColor: "white",
-            ".MuiOutlinedInput-notchedOutline": {
-              borderColor: "#95A7AC",
-            },
-            "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-              borderColor: "#95A7AC",
-            },
-            "&:hover .MuiOutlinedInput-notchedOutline": {
-              borderColor: "#95A7AC",
-            },
-            ".MuiSvgIcon-root ": {
-              fill: "#95A7AC !important",
-            },
-          }}
-        />
+        <Grid container spacing={3}>
+          <Grid item xs={4}>
+            <Box>
+              <Typography sx={{ color: "#95A7AC", mb: 1 }}>
+                Chọn bác sĩ
+              </Typography>
+              <FormControl fullWidth>
+                <Select
+                  value={doctorSelected}
+                  onChange={(e) => setDoctorSelected(e.target.value)}
+                  sx={{
+                    color: "#95A7AC",
+
+                    ".MuiOutlinedInput-notchedOutline": {
+                      borderColor: "#95A7AC",
+                    },
+                    "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                      borderColor: "#95A7AC",
+                    },
+                    "&:hover .MuiOutlinedInput-notchedOutline": {
+                      borderColor: "#95A7AC",
+                    },
+                    ".MuiSvgIcon-root ": {
+                      fill: "#95A7AC !important",
+                    },
+                  }}
+                  // onChange={(e) => handleSelectDoctor(e.target.value)}
+                >
+                  {doctors.map((doctor, index) => {
+                    return (
+                      <MenuItem
+                        key={"doctor selected" + index}
+                        value={doctor.id}
+                      >
+                        {doctor.firstName} {doctor.lastName}
+                      </MenuItem>
+                    );
+                  })}
+                </Select>
+              </FormControl>
+            </Box>
+          </Grid>
+          <Grid item xs={4}>
+            <Box>
+              <Typography sx={{ color: "#95A7AC", mb: 1 }}>
+                Chọn ngày khám
+              </Typography>
+              <Input
+                type="date"
+                value={date}
+                onChange={(e) => setDate(e.target.value)}
+                sx={{
+                  color: "#95A7AC",
+                  // backgroundColor: "white",
+                  ".MuiOutlinedInput-notchedOutline": {
+                    borderColor: "#95A7AC",
+                  },
+                  "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                    borderColor: "#95A7AC",
+                  },
+                  "&:hover .MuiOutlinedInput-notchedOutline": {
+                    borderColor: "#95A7AC",
+                  },
+                  ".MuiSvgIcon-root ": {
+                    fill: "#95A7AC !important",
+                  },
+                }}
+              />
+            </Box>
+          </Grid>
+        </Grid>
       </Box>
       <Grid container sx={{ mt: 5 }}>
         <Grid item xs={1}>
@@ -154,13 +247,15 @@ export default function ManagePatient() {
           </Typography>
         </Grid>
         <Grid item xs={2}>
-          <Typography
-            sx={{
-              color: "#95A7AC",
-            }}
-          >
-            Actions
-          </Typography>
+          <Box sx={{ textAlign: "right" }}>
+            <Typography
+              sx={{
+                color: "#95A7AC",
+              }}
+            >
+              Actions
+            </Typography>
+          </Box>
         </Grid>
       </Grid>
       {listPatient.map((item, index) => {
@@ -223,13 +318,25 @@ export default function ManagePatient() {
                 </Typography>
               </Grid>
               <Grid item xs={2}>
-                <Button
-                  variant="contained"
-                  color="success"
-                  onClick={() => handleClickDone(item.id)}
-                >
-                  Hoàn thành
-                </Button>
+                {item.statusId == "S2" ? (
+                  <Button
+                    variant="contained"
+                    color="success"
+                    onClick={() => handleClickDone(item.id)}
+                  >
+                    Hoàn thành
+                  </Button>
+                ) : (
+                  <Box sx={{ textAlign: "right" }}>
+                    <Typography
+                      sx={{
+                        color: "#95A7AC",
+                      }}
+                    >
+                      Đã khám
+                    </Typography>
+                  </Box>
+                )}
               </Grid>
             </Grid>
           </Box>

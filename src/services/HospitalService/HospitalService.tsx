@@ -70,3 +70,11 @@ export const addNewHospital = async (newHospital: THospital) => {
 export const EditHospital = async (newHospital: THospital) => {
   return await axios.put(`${BACKEND_DOMAIN}/api/edit-hospital`, newHospital);
 };
+
+export const DeleteHospital = async (hospitalId: string) => {
+  return await axios.delete(`${BACKEND_DOMAIN}/api/delete-hospital`, {
+    data: {
+      id: hospitalId,
+    },
+  });
+};

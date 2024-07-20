@@ -12,6 +12,8 @@ import ModalRate from "../../components/ModalDetailDoctor/ModalDetailDoctor";
 import useNotifier from "../../hooks/useNotifier";
 import { useModalContext } from "../../context/modal-contex/modal-context";
 import ModalCancel from "./ModalCancel/ModalCancel";
+import ModalEditProfile from "./ModalEditProfile/ModalEditProfile";
+import ModalEditPassword from "./ModalEditPassword/ModalEditPassword";
 
 type TDataAppoinment = {
   appointmentId: string;
@@ -52,8 +54,7 @@ export default function ProfileUser() {
     // point:'',
     // rateContent:'',userId:''
   });
-  const { openModal, open } = useModalContext();
-  console.log(open);
+  const { openModal } = useModalContext();
   function handleDelete(appointmentId: string) {
     openModal(
       "Vui lòng xác nhận lại!",
@@ -62,6 +63,14 @@ export default function ProfileUser() {
         getListAppointmentByUSer={getListAppointmentByUSer}
       />
     );
+  }
+
+  function handleEditProfile() {
+    openModal("Thay đổi thông tin thài khoản", <ModalEditProfile />, "600px");
+  }
+
+  function handleEditPassword() {
+    openModal("Thay đổi mật khẩu", <ModalEditPassword />, "400px");
   }
 
   async function getListAppointmentByUSer() {
@@ -137,9 +146,9 @@ export default function ProfileUser() {
                 <Typography sx={{ fontWeight: 600, fontSize: "20px", mb: 3 }}>
                   {dataLogin.firstName} {dataLogin.lastName}
                 </Typography>
-                <Typography sx={{ mb: 1 }}>
+                {/* <Typography sx={{ mb: 1 }}>
                   Ngày sinh: {dataLogin.address}
-                </Typography>
+                </Typography> */}
                 <Typography sx={{ mb: 1 }}>
                   Giới tính: {dataLogin.gender}
                 </Typography>
@@ -152,6 +161,31 @@ export default function ProfileUser() {
                 <Typography sx={{ mb: 1 }}>
                   {/* Vai trò: {dataLogin.roleId} */}
                 </Typography>
+              </Box>
+              <Box>
+                <Button
+                  variant="contained"
+                  sx={{
+                    // width: "120px",
+                    background:
+                      "linear-gradient(83.63deg,#00b5f1 33.34%,#00e0ff 113.91%)",
+                    mr: 2,
+                  }}
+                  onClick={handleEditProfile}
+                >
+                  Sửa thông tin
+                </Button>
+                <Button
+                  variant="contained"
+                  sx={{
+                    // width: "120px",
+                    background:
+                      "linear-gradient(83.63deg,#00b5f1 33.34%,#00e0ff 113.91%)",
+                  }}
+                  onClick={handleEditPassword}
+                >
+                  Đổi mật khẩu
+                </Button>
               </Box>
             </Grid>
           </Grid>
@@ -277,7 +311,9 @@ export default function ProfileUser() {
                     })}
                   </Box>
                 ) : (
-                  <Typography>No data</Typography>
+                  <Box sx={{ mt: 3, textAlign: "center" }}>
+                    <Typography sx={{ fontSize: "24px" }}>No data</Typography>
+                  </Box>
                 )}
               </Box>
             </Box>

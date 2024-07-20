@@ -22,7 +22,13 @@ import MarkdownIt from "markdown-it";
 import MdEditor from "react-markdown-editor-lite";
 import "react-markdown-editor-lite/lib/index.css";
 import useNotifier from "../../../hooks/useNotifier";
-import { TDoctor } from "../../../context/constants/typeData";
+import {
+  TDoctor,
+  THospital,
+  TSpecialty,
+} from "../../../context/constants/typeData";
+import { getHospital } from "../../../services/HospitalService/HospitalService";
+import { getSpecialty } from "../../../services/SpecialtyService/SpecialtyService";
 
 // type TPrice = '200.000VND'|'300.000VND'|'400.000VND'|'500.000VND'
 export type TInfoDoctor = {
@@ -53,12 +59,33 @@ const mdParser = new MarkdownIt(/* Markdown-it options */);
 
 export default function ManageDoctors() {
   const [infoDoctor, setInfoDoctor] = useState<TInfoDoctor>(initDoctor);
-  const { specialtys, hospitals } = useManageContext();
+  // const { specialtys, hospitals } = useManageContext();
   const { notifyError, notifySuccess } = useNotifier();
   const [doctors, setDoctors] = useState<TDoctor[]>([]);
-
+  const [specialtys, setSpecialtys] = useState<TSpecialty[]>([]);
   // const [contentMarkdown, setContentMarkdown] = useState<string>();
   // const [contentHTML, setContentHTML] = useState<string>();
+  const [hospitals, setHospitals] = useState<THospital[]>([]);
+
+  async function getDataHospitals() {
+    try {
+      const response = await getHospital();
+      console.log(response);
+      setHospitals(response.data.hospitals);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  async function getDataSpecialtys() {
+    try {
+      const response = await getSpecialty();
+      console.log(response);
+      setSpecialtys(response.data.specialtys);
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
   console.log(doctors);
   console.log(infoDoctor);
@@ -180,6 +207,10 @@ export default function ManageDoctors() {
     getDataInfoDoctor();
   }, [infoDoctor.doctorSelected]);
 
+  useEffect(() => {
+    getDataHospitals();
+    getDataSpecialtys();
+  }, []);
   return (
     <Box sx={{ backgroundColor: "#1B2626", borderRadius: "20px", my: 8, p: 3 }}>
       <Typography

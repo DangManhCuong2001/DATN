@@ -3,7 +3,7 @@ import { Dialog, DialogTitle, Typography } from "@mui/material";
 import { useModalContext } from "../../context/modal-contex/modal-context";
 
 export default function ModalCustom() {
-  const { open, closeModal, content, title } = useModalContext();
+  const { open, closeModal, content, title, width } = useModalContext();
   function closeDialog() {
     closeModal();
   }
@@ -20,7 +20,7 @@ export default function ModalCustom() {
         "& .MuiPaper-root": {
           maxWidth: "100%!important",
           margin: "0!important",
-          width: "380px",
+          width: width ? width : "380px",
         },
       }}
     >

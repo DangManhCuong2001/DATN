@@ -28,9 +28,9 @@ export const DeleteUser = async (userId: string) => {
   });
 };
 
-export const getDataAllCode = async (inputType: string) => {
-  return await axios.get(`${BACKEND_DOMAIN}/api/allcode?type=${inputType}`);
-};
+// export const getDataAllCode = async (inputType: string) => {
+//   return await axios.get(`${BACKEND_DOMAIN}/api/allcode?type=${inputType}`);
+// };
 
 export const saveBulkSchedule = async (data: any) => {
   console.log(data);

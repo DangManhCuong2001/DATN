@@ -13,6 +13,8 @@ import DividerCustom from "../../../components/DividerCustom/DividerCustom";
 import { v4 as uuidv4 } from "uuid";
 import {
   addNewSpecialty,
+  DeleteSpecialty,
+  EditSpeciality,
   getSpecialty,
 } from "../../../services/SpecialtyService/SpecialtyService";
 import CommonUtils from "../../../utils/CommonUtils";
@@ -32,9 +34,9 @@ export default function ManageSpecialty() {
   const [newSpecialty, setNewSpecialty] =
     useState<TSpecialty>(initNewSpecialty);
   const [editing, setEdit] = useState<boolean>(false);
-  const { specialtys, setSpecialtys } = useManageContext();
   const { notifyError, notifySuccess } = useNotifier();
   // const [previewImage, setPreviewImage] = useState<string>("");
+  const [specialtys, setSpecialtys] = useState<TSpecialty[]>([]);
 
   console.log(specialtys);
 
@@ -45,6 +47,16 @@ export default function ManageSpecialty() {
   const handleShow = () => {
     setShow(true);
   };
+
+  async function getDataSpecialtys() {
+    try {
+      const response = await getSpecialty();
+      console.log(response);
+      setSpecialtys(response.data.specialtys);
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
   const handleChangeImage = async (event: any) => {
     const data = event.target.files;
@@ -80,7 +92,7 @@ export default function ManageSpecialty() {
     try {
       const response = await addNewSpecialty(addSpecialty);
       notifySuccess("Thêm chuyên khoa thành công");
-      setSpecialtys((prev) => [...prev, addSpecialty]);
+      // setSpecialtys((prev) => [...prev, addSpecialty]);
       setNewSpecialty(initNewSpecialty);
 
       setShow(false);
@@ -92,27 +104,39 @@ export default function ManageSpecialty() {
 
   async function handleUpdateSpecialty() {
     setEdit(false);
-    let id = newSpecialty.id;
+    // const newSpecialty2 = { ...newSpecialty, id: id };
     try {
-      // const response = await EditSpeciality(newSpecialty);
-      setSpecialtys(specialtys.map((i) => (i.id === id ? newSpecialty : i)));
+      console.log(newSpecialty);
+      const response = await EditSpeciality(newSpecialty);
+      console.log(response);
+      if (response.data.errMessage == "Missing parameter") {
+        notifyError("Vui lòng điền đầy đủ thông tin!");
+      } else {
+        notifySuccess("Thay đổi thông tin chuyên khoa thành công!");
+        getDataSpecialtys();
+        setShow(false);
+      }
     } catch (err) {
       console.log(err);
     }
 
     setNewSpecialty(initNewSpecialty);
-
-    setShow(false);
   }
 
-  async function handleDeleteSpecialty(currentSpecialty: TSpecialty) {
+  async function handleDeleteSpecialty(specialtyId: string) {
     try {
-      //   const response = await DeleteSpeciality(currentSpeciality.id as string);
-      setSpecialtys(specialtys.filter((i) => i.id !== currentSpecialty.id));
+      const response = await DeleteSpecialty(specialtyId);
+      notifySuccess("Xoá chuyên khoa thành công!");
+      getDataSpecialtys();
     } catch (err) {
       console.log(err);
+      notifyError("Xoá chuyên khoa thất bại!");
     }
   }
+
+  useEffect(() => {
+    getDataSpecialtys();
+  }, []);
 
   return (
     <Box>
@@ -223,7 +247,7 @@ export default function ManageSpecialty() {
                       <Button
                         variant="outlined"
                         title="Delete specialty"
-                        onClick={() => handleDeleteSpecialty(specialty)}
+                        onClick={() => handleDeleteSpecialty(specialty.id)}
                       >
                         Delete
                       </Button>
@@ -290,7 +314,7 @@ export default function ManageSpecialty() {
             {editing === true ? (
               <Button
                 color="success"
-                onClick={() => handleUpdateSpecialty()}
+                onClick={handleUpdateSpecialty}
                 variant="contained"
               >
                 Update

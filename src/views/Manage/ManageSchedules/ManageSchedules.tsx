@@ -8,14 +8,12 @@ import {
   Select,
   Typography,
 } from "@mui/material";
-import React, { useEffect, useState } from "react";
-import { useManageContext } from "../../../context/manage-context";
-import {
-  getDataAllCode,
-  saveBulkSchedule,
-} from "../../../services/UserService/UserService";
+import { useEffect, useState } from "react";
+import { saveBulkSchedule } from "../../../services/UserService/UserService";
 import { useLoginContext } from "../../../context/login-context";
 import useNotifier from "../../../hooks/useNotifier";
+import { getDoctors } from "../../../services/DoctorService/DoctorService";
+import { TDoctor } from "../../../context/constants/typeData";
 
 type TRangeTime = {
   id: number;
@@ -29,28 +27,85 @@ export type TNewSchedule = {
   rangeTimes: TRangeTime[];
   doctorSelected: string;
 };
+
+export const initRangeTime: TRangeTime[] = [
+  { id: 1, key: "T1", value: "8:00 - 9:00", isSelected: false },
+  {
+    id: 2,
+    key: "T2",
+    value: "9:00 - 10:00",
+    isSelected: false,
+  },
+  {
+    id: 3,
+    key: "T3",
+    value: "20:00 - 11:00",
+    isSelected: false,
+  },
+  {
+    id: 4,
+    key: "T4",
+    value: "11:00 - 12:00",
+    isSelected: false,
+  },
+  {
+    id: 5,
+    key: "T5",
+    value: "13:00 - 14:00",
+    isSelected: false,
+  },
+  {
+    id: 6,
+    key: "T6",
+    value: "14:00 - 15:00",
+    isSelected: false,
+  },
+  {
+    id: 7,
+    key: "T7",
+    value: "15:00 - 16:00",
+    isSelected: false,
+  },
+  {
+    id: 8,
+    key: "T8",
+    value: "16:00 - 17:00",
+    isSelected: false,
+  },
+];
 export default function ManageSchedules() {
-  const { doctors } = useManageContext();
+  // const { doctors } = useManageContext();
   const { dataLogin } = useLoginContext();
   const [newSchedule, setNewSchedule] = useState<TNewSchedule>({
     dayPicked: "",
     rangeTimes: [],
     doctorSelected: "",
   });
-  const [rangeTime, setRangeTime] = useState<TRangeTime[]>([]);
+  const [rangeTime, setRangeTime] = useState<TRangeTime[]>(initRangeTime);
   // const [isSelected,setIsSelected] = useState<boolean>(false)
   const { notifyError, notifySuccess } = useNotifier();
+  const [doctors, setDoctors] = useState<TDoctor[]>([]);
   console.log(newSchedule);
 
-  async function getRangeTime() {
+  async function getListDoctors() {
     try {
-      const response = await getDataAllCode("TIME");
+      const response = await getDoctors();
       console.log(response);
-      setRangeTime(response.data);
+      setDoctors(response.data.doctors);
     } catch (err) {
       console.log(err);
     }
   }
+
+  // async function getRangeTime() {
+  //   try {
+  //     const response = await getDataAllCode("TIME");
+  //     console.log(response);
+  //     setRangeTime(response.data);
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // }
 
   const handleClickTime = (time: TRangeTime) => {
     if (rangeTime && rangeTime.length > 0) {
@@ -120,7 +175,7 @@ export default function ManageSchedules() {
   }
 
   useEffect(() => {
-    getRangeTime();
+    getListDoctors();
   }, []);
 
   return (

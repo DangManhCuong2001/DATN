@@ -30,43 +30,53 @@ export default function Login({ urlAfterLogin }: { urlAfterLogin?: string }) {
       sx={{
         backgroundColor: "#e8f2f7",
         py: 5,
-        px: 100,
         minHeight: "600px",
+        position: "relative",
       }}
     >
-      <IconLogo />
-      <Box>
-        <Box sx={{ mb: 2, mt: 5 }}>
-          <Typography>Email:</Typography>
+      <Box
+        sx={{
+          position: "absolute",
+          top: " 40%",
+          left: " 50%",
+          transform: "translate(-50%, -50%)",
+        }}
+      >
+        <IconLogo />
+        <Box>
+          <Box sx={{ mb: 2, mt: 5 }}>
+            <Typography>Email:</Typography>
 
-          <TextField
-            placeholder="Email"
-            onChange={(e) => changeEmail(e.target.value)}
-            sx={{ width: "300px" }}
-            type="email"
-          ></TextField>
+            <TextField
+              placeholder="Email"
+              onChange={(e) => changeEmail(e.target.value)}
+              sx={{ width: "300px" }}
+              type="email"
+            ></TextField>
+          </Box>
+          <Box sx={{ mb: 2 }}>
+            <Typography>Mật khẩu:</Typography>
+            <TextField
+              placeholder="Mật khẩu"
+              type="password"
+              onChange={(e) => changePassword(e.target.value)}
+              sx={{ width: "300px" }}
+            ></TextField>
+          </Box>
+          <Button
+            variant="contained"
+            onClick={() =>
+              handleLogin(urlAfterLogin ? urlAfterLogin : undefined)
+            }
+            sx={{
+              background:
+                "linear-gradient(83.63deg, #00b5f1 33.34%, #00e0ff 113.91%)",
+            }}
+          >
+            Đăng nhập
+          </Button>
         </Box>
-        <Box sx={{ mb: 2 }}>
-          <Typography>Mật khẩu:</Typography>
-          <TextField
-            placeholder="Mật khẩu"
-            type="password"
-            onChange={(e) => changePassword(e.target.value)}
-            sx={{ width: "300px" }}
-          ></TextField>
-        </Box>
-        <Button
-          variant="contained"
-          onClick={() => handleLogin(urlAfterLogin ? urlAfterLogin : undefined)}
-          sx={{
-            background:
-              "linear-gradient(83.63deg, #00b5f1 33.34%, #00e0ff 113.91%)",
-          }}
-        >
-          Đăng nhập
-        </Button>
-      </Box>
-      {/* <Box sx={{ mt: 5 }}>
+        {/* <Box sx={{ mt: 5 }}>
         <Typography sx={{ mb: 1 }}>Hoặc đăng nhập bằng tài khoản</Typography>
         <Box>
           <Button
@@ -95,13 +105,14 @@ export default function Login({ urlAfterLogin }: { urlAfterLogin?: string }) {
           </Button>
         </Box>
       </Box> */}
-      <Box sx={{ mt: 2 }}>
-        <Typography>
-          Nếu chưa có tải khoản. Vui lòng{" "}
-          <a href="/register" target="_blank">
-            Đăng ký
-          </a>
-        </Typography>
+        <Box sx={{ mt: 2 }}>
+          <Typography>
+            Nếu chưa có tải khoản. Vui lòng{" "}
+            <a href="/register" target="_blank">
+              Đăng ký
+            </a>
+          </Typography>
+        </Box>
       </Box>
     </Box>
   );

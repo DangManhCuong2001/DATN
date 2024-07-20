@@ -3,6 +3,8 @@ import { TDataForm } from "../../context/hospital-context";
 import { BACKEND_DOMAIN } from "../BackendDomain";
 import { TDataVerify } from "../../views/VerifyBooking/VerifyBooking";
 import { TDataInfoRate } from "../../views/ProfileUser/ProfileUser";
+import { TEditProfile } from "../../views/ProfileUser/ModalEditProfile/ModalEditProfile";
+import { TNewPassword } from "../../views/ProfileUser/ModalEditPassword/ModalEditPassword";
 
 export const bookingAppointment = async (dataForm: TDataForm) => {
   return await axios.post(
@@ -69,4 +71,12 @@ export const cancelAppointment = async (appointmentId: string) => {
       appointmentId: appointmentId,
     },
   });
+};
+
+export const EditProfile = async (newProfile: TEditProfile) => {
+  return await axios.put(`${BACKEND_DOMAIN}/api/edit-profile`, newProfile);
+};
+
+export const EditPassword = async (newPassword: TNewPassword) => {
+  return await axios.put(`${BACKEND_DOMAIN}/api/edit-password`, newPassword);
 };

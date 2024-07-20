@@ -58,6 +58,13 @@ export const menu: TMenu = [
     children: [],
     target: undefined,
   },
+  {
+    // icon: IconUser,
+    title: "Quản lý Lịch sử khám",
+    url: "/manage/managePatient",
+    children: [],
+    target: undefined,
+  },
 ];
 
 export const menuOfManageDoctor: TMenu = [
@@ -77,7 +84,7 @@ export const menuOfManageDoctor: TMenu = [
   },
   {
     // icon: IconUser,
-    title: "Quản lý Lịch sử",
+    title: "Quản lý Lịch sử khám",
     url: "/manage/managePatient",
     children: [],
     target: undefined,

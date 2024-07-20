@@ -11,13 +11,15 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DividerCustom from "../../../components/DividerCustom/DividerCustom";
 import { v4 as uuidv4 } from "uuid";
 import CommonUtils from "../../../utils/CommonUtils";
 import {
+  DeleteHospital,
   EditHospital,
   addNewHospital,
+  getHospital,
 } from "../../../services/HospitalService/HospitalService";
 import { useManageContext } from "../../../context/manage-context";
 import { THospital, TTypeHospital } from "../../../context/constants/typeData";
@@ -57,8 +59,20 @@ export default function ManageHospital() {
   const [newHospital, setNewHospital] = useState<TNewHospital>(initNewHospital);
   const [editing, setEdit] = useState<boolean>(false);
   // const [previewImage, setPreviewImage] = useState<string>("");
-  const { hospitals, setHospitals } = useManageContext();
   const { notifyError, notifySuccess } = useNotifier();
+
+  const [hospitals, setHospitals] = useState<THospital[]>([]);
+
+  async function getDataHospitals() {
+    try {
+      const response = await getHospital();
+      console.log(response);
+      setHospitals(response.data.hospitals);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   console.log(newHospital);
   console.log(hospitals);
 
@@ -120,7 +134,8 @@ export default function ManageHospital() {
 
     try {
       const response = await addNewHospital(addHospital);
-      setHospitals((prev) => [...prev, addHospital]);
+      // setHospitals((prev) => [...prev, addHospital]);
+      getDataHospitals();
       notifySuccess("Thêm bệnh viện thành công!");
       // setNewHospital(initNewHospital);
 
@@ -137,7 +152,8 @@ export default function ManageHospital() {
     try {
       const response = await EditHospital(newHospital);
 
-      setHospitals(hospitals.map((i) => (i.id === id ? newHospital : i)));
+      // setHospitals(hospitals.map((i) => (i.id === id ? newHospital : i)));
+      getDataHospitals();
       notifySuccess("Cập nhật bệnh viện thành công!");
     } catch (err) {
       console.log(err);
@@ -150,15 +166,24 @@ export default function ManageHospital() {
     setShow(false);
   }
 
-  async function handleDeleteHospital(currentHospital: THospital) {
+  async function handleDeleteHospital(hospitalId: string) {
     try {
-      //   const response = await DeleteSpeciality(currentSpeciality.id as string);
-      setHospitals(hospitals.filter((i) => i.id !== currentHospital.id));
+      const response = await DeleteHospital(hospitalId);
+      if (response.data.message == "Delete success") {
+        getDataHospitals();
+        notifySuccess("Xoá bệnh viện thành công!");
+      } else {
+        notifyError("Xoá bệnh viện thất bại!");
+      }
     } catch (err) {
       console.log(err);
+      notifyError("Xoá bệnh viện thất bại!");
     }
   }
 
+  useEffect(() => {
+    getDataHospitals();
+  }, []);
   return (
     <Box>
       <Typography
@@ -298,7 +323,7 @@ export default function ManageHospital() {
                     </Grid>
                     <Grid item xs={2}>
                       <Button
-                        variant="outlined"
+                        variant="contained"
                         onClick={() => onEdit(hospital)}
                         sx={{ mr: 1 }}
                       >
@@ -308,7 +333,7 @@ export default function ManageHospital() {
                       <Button
                         variant="outlined"
                         title="Delete hospital"
-                        onClick={() => handleDeleteHospital(hospital)}
+                        onClick={() => handleDeleteHospital(hospital.id)}
                       >
                         Delete
                       </Button>

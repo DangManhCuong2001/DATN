@@ -29,6 +29,7 @@ import ICON_BACSI from "../assets/icon/bac-si.png";
 
 import logo_black from "../assets/image/logo black.png";
 import logo_white from "../assets/image/logoWhite.png";
+import logo_admin from "../assets/image/admin.jpg";
 
 export const imagePath = {
   BANNER_IMAGE,
@@ -58,4 +59,5 @@ export const imagePath = {
   ICON_BACSI,
   logo_black,
   logo_white,
+  logo_admin,
 };
