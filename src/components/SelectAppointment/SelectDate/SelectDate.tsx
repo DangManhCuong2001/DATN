@@ -17,6 +17,7 @@ import MedicalServicesRoundedIcon from "@mui/icons-material/MedicalServicesRound
 import MasksRoundedIcon from "@mui/icons-material/MasksRounded";
 import LinkCustom from "../../LinkCustom/LinkCustom";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import { initRangeTime } from "../../../views/Manage/ManageSchedules/ManageSchedules";
 
 type TObject = {
   label: string;
@@ -242,6 +243,10 @@ export default function SelectDate() {
                   }}
                 >
                   {listSchedule.map((item: any, index) => {
+                    const valueTime = initRangeTime.find(
+                      (rangeT) => rangeT.key == item.timeType
+                    );
+                    console.log(valueTime);
                     return (
                       <Button
                         onClick={() => handleSlectTime(item.timeType)}
@@ -254,7 +259,7 @@ export default function SelectDate() {
                         sx={{ mr: 4, mt: 2, width: "170px" }}
                       >
                         {" "}
-                        {item.Allcode.value}
+                        {valueTime?.value}
                       </Button>
                     );
                   })}

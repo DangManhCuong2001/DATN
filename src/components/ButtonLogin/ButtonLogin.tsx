@@ -59,26 +59,19 @@ export default function ButtonLogin() {
                   borderRadius: "16px",
                   boxShadow: 4,
                   py: 2,
+                  backgroundColor: "#4b4b4bcc",
                 }}
               >
                 <MenuItem onClick={() => navigate("/profile")}>
-                  <Typography
-                    variant="body2"
-                    color={"text.secondary"}
-                    fontWeight={500}
-                  >
+                  <Typography variant="body2" color="#1976d2" fontWeight={500}>
                     Xem hồ sơ
                   </Typography>
                 </MenuItem>
                 <MenuItem sx={{ mt: 1, gap: 1 }} onClick={disconnectWallet}>
-                  <Typography
-                    variant="body2"
-                    color={"text.secondary"}
-                    fontWeight={500}
-                  >
+                  <Typography variant="body2" color="#1976d2" fontWeight={500}>
                     Đăng xuất
                   </Typography>
-                  <LogoutRounded sx={{ fontSize: "16px" }} />
+                  <LogoutRounded sx={{ fontSize: "16px", color: "#1976d2" }} />
                 </MenuItem>
               </Box>
             ) : null}

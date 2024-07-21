@@ -14,6 +14,7 @@ import { useLoginContext } from "../../../context/login-context";
 import useNotifier from "../../../hooks/useNotifier";
 import { getDoctors } from "../../../services/DoctorService/DoctorService";
 import { TDoctor } from "../../../context/constants/typeData";
+import moment from "moment";
 
 type TRangeTime = {
   id: number;
@@ -39,7 +40,7 @@ export const initRangeTime: TRangeTime[] = [
   {
     id: 3,
     key: "T3",
-    value: "20:00 - 11:00",
+    value: "10:00 - 11:00",
     isSelected: false,
   },
   {
@@ -77,7 +78,7 @@ export default function ManageSchedules() {
   // const { doctors } = useManageContext();
   const { dataLogin } = useLoginContext();
   const [newSchedule, setNewSchedule] = useState<TNewSchedule>({
-    dayPicked: "",
+    dayPicked: moment(new Date()).format("YYYY-MM-DD"),
     rangeTimes: [],
     doctorSelected: "",
   });
@@ -178,6 +179,17 @@ export default function ManageSchedules() {
     getListDoctors();
   }, []);
 
+  useEffect(() => {
+    if (dataLogin.roleId == "doctor") {
+      setNewSchedule((prev) => {
+        return {
+          ...prev,
+          doctorSelected: dataLogin.idUser,
+        };
+      });
+    }
+  }, [dataLogin.roleId]);
+
   return (
     <Box sx={{ backgroundColor: "#1B2626", borderRadius: "20px", my: 8, p: 3 }}>
       <Grid container spacing={4}>
@@ -185,10 +197,8 @@ export default function ManageSchedules() {
           <Box>
             {dataLogin.roleId == "doctor" ? (
               <Box>
+                <Typography sx={{ color: "#95A7AC", mb: 1 }}>Bác sĩ</Typography>
                 <Typography sx={{ color: "#95A7AC", mb: 1 }}>
-                  Chọn bác sĩ
-                </Typography>
-                <Typography>
                   {dataLogin.firstName} {dataLogin.lastName}
                 </Typography>
               </Box>

@@ -5,6 +5,8 @@ import { TDataVerify } from "../../views/VerifyBooking/VerifyBooking";
 import { TDataInfoRate } from "../../views/ProfileUser/ProfileUser";
 import { TEditProfile } from "../../views/ProfileUser/ModalEditProfile/ModalEditProfile";
 import { TNewPassword } from "../../views/ProfileUser/ModalEditPassword/ModalEditPassword";
+import { TTypeHospital } from "../../context/constants/typeData";
+import { TReturnAllDataHospital } from "../HospitalService/HospitalService";
 
 export const bookingAppointment = async (dataForm: TDataForm) => {
   return await axios.post(
@@ -79,4 +81,24 @@ export const EditProfile = async (newProfile: TEditProfile) => {
 
 export const EditPassword = async (newPassword: TNewPassword) => {
   return await axios.put(`${BACKEND_DOMAIN}/api/edit-password`, newPassword);
+};
+
+export const getDataSearchHospital = async (
+  keyword: string,
+  typeHospital: TTypeHospital
+): Promise<TReturnAllDataHospital> => {
+  const response = await axios.get(
+    `${BACKEND_DOMAIN}/api/search-hospital?keyword=${keyword}&typeHospital=${typeHospital}`
+  );
+
+  const data = response.data.listHospital;
+  return data.map((item: any) => {
+    return {
+      id: item.id,
+      address: item.address,
+      image: item.image,
+      name: item.name,
+      type: item.type,
+    };
+  });
 };
