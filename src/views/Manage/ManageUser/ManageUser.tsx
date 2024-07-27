@@ -61,6 +61,8 @@ export default function ManageUser() {
   const [editing, setEdit] = useState<boolean>(false);
   // const [allUsers,setAllUsers] = useState()
   const { notifySuccess, notifyError } = useNotifier();
+
+  console.log(newUser);
   const handleClose = () => {
     setShow(false);
   };
@@ -105,11 +107,19 @@ export default function ManageUser() {
 
     try {
       const response = await AddUser(addUser);
+      console.log(response);
 
-      setShow(false);
-      setUsers((prev) => [...prev, addUser]);
-      notifySuccess("Thêm người dùng thành công!");
-      setNewUser(initNewUser);
+      if (response.data.errCode == 1) {
+        notifyError("Email đã tồn tại!");
+      }
+      if (response.data.errCode == 2) {
+        notifyError("Vui lòng điền đày đủ thông tin!");
+      } else {
+        setShow(false);
+        setUsers((prev) => [...prev, addUser]);
+        notifySuccess("Thêm người dùng thành công!");
+        setNewUser(initNewUser);
+      }
     } catch (err) {
       notifyError("Thêm dùng thất bại!");
       console.log(err);
@@ -513,7 +523,7 @@ export default function ManageUser() {
                 sx={{ mb: "10px" }}
               />
             </Grid>
-            <Grid item xs={6}>
+            {/* <Grid item xs={6}>
               <FormControl fullWidth sx={{ mb: 2 }}>
                 <InputLabel>Position ID</InputLabel>
                 <Select
@@ -533,7 +543,7 @@ export default function ManageUser() {
                   <MenuItem value={"P4"}>P4</MenuItem>
                 </Select>
               </FormControl>
-            </Grid>
+            </Grid> */}
             <Grid item xs={6}>
               <FormControl fullWidth>
                 <InputLabel>Role ID</InputLabel>

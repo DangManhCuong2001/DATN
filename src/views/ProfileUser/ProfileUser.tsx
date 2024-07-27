@@ -1,19 +1,15 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Container } from "../../components/container/Container";
 import { Box, Button, Grid, Typography } from "@mui/material";
-import {
-  cancelAppointment,
-  getAppoinmentsPatient,
-} from "../../services/PatientService/PatientService";
+import { getAppoinmentsPatient } from "../../services/PatientService/PatientService";
 import { useLoginContext } from "../../context/login-context";
 import DividerCustom from "../../components/DividerCustom/DividerCustom";
 import { useHospitalContext } from "../../context/hospital-context";
-import ModalRate from "../../components/ModalDetailDoctor/ModalDetailDoctor";
-import useNotifier from "../../hooks/useNotifier";
 import { useModalContext } from "../../context/modal-contex/modal-context";
 import ModalCancel from "./ModalCancel/ModalCancel";
 import ModalEditProfile from "./ModalEditProfile/ModalEditProfile";
 import ModalEditPassword from "./ModalEditPassword/ModalEditPassword";
+import ModalRate from "./ModalRate/ModalRate";
 
 type TDataAppoinment = {
   appointmentId: string;
@@ -91,7 +87,11 @@ export default function ProfileUser() {
             reason: item.reason,
             statusId: item.statusId,
             timeType: item.timeType,
-            doctorName: item.User.firstName + " " + item.User.lastName,
+            doctorName:
+              item.Doctor_Info.User.firstName +
+              " " +
+              item.Doctor_Info.User.lastName,
+
             doctorId: item.doctorId,
             ratePoint: item.RatePoint,
           };

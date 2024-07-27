@@ -94,7 +94,7 @@ export default function ManageDoctors() {
     try {
       const response = await getDoctors();
       console.log(response);
-      setDoctors(response.data.doctors);
+      setDoctors(response);
     } catch (err) {
       console.log(err);
     }

@@ -4,9 +4,11 @@ import BoxPreviewHospital from "../../../components/BoxPreviewHospital/BoxPrevie
 import { navHospital } from "../../../layout/header/Header";
 import LinkCustom from "../../../components/LinkCustom/LinkCustom";
 import { useHospitalContext } from "../../../context/hospital-context";
+import { useParams } from "react-router-dom";
 
 export default function ListHospital() {
-  const { setTypeHospital, typeHospital } = useHospitalContext();
+  const { idTypeHospital } = useParams();
+  const { setTypeHospital } = useHospitalContext();
   return (
     <Box
       sx={{
@@ -21,7 +23,7 @@ export default function ListHospital() {
         return (
           <LinkCustom url={item.href}>
             <Button
-              variant={typeHospital == item.type ? "contained" : "outlined"}
+              variant={idTypeHospital == item.type ? "contained" : "outlined"}
               onClick={() => setTypeHospital(item.type)}
               sx={{
                 borderRadius: "20px",
@@ -29,7 +31,7 @@ export default function ListHospital() {
                 fontWeight: 600,
                 mr: 5,
                 background:
-                  typeHospital == item.type
+                  idTypeHospital == item.type
                     ? "linear-gradient(83.63deg,#00b5f1 33.34%,#00e0ff 113.91%)"
                     : "#ebf9fd",
                 width: "200px",

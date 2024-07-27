@@ -3,11 +3,18 @@ import PersonRoundedIcon from "@mui/icons-material/PersonRounded";
 import WcIcon from "@mui/icons-material/Wc";
 import { useHospitalContext } from "../../../context/hospital-context";
 import { useNavigate, useParams } from "react-router-dom";
-import { TAllDataDoctor } from "../../../services/DoctorService/DoctorService";
+import {
+  TAllDataDoctor,
+  TDataDoctorByHospital,
+} from "../../../services/DoctorService/DoctorService";
 import MedicalServicesRoundedIcon from "@mui/icons-material/MedicalServicesRounded";
 import AttachMoneyRoundedIcon from "@mui/icons-material/AttachMoneyRounded";
 
-export default function PreviewDoctor({ data }: { data: TAllDataDoctor }) {
+export default function PreviewDoctor({
+  data,
+}: {
+  data: TDataDoctorByHospital;
+}) {
   const { setDataForm, dataForm } = useHospitalContext();
   const navigate = useNavigate();
   const { idHospital, idSpeciality } = useParams();
@@ -26,13 +33,14 @@ export default function PreviewDoctor({ data }: { data: TAllDataDoctor }) {
       <Box
         sx={{
           p: 2,
-          border: "1px solid",
           borderRadius: "12px",
           mb: 3,
           display: "flex",
           placeItems: "center",
           gap: 2,
           justifyContent: "space-between",
+          border: "2px solid #00b5f1!important",
+          boxShadow: "0 4px 15px rgba(116,157,206,.5)!important",
         }}
       >
         <Box sx={{ display: "flex" }}>
@@ -94,6 +102,7 @@ export default function PreviewDoctor({ data }: { data: TAllDataDoctor }) {
                 setDataForm({
                   ...dataForm,
                   fullNameDoctor: data.firstName + data.lastName,
+                  doctorInfoId: data.doctorInfoId,
                 });
                 navigate(
                   `/SelectAppointment/${idHospital}/${idSpeciality}/${data.doctorId}`

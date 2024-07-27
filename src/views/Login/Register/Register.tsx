@@ -27,7 +27,12 @@ export default function Register() {
       const addUser = { ...newUser, id: id };
       console.log(addUser);
       const response = await AddUser(addUser);
-      notifySuccess("Tạo tài khoản thành công!");
+      console.log(response);
+      if (response.data.errCode == 1) {
+        notifyError("Email đã tồn tại!");
+      } else {
+        notifySuccess("Tạo tài khoản thành công!");
+      }
     } catch (err) {
       console.log(err);
       notifyError("Tạo tài khoản thất bại!");

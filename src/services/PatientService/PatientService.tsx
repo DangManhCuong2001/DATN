@@ -90,7 +90,7 @@ export const getDataSearchHospital = async (
   const response = await axios.get(
     `${BACKEND_DOMAIN}/api/search-hospital?keyword=${keyword}&typeHospital=${typeHospital}`
   );
-
+  console.log(response, keyword, typeHospital);
   const data = response.data.listHospital;
   return data.map((item: any) => {
     return {

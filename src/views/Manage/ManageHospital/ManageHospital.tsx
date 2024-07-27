@@ -134,12 +134,18 @@ export default function ManageHospital() {
 
     try {
       const response = await addNewHospital(addHospital);
-      // setHospitals((prev) => [...prev, addHospital]);
-      getDataHospitals();
-      notifySuccess("Thêm bệnh viện thành công!");
-      // setNewHospital(initNewHospital);
+      console.log(response);
+      if (response.data.errCode == 1) {
+        notifyError("Vui lòng điền đầy đủ thông tin!");
+      } else {
+        getDataHospitals();
+        setShow(false);
 
-      setShow(false);
+        notifySuccess("Thêm bệnh viện thành công!");
+      }
+      // setHospitals((prev) => [...prev, addHospital]);
+
+      // setNewHospital(initNewHospital);
     } catch (err) {
       console.log(err);
       notifyError("Thêm bệnh viện thất bại!");
@@ -151,10 +157,14 @@ export default function ManageHospital() {
     let id = newHospital.id;
     try {
       const response = await EditHospital(newHospital);
-
+      if (response.data.errCode == 1) {
+        notifyError("Vui lòng điền đầy đủ thông tin!");
+      } else {
+        setShow(false);
+        getDataHospitals();
+        notifySuccess("Cập nhật bệnh viện thành công!");
+      }
       // setHospitals(hospitals.map((i) => (i.id === id ? newHospital : i)));
-      getDataHospitals();
-      notifySuccess("Cập nhật bệnh viện thành công!");
     } catch (err) {
       console.log(err);
 
@@ -162,8 +172,6 @@ export default function ManageHospital() {
     }
 
     setNewHospital(initNewHospital);
-
-    setShow(false);
   }
 
   async function handleDeleteHospital(hospitalId: string) {

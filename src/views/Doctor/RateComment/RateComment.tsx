@@ -17,7 +17,7 @@ export default function RateComment({ idDoctor }: { idDoctor: string }) {
       const response = await getListRatePoint(idDoctor);
       console.log(response);
 
-      const data = response.data.data.map((item: any) => {
+      const data = response.data.data.RatePoints.map((item: any) => {
         return {
           point: item.point,
           rateContent: item.rateContent,

@@ -3,6 +3,7 @@ import React from "react";
 import DividerCustom from "../../../DividerCustom/DividerCustom";
 import { TDataSelectSpecialty } from "../SelectSpecialty";
 import { useNavigate, useParams } from "react-router-dom";
+import { useHospitalContext } from "../../../../context/hospital-context";
 
 export default function PreviewSpecialty({
   data,
@@ -11,11 +12,18 @@ export default function PreviewSpecialty({
 }) {
   const { idHospital } = useParams();
   const Navigate = useNavigate();
+  const { setDataForm, dataForm } = useHospitalContext();
   return (
     <Box sx={{ px: 2 }}>
       <DividerCustom />
       <Typography
-        onClick={() => Navigate(`/SelectAppointment/${idHospital}/${data.id}`)}
+        onClick={() => {
+          setDataForm({
+            ...dataForm,
+            nameSpecialtySelected: data.nameSpecialty,
+          });
+          Navigate(`/SelectAppointment/${idHospital}/${data.id}`);
+        }}
         sx={{
           textTransform: "uppercase",
           fontWeight: 600,

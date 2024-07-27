@@ -2,9 +2,10 @@ import {
   Box,
   Button,
   FormControlLabel,
+  MenuItem,
   Radio,
   RadioGroup,
-  TextField,
+  Select,
   Typography,
 } from "@mui/material";
 import PersonIcon from "@mui/icons-material/Person";
@@ -21,10 +22,6 @@ import { v4 as uuidv4 } from "uuid";
 import moment from "moment";
 import useNotifier from "../../../hooks/useNotifier";
 import { Container } from "../../../components/container/Container";
-import { FormControl, useFormControlContext } from "@mui/base/FormControl";
-import { Input, inputClasses } from "@mui/base/Input";
-import { styled } from "@mui/system";
-import clsx from "clsx";
 
 type TtimeType = "T1" | "T2" | "T3" | "T4" | "T5" | "T6" | "T7" | "T8";
 const timeType: { [k in TtimeType]: string } = {
@@ -165,6 +162,24 @@ export default function MyselfForm() {
         <FormControlLabel value="Nữ" control={<Radio />} label="Nữ" />
         <FormControlLabel value="Khác" control={<Radio />} label="Khác" />
       </RadioGroup>
+      {/* <Box>
+        <Select
+          value={dataForm.gender}
+          onChange={(e) =>
+            setDataForm({
+              ...dataForm,
+              gender: e.target.value,
+            })
+          }
+          defaultValue={dataForm.gender}
+          sx={{ width: "200px" }}
+        >
+          <MenuItem value={"Nam"}>Nam</MenuItem>
+          <MenuItem value={"Nữ"}>Nu</MenuItem>
+          <MenuItem value="Khác">Khac</MenuItem>
+          
+        </Select>
+      </Box> */}
       <Box
         sx={{
           border: "1px solid #ccc",
@@ -204,6 +219,7 @@ export default function MyselfForm() {
           mt: 2,
         }}
       >
+        <Typography>Ngày sinh:</Typography>
         <CalendarMonthIcon sx={{ mr: 1 }} />
         <input
           className="inputStyle"

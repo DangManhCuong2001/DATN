@@ -9,6 +9,7 @@ import {
 import { THospital, TTypeHospital } from "../constants/typeData";
 import {
   TAllDataDoctor,
+  TDataDoctorByHospital,
   TReturnAllDataDoctor,
   getInfoDoctor,
   getListDoctorByHopital,
@@ -24,7 +25,7 @@ interface IHospitalContext {
   dataForm: TDataForm;
   setDataForm: React.Dispatch<React.SetStateAction<TDataForm>>;
   infoHospital: TAllDataHospital;
-  listDoctorByHospital: TReturnAllDataDoctor;
+  listDoctorByHospital: TDataDoctorByHospital[];
   infoDoctor: TAllDataDoctor;
   openModalInfoDoctor: boolean;
   setOpenModalInfoDoctor: React.Dispatch<React.SetStateAction<boolean>>;
@@ -58,6 +59,8 @@ export type TDataForm = {
   timeString: string;
   fullNameDoctor: string;
   specialtySelected: string;
+  doctorInfoId: string;
+  nameSpecialtySelected: string;
 };
 
 export const initDataInfoDoctor: TAllDataDoctor = {
@@ -95,12 +98,14 @@ export function HospitalProvider({ children }: BaseContextProps) {
     contentMarkdown: "",
     description: "",
   });
-  const [listDoctorByHospital, setListDoctorByHospital] =
-    useState<TReturnAllDataDoctor>([]);
+  const [listDoctorByHospital, setListDoctorByHospital] = useState<
+    TDataDoctorByHospital[]
+  >([]);
   const [dataForm, setDataForm] = useState<TDataForm>({
     doctorSelected: "",
     hospitalSelected: "",
     specialtySelected: "",
+    nameSpecialtySelected: "",
     daySelected: moment(new Date()).startOf("day").valueOf(),
     hourSelected: "",
     patientId: "",
@@ -113,6 +118,7 @@ export function HospitalProvider({ children }: BaseContextProps) {
     dateOfBirth: "",
     timeString: "",
     fullNameDoctor: "",
+    doctorInfoId: "",
   });
   // const [HospitalSelected,setHospitalSelected] = useState<TInfoDoctor>({firstName:'',image:'',lastName:''})
   const [infoDoctor, setInfoDoctor] =
@@ -128,7 +134,7 @@ export function HospitalProvider({ children }: BaseContextProps) {
         dataForm.hospitalSelected,
         dataForm.specialtySelected
       );
-      console.log(response);
+      console.log("data", response);
       setListDoctorByHospital(response);
     } catch (err) {
       console.log(err);

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { getStatistical } from "../../../services/PatientService/PatientService";
 import { imagePath } from "../../../constants/imagePath";
 
-type TDataStatistical = {
+export type TDataStatistical = {
   totalAppointment: number;
   totalDoctor: number;
   totalHospital: number;
@@ -16,6 +16,7 @@ export default function Statistical() {
     totalHospital: 0,
     totalSpecialty: 0,
   });
+
   async function getData() {
     try {
       const response = await getStatistical();

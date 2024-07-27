@@ -17,8 +17,6 @@ import {
   getDoctors,
 } from "../../../services/DoctorService/DoctorService";
 import { TDoctor } from "../../../context/constants/typeData";
-import ModalConfirm from "./ModalConfirm/ModalConfirm";
-import { useModalContext } from "../../../context/modal-contex/modal-context";
 import useNotifier from "../../../hooks/useNotifier";
 import { useLoginContext } from "../../../context/login-context";
 import { initRangeTime } from "../ManageSchedules/ManageSchedules";
@@ -42,7 +40,7 @@ export default function ManagePatient() {
   const [listPatient, setListPatient] = useState<TListPatient[]>([]);
   const [doctors, setDoctors] = useState<TDoctor[]>([]);
   const [doctorSelected, setDoctorSelected] = useState<string>("");
-  // console.log(doctors);
+  console.log(doctorSelected, doctors);
   const { dataLogin } = useLoginContext();
   const { notifyError, notifySuccess } = useNotifier();
 
@@ -93,7 +91,7 @@ export default function ManagePatient() {
     try {
       const response = await getDoctors();
       console.log(response);
-      setDoctors(response.data.doctors);
+      setDoctors(response);
     } catch (err) {
       console.log(err);
     }
@@ -105,13 +103,13 @@ export default function ManagePatient() {
 
   useEffect(() => {
     if (dataLogin.roleId == "doctor") {
-      setDoctorSelected(dataLogin.idUser);
+      setDoctorSelected(dataLogin.doctorinfoId);
     }
   }, [dataLogin.roleId]);
 
   useEffect(() => {
     getListPatient();
-  }, [date, doctorSelected]);
+  }, [date, doctorSelected, dataLogin.doctorinfoId]);
   return (
     <Box sx={{ minHeight: "900px" }}>
       <Typography
@@ -171,7 +169,7 @@ export default function ManagePatient() {
                         return (
                           <MenuItem
                             key={"doctor selected" + index}
-                            value={doctor.id}
+                            value={doctor.doctorInfoId}
                           >
                             {doctor.firstName} {doctor.lastName}
                           </MenuItem>
@@ -349,25 +347,41 @@ export default function ManagePatient() {
                     </Box>
                   </Grid>
                   <Grid item xs={2}>
-                    {item.statusId == "S2" ? (
-                      <Button
-                        variant="contained"
-                        color="success"
-                        onClick={() => handleClickDone(item.id)}
-                      >
-                        Hoàn thành
-                      </Button>
-                    ) : (
-                      <Box sx={{ textAlign: "right" }}>
-                        <Typography
-                          sx={{
-                            color: "#95A7AC",
-                          }}
-                        >
-                          Đã khám
-                        </Typography>
-                      </Box>
-                    )}
+                    <Box sx={{ textAlign: "right" }}>
+                      {item.statusId == "S1" ? (
+                        <Box sx={{ textAlign: "right" }}>
+                          <Typography
+                            sx={{
+                              color: "red",
+                            }}
+                          >
+                            Chưa xác nhận
+                          </Typography>
+                        </Box>
+                      ) : (
+                        <>
+                          {item.statusId == "S2" ? (
+                            <Button
+                              variant="contained"
+                              color="success"
+                              onClick={() => handleClickDone(item.id)}
+                            >
+                              Hoàn thành
+                            </Button>
+                          ) : (
+                            <Box sx={{ textAlign: "right" }}>
+                              <Typography
+                                sx={{
+                                  color: "#95A7AC",
+                                }}
+                              >
+                                Đã khám
+                              </Typography>
+                            </Box>
+                          )}
+                        </>
+                      )}
+                    </Box>
                   </Grid>
                 </Grid>
               </Box>

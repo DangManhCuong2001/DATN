@@ -7,14 +7,14 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { useHospitalContext } from "../../context/hospital-context";
+import { useHospitalContext } from "../../../context/hospital-context";
 import { ClearRounded } from "@mui/icons-material";
-import { TAllDataDoctor } from "../../services/DoctorService/DoctorService";
+import { TAllDataDoctor } from "../../../services/DoctorService/DoctorService";
 import { useState } from "react";
 import StarIcon from "@mui/icons-material/Star";
-import { saveRatePoint } from "../../services/PatientService/PatientService";
-import useNotifier from "../../hooks/useNotifier";
-import { TDataInfoRate } from "../../views/ProfileUser/ProfileUser";
+import { saveRatePoint } from "../../../services/PatientService/PatientService";
+import useNotifier from "../../../hooks/useNotifier";
+import { TDataInfoRate } from "../ProfileUser";
 import { v4 as uuidv4 } from "uuid";
 
 export const labelsRate: { [index: string]: string } = {

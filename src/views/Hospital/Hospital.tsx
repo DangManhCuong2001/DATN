@@ -15,7 +15,7 @@ import { TAllDataHospital } from "../../services/HospitalService/HospitalService
 
 export default function Hospital() {
   const { idTypeHospital } = useParams();
-  const { dataHospital, hospitalsWithType, typeHospital } =
+  const { dataHospital, hospitalsWithType, setTypeHospital } =
     useHospitalContext();
   const dataLocalHospital = dataHospital[idTypeHospital as TTypeHospital];
   console.log(dataLocalHospital);
@@ -28,11 +28,16 @@ export default function Hospital() {
   async function getData() {
     setLoading(true);
     try {
-      const response = await getDataSearchHospital(value, typeHospital);
+      if (idTypeHospital) {
+        const response = await getDataSearchHospital(
+          value,
+          idTypeHospital as TTypeHospital
+        );
 
-      console.log(response);
+        console.log(response);
 
-      setHospitalsSearch(response);
+        setHospitalsSearch(response);
+      }
     } catch (err) {
       console.log(err);
     }
@@ -43,10 +48,11 @@ export default function Hospital() {
     const timeOut = setTimeout(() => {
       getData();
     }, 2000);
+    setTypeHospital(idTypeHospital as TTypeHospital);
     return () => {
       clearTimeout(timeOut);
     };
-  }, [value, typeHospital]);
+  }, [value, idTypeHospital]);
 
   return (
     <Box sx={{ mt: 3 }}>

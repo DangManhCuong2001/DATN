@@ -3,6 +3,7 @@ export type TDoctor = {
   id: string;
   firstName: string;
   lastName: string;
+  doctorInfoId: string;
 };
 
 export type TSpecialty = {

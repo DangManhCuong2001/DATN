@@ -20,6 +20,8 @@ export default function VerifyBooking() {
         token: token as string,
         doctorId: doctorId as string,
       });
+
+      console.log(response);
       if (response && response.data.errCode == 0) {
         setStatusVerify(true);
       }

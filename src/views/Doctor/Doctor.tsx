@@ -7,7 +7,10 @@ import {
 } from "../../services/DoctorService/DoctorService";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { initDataInfoDoctor } from "../../context/hospital-context";
+import {
+  initDataInfoDoctor,
+  useHospitalContext,
+} from "../../context/hospital-context";
 import RateComment from "./RateComment/RateComment";
 import DividerCustom from "../../components/DividerCustom/DividerCustom";
 
@@ -16,7 +19,7 @@ export default function Doctor() {
   const navigator = useNavigate();
   const [dataDoctor, setDataDoctor] =
     useState<TAllDataDoctor>(initDataInfoDoctor);
-
+  const { dataForm, setDataForm } = useHospitalContext();
   async function getData() {
     try {
       if (idDoctor) {
@@ -69,11 +72,16 @@ export default function Doctor() {
                   background:
                     "linear-gradient(83.63deg, #00b5f1 33.34%, #00e0ff 113.91%)",
                 }}
-                onClick={() =>
+                onClick={() => {
+                  setDataForm({
+                    ...dataForm,
+                    doctorInfoId: dataDoctor.doctorInfoId,
+                  });
+
                   navigator(
                     `/SelectAppointment/${dataDoctor.hospitalId}/${dataDoctor.specialtyId}/${dataDoctor.doctorId}`
-                  )
-                }
+                  );
+                }}
               >
                 Đặt lịch ngay
               </Button>
@@ -104,12 +112,12 @@ export default function Doctor() {
                 Giới tính:{" "}
                 <Typography component={"span"}>{dataDoctor.gender}</Typography>
               </Typography>
-              <Typography
+              {/* <Typography
                 sx={{ fontWeight: 600, color: "rgb(102 102 102/ 1)" }}
               >
                 Ngày sinh:{" "}
                 <Typography component={"span"}>{dataDoctor.gender}</Typography>
-              </Typography>
+              </Typography> */}
             </Box>
             <Box
               sx={{

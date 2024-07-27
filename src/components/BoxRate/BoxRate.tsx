@@ -1,7 +1,7 @@
 import React from "react";
 import { TDataRated } from "../../views/Doctor/RateComment/RateComment";
 import { Box, Rating, Typography } from "@mui/material";
-import { labelsRate } from "../ModalDetailDoctor/ModalDetailDoctor";
+import { labelsRate } from "../../views/ProfileUser/ModalRate/ModalRate";
 
 export default function BoxRate({ dataRated }: { dataRated: TDataRated }) {
   return (

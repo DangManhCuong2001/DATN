@@ -2,11 +2,14 @@ import { Box, Typography } from "@mui/material";
 import MyselfForm from "./MyselfForm/MyselfForm";
 import { useHospitalContext } from "../../context/hospital-context";
 import moment from "moment";
+import { initRangeTime } from "../Manage/ManageSchedules/ManageSchedules";
 
 export default function Schedule() {
   const { dataForm, infoDoctor } = useHospitalContext();
   console.log(dataForm, infoDoctor);
-
+  const valueTime = initRangeTime.find(
+    (rangeT) => rangeT.key == dataForm.hourSelected
+  );
   return (
     <Box sx={{ backgroundColor: "#e8f2f7", px: 40, py: 5 }}>
       <Box sx={{ textAlign: "center" }}>
@@ -54,8 +57,9 @@ export default function Schedule() {
           <Typography
             sx={{ fontSize: "20px", fontWeight: 600, color: "#00b5f1" }}
           >
-            Thời gian: {dataForm.hourSelected} -{" "}
+            Thời gian: {valueTime?.value} ({" "}
             {moment(new Date(dataForm.daySelected)).format("dddd - DD/MM/YYYY")}
+            )
           </Typography>
           <Typography
             sx={{ fontSize: "20px", fontWeight: 600, color: "#00b5f1" }}

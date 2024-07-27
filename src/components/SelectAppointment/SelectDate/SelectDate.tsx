@@ -18,6 +18,7 @@ import MasksRoundedIcon from "@mui/icons-material/MasksRounded";
 import LinkCustom from "../../LinkCustom/LinkCustom";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { initRangeTime } from "../../../views/Manage/ManageSchedules/ManageSchedules";
+import { getListPatientForDoctor } from "../../../services/PatientService/PatientService";
 
 type TObject = {
   label: string;
@@ -31,7 +32,6 @@ export default function SelectDate() {
   const [listSchedule, setListSchedule] = useState([]);
   const [dataDoctor, setDataDoctor] =
     useState<TAllDataDoctor>(initDataInfoDoctor);
-
   console.log(dataForm);
   console.log(allDays);
   function capitalizeFirstLetter(value: string) {
@@ -68,11 +68,26 @@ export default function SelectDate() {
 
     try {
       const response = await getScheduleDoctors(
-        idDoctor as string,
+        // idDoctor as string,
+        dataForm.doctorInfoId,
         daySelected
       );
       console.log(response);
-      setListSchedule(response.data.data);
+      const listBooked = await getListPatientForDoctor(
+        dataForm.doctorInfoId,
+        Math.floor(daySelected - 25200000)
+      );
+      console.log(listBooked, dataForm.doctorInfoId, daySelected);
+
+      if (response.data.errCode == 0 && listBooked.data.errCode == 0) {
+        const filteredArray = response.data.data.filter(
+          (obj1: any) =>
+            !listBooked.data.listPatientBook.some(
+              (obj2: any) => obj2.timeType === obj1.timeType
+            )
+        );
+        setListSchedule(filteredArray);
+      }
     } catch (err) {
       console.log(err);
     }

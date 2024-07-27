@@ -1,6 +1,7 @@
 import axios from "axios";
 import { BACKEND_DOMAIN } from "../BackendDomain";
 import { TInfoDoctor } from "../../views/Manage/ManageDoctors/ManageDoctors";
+import { TDoctor } from "../../context/constants/typeData";
 
 export type TAllDataDoctor = {
   price: string;
@@ -17,12 +18,22 @@ export type TAllDataDoctor = {
   addressHospital: string;
   markdownHTML: string;
   description: String;
+  doctorInfoId: string;
 };
 
 export type TReturnAllDataDoctor = TAllDataDoctor[];
 
-export const getDoctors = async () => {
-  return await axios.get(`${BACKEND_DOMAIN}/api/get-all-doctors`);
+export const getDoctors = async (): Promise<TDoctor[]> => {
+  const response = await axios.get(`${BACKEND_DOMAIN}/api/get-all-doctors`);
+  console.log(response);
+  return response.data.doctors.map((item: any) => {
+    return {
+      id: item.id,
+      firstName: item.firstName,
+      lastName: item.lastName,
+      doctorInfoId: item?.Doctor_Info?.id,
+    };
+  });
 };
 
 export const saveInfoDoctor = async (infoDoctor: TInfoDoctor) => {
@@ -53,13 +64,26 @@ export const getInfoDoctor = async (
     addressHospital: response.data.doctorInfo.dataHospital.address,
     markdownHTML: data?.Markdown?.contentHTML,
     description: data?.Markdown?.description,
+    doctorInfoId: data.Doctor_Info.id,
   };
+};
+
+export type TDataDoctorByHospital = {
+  price: string;
+  firstName: string;
+  lastName: string;
+  gender: string;
+  province: string;
+  nameSpecialty: string;
+  doctorId: string;
+  image: string;
+  doctorInfoId: string;
 };
 
 export const getListDoctorByHopital = async (
   hospitalId: string,
   specialtyId: string
-) => {
+): Promise<TDataDoctorByHospital[]> => {
   console.log(hospitalId);
   const response = await axios.get(
     `${BACKEND_DOMAIN}/api/get-list-doctor-by-hospital?hospitalId=${hospitalId}&specialtyId=${specialtyId}`
@@ -76,6 +100,7 @@ export const getListDoctorByHopital = async (
       province: item.provinceId,
       doctorId: item.doctorId,
       image: item.User.image,
+      doctorInfoId: item.id,
     };
   });
 };

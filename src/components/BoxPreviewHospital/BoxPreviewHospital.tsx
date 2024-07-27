@@ -55,7 +55,9 @@ export default function BoxPreviewHospital({
           style={{ width: "120px", height: "120px", marginRight: "20px" }}
         />
         <Box>
-          <Typography>{name}</Typography>
+          <Typography sx={{ color: "#00b5f1", fontWeight: 600 }}>
+            {name}
+          </Typography>
           <Typography>{address}</Typography>
 
           <Box sx={{ mt: 3 }}>

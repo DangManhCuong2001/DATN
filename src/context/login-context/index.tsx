@@ -30,6 +30,7 @@ export type TDataLogin = {
   phoneNumber: string;
   address: string;
   image: string;
+  doctorinfoId: string;
 };
 const LoginContext = createContext({} as ILoginContext);
 export function LoginProvider({ children }: BaseContextProps) {
@@ -48,6 +49,7 @@ export function LoginProvider({ children }: BaseContextProps) {
     phoneNumber: "",
     address: "",
     image: "",
+    doctorinfoId: "",
   });
   const [isLogin, setIsLogin] = useState<boolean>(false);
   const { notifyError, notifySuccess } = useNotifier();
@@ -70,6 +72,7 @@ export function LoginProvider({ children }: BaseContextProps) {
           phoneNumber: response.data.user.phoneNumber,
           address: response.data.user.address,
           image: response.data.user.image,
+          doctorinfoId: response.data.user["Doctor_Info.id"],
         };
       });
       return response;

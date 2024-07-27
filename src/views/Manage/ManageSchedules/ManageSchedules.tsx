@@ -87,12 +87,12 @@ export default function ManageSchedules() {
   const { notifyError, notifySuccess } = useNotifier();
   const [doctors, setDoctors] = useState<TDoctor[]>([]);
   console.log(newSchedule);
-
+  console.log(dataLogin);
   async function getListDoctors() {
     try {
       const response = await getDoctors();
       console.log(response);
-      setDoctors(response.data.doctors);
+      setDoctors(response);
     } catch (err) {
       console.log(err);
     }
@@ -139,7 +139,7 @@ export default function ManageSchedules() {
             let object: any = {};
             object.doctorId =
               dataLogin.roleId == "doctor"
-                ? dataLogin.idUser
+                ? dataLogin.doctorinfoId
                 : newSchedule.doctorSelected;
             object.date = formatedDate;
             object.timeType = schedule.key;
@@ -150,6 +150,7 @@ export default function ManageSchedules() {
           return;
         }
       }
+
       console.log("result", result);
 
       // let res = await saveBulkSchedule(result);
@@ -158,7 +159,7 @@ export default function ManageSchedules() {
         arrSchedule: result,
         doctorId:
           dataLogin.roleId == "doctor"
-            ? dataLogin.idUser
+            ? dataLogin.doctorinfoId
             : newSchedule.doctorSelected,
         formatedDate: formatedDate,
       });
@@ -184,7 +185,7 @@ export default function ManageSchedules() {
       setNewSchedule((prev) => {
         return {
           ...prev,
-          doctorSelected: dataLogin.idUser,
+          doctorSelected: dataLogin.doctorinfoId,
         };
       });
     }
@@ -238,7 +239,7 @@ export default function ManageSchedules() {
                       return (
                         <MenuItem
                           key={"doctor selected" + index}
-                          value={doctor.id}
+                          value={doctor.doctorInfoId}
                         >
                           {doctor.firstName} {doctor.lastName}
                         </MenuItem>

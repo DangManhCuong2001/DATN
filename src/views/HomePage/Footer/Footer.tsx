@@ -28,6 +28,12 @@ export default function Footer() {
       <Box>
         <Typography fontWeight={600}>Dịch vụ Y tế</Typography>
         <Link
+          to={"/benhVienCong"}
+          style={{ textDecoration: "none", color: "black" }}
+        >
+          <Typography>Đặt khám tại cơ sở</Typography>
+        </Link>
+        {/* <Link
           to={"http://localhost:5173/"}
           style={{ textDecoration: "none", color: "black" }}
         >
@@ -38,19 +44,13 @@ export default function Footer() {
           style={{ textDecoration: "none", color: "black" }}
         >
           <Typography>Đặt khám tại cơ sở</Typography>
-        </Link>
-        <Link
+        </Link> */}
+        {/* <Link
           to={"http://localhost:5173/"}
           style={{ textDecoration: "none", color: "black" }}
         >
           <Typography>Đặt khám tại cơ sở</Typography>
-        </Link>
-        <Link
-          to={"http://localhost:5173/"}
-          style={{ textDecoration: "none", color: "black" }}
-        >
-          <Typography>Đặt khám tại cơ sở</Typography>
-        </Link>
+        </Link> */}
       </Box>
       <Box>
         <Typography fontWeight={600}>Hướng dẫn</Typography>

@@ -13,7 +13,7 @@ export default function SelectDoctor() {
   const { idHospital, idSpecialty } = useParams();
   const { infoHospital, setDataForm, listDoctorByHospital } =
     useHospitalContext();
-
+  const { dataForm } = useHospitalContext();
   useEffect(() => {
     // setHospitalSelected(idHospital as string);
     setDataForm((prev) => {
@@ -89,7 +89,7 @@ export default function SelectDoctor() {
               <Box sx={{ display: "flex", p: 2 }}>
                 <MedicalServicesRoundedIcon />
                 <Typography sx={{ fontSize: "20px", ml: 1 }}>
-                  Chuyên khoa:
+                  Chuyên khoa: {dataForm.nameSpecialtySelected}
                 </Typography>
               </Box>
             </Box>
